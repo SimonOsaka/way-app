@@ -1,5 +1,5 @@
 ## Commands
-
+IOS
 ### npm start
 
 Starts the development server for you to preview your weex page on browser.
