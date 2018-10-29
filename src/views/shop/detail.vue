@@ -1,6 +1,7 @@
 <template>
   <div>
-    <scroller class="scroller">
+    <navbar title="商家详情" backgroundColor="#45b5f0" height="88"></navbar>
+    <scroller class="scroller" :style="scrollerStyle">
       <div style="flex-direction: column; align-items: center; justice-content: center; padding-top: 10px; padding-bottom: 10px;">
         <image class="image_shop" :src="shop.shopLogoUrl"></image>
         <text class="text_shop">{{shop.shopName}}</text>
@@ -19,6 +20,7 @@
 
 <script>
 import { Utils, WxcCell } from "weex-ui";
+import navbar from "../../include/navbar.vue"
 import {
   getEntryUrl,
   receiveMessage,
@@ -30,7 +32,7 @@ import { http } from "../../tools/http.js";
 const navigator = weex.requireModule("navigator");
 
 export default {
-  components: { WxcCell },
+  components: { WxcCell, navbar },
   data: () => ({
     cellStyle: { height: "150px" },
     shop: {
@@ -44,6 +46,12 @@ export default {
   beforeCreate() {
     initIconfont();
     setPageTitle("商家详情");
+    const pageHeight = Utils.env.getPageHeight()
+    const screenHeight = Utils.env.getScreenHeight();
+    this.scrollerStyle = {
+        height: pageHeight + 'px',
+        marginTop: screenHeight - pageHeight + 'px'
+    }
   },
   created() {
     let _this = this;

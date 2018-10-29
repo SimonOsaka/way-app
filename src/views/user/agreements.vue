@@ -1,6 +1,7 @@
 <template>
     <div class="wrapper">
-        <web :style="agreementsStyle" :src="userAgreementsUrl"></web>
+      <navbar title="用户协议" backgroundColor="#45b5f0" height="88"></navbar>
+      <web :style="agreementsStyle" :src="userAgreementsUrl"></web>
     </div>
 </template>
 
@@ -15,8 +16,10 @@
 import { setPageTitle } from "../../tools/utils.js";
 import { Utils } from "weex-ui";
 import { http } from "../../tools/http.js";
+import navbar from "../../include/navbar.vue"
 
 export default {
+  components: { navbar },
   data: () => ({
     userAgreementsUrl: ""
   }),
@@ -49,7 +52,8 @@ export default {
   },
   created() {
     const pageHeight = Utils.env.getPageHeight();
-    this.agreementsStyle = { width: "750px", height: pageHeight + "px" };
+    const screenHeight = Utils.env.getScreenHeight();
+    this.agreementsStyle = { width: "750px", height: pageHeight + "px", marginTop: screenHeight - pageHeight + 'px'};
     this.queryUserAgreementsUrl();
   }
 };

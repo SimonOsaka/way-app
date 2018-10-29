@@ -1,6 +1,7 @@
 <template>
   <div>
-    <scroller class="scroller">
+    <navbar title="商品详情" backgroundColor="#45b5f0" height="88"></navbar>
+    <scroller class="scroller" :style="scrollerStyle">
       <div>
         <image class="image" resize="cover" :src="commodityObj.cPicUrl"></image>
       </div>
@@ -43,20 +44,13 @@
 
     <wxc-popup height="160" :show="isAutoShow" pos="bottom" @wxcPopupOverlayClicked="popupOverlayAutoClick">
       <div @click="weixinClicked" style="width: 128px; height: 128px; margin-left: 311px; margin-top: 24px;">
-        <text class="iconfont" style="font-size: 64px;">&#xe622;</text>
+        <text class="iconfont" :style="weixinIconStyle">&#xe622;</text>
         <text style="margin-left: 10px;">微信</text>
       </div>
     </wxc-popup>
 
-    <wxc-dialog title="功能开发中" content="请使用当前App的微信分享功能" :show="show" :single="true" @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked"></wxc-dialog>
+    <wxc-dialog title="功能开发中" content="敬请期待" :show="show" :single="true" @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked"></wxc-dialog>
 
-    <wxc-mask height="100" :top="24" border-radius="0" duration="200" mask-bg-color="transparent" :has-animation="true" :has-overlay="true" :show-close="false" :show="weixinShow" @wxcMaskSetHidden="weixinMaskSetHidden">
-      <div style="flex-direction: column; align-items: flex-end; position: absolute; top: 25px; right: 50px;">
-        <text class="iconfont" style="font-size: 64px; color: #fff;">&#xe728;</text>
-        <text class="iconfont" style="font-size: 48px;color: #fff;"> 请点击右上角的&#xe684;</text>
-        <text style="color: #fff;font-size: 48px;">进行分享</text>
-      </div>
-    </wxc-mask>
   </div>
 </template>
 
@@ -72,17 +66,22 @@ import {
   getStorageVal,
   setPageTitle,
   setOgImage,
-  getUrlKey
+  getUrlKey,
+setStorageVal
 } from '../../tools/utils.js'
 import { loadCateImageUrl } from '../../tools/image.js'
 import { http } from '../../tools/http.js'
+import navbar from "../../include/navbar.vue"
 const navigator = weex.requireModule('navigator')
 const modal = weex.requireModule('modal')
 
 export default {
-  components: { WxcCell, WxcPopup, WxcDialog, WxcMask },
+  components: { WxcCell, WxcPopup, WxcDialog, WxcMask, navbar },
   data: () => ({
-    cellStyle: { height: 'auto' },
+    cellStyle: {},
+    weixinIconStyle: {
+      fontSize: '64px'
+    },
     commodityObj: {
       id: 0,
       cPicUrl: '',
@@ -94,55 +93,65 @@ export default {
       shopLogoUrl: ''
     },
     isAutoShow: false,
-    show: false,
-    weixinShow: false
+    show: false
   }),
-  beforeCreate() {
-    initIconfont()
-  },
   created() {
+    initIconfont()
+    const pageHeight = Utils.env.getPageHeight();
+    const screenHeight = Utils.env.getScreenHeight();
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
+    
     let _this = this
-    _this.commodityObj.id = getUrlKey('cid')
-    if (!_this.commodityObj.id) {
-      navigator.pop()
-      return
-    }
+    // _this.commodityObj.id = getUrlKey('cid')
+    getStorageVal('way:commodity:id').then(data => {
+      console.log('商品详情id接收', data)
+      _this.commodityObj.id = data
+      if (!_this.commodityObj.id) {
+        console.log('商品详情id没有', data)
+        navigator.pop()
+        return
+      }
+
+      this.getCommodityData()
+    })
 
     console.log('商品详情id', _this.commodityObj.id)
-
-    http({
-      method: 'POST',
-      url: '/commodity/detail',
-      headers: {},
-      body: {
-        commodityId: this.commodityObj.id
-      }
-    }).then(
-      function(data) {
-        console.log('success', data)
-        if (data.code != 200) {
-          _this.dialogContent = data.msg
-          _this.dialogShow = true
-        }
-        let commodityDetail = data.data
-        _this.commodityObj.id = commodityDetail.id
-        _this.commodityObj.cName = commodityDetail.name
-        // _this.commodityObj.cPrice = commodityDetail.price
-        _this.commodityObj.cPosition = commodityDetail.shopAddress
-        _this.commodityObj.cPicUrl = commodityDetail.imgUrl
-        _this.commodityObj.shopId = commodityDetail.shopId
-        _this.commodityObj.shopName = commodityDetail.shopName
-        _this.commodityObj.shopLogoUrl = commodityDetail.shopLogoUrl
-
-        setPageTitle(commodityDetail.name)
-        setOgImage(_this.commodityObj.cPicUrl)
-      },
-      function(error) {
-        console.error('failure', error)
-      }
-    )
   },
   methods: {
+    getCommodityData() {
+      let _this = this
+      http({
+          method: 'POST',
+          url: '/commodity/detail',
+          headers: {},
+          body: {
+            commodityId: this.commodityObj.id
+          }
+        }).then(
+          function(data) {
+            console.log('success', data)
+            if (data.code != 200) {
+              _this.dialogContent = data.msg
+              _this.dialogShow = true
+            }
+            let commodityDetail = data.data
+            _this.commodityObj.id = commodityDetail.id
+            _this.commodityObj.cName = commodityDetail.name
+            // _this.commodityObj.cPrice = commodityDetail.price
+            _this.commodityObj.cPosition = commodityDetail.shopAddress
+            _this.commodityObj.cPicUrl = commodityDetail.imgUrl
+            _this.commodityObj.shopId = commodityDetail.shopId
+            _this.commodityObj.shopName = commodityDetail.shopName
+            _this.commodityObj.shopLogoUrl = commodityDetail.shopLogoUrl
+
+            setPageTitle(commodityDetail.name)
+            setOgImage(_this.commodityObj.cPicUrl)
+          },
+          function(error) {
+            console.error('failure', error)
+          }
+        )
+    },
     popupOverlayAutoClick() {
       this.isAutoShow = false
     },
@@ -151,25 +160,17 @@ export default {
     },
     weixinClicked() {
       console.log('weixin clicked...')
-      let userAgent = window.navigator.userAgent
-      if (userAgent.indexOf('MicroMessenger') != -1) {
-        this.weixinShow = true
-      } else {
-        this.show = true
-      }
+      this.show = true
     },
     wxcDialogConfirmBtnClicked() {
       this.show = false
     },
     shopCellClicked() {
-      postMessage('way:shop:id', this.commodityObj.shopId)
+      setStorageVal('way:shop:id', this.commodityObj.shopId)
       navigator.push({
         url: getEntryUrl('views/shop/detail'),
         animated: 'true'
       })
-    },
-    weixinMaskSetHidden() {
-      this.weixinShow = false
     }
   }
 }

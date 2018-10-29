@@ -2,12 +2,14 @@ export function initIconfont() {
   let domModule = weex.requireModule('dom')
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('//at.alicdn.com/t/font_707137_i0keyt6zb4q.ttf')"
+    src: "url('https://at.alicdn.com/t/font_707137_i0keyt6zb4q.ttf')"
   })
 }
 
 export function setPageTitle(title) {
-  document.title = title || '页面'
+  // if (document) {
+  //   document.title = title || '页面'
+  // }
 }
 
 export function setOgImage(imgUrl) {
@@ -45,6 +47,7 @@ export function getEntryUrl(filename, parameters) {
   } else {
     if (isiOSAssets || isAndroidAssets) {
       url = `${bundleUrl.split('bundlejs')[0]}/bundlejs/${filename}.js`
+      console.log('getEntryUrl, ios', url)
     } else {
       url = `${bundleUrl.split('/dist')[0]}/dist/${filename}.js`
     }
@@ -114,7 +117,7 @@ export function getStorageVal(key) {
     const storage = weex.requireModule('storage')
     let storageVal = ''
     storage.getItem(key, e => {
-      console.log(e)
+      console.log('getStorageVal', e)
       if (e.result == 'success') {
         storageVal = e.data
         resolve(storageVal)
@@ -147,6 +150,11 @@ export function postMessage(key, val) {
         return false
       }
     })
+  } else {
+    console.log('postMessage start', key, val)
+    const a = new BroadcastChannel(key)
+    a.postMessage(val)
+    console.log('postMessage over', key, val)
   }
 }
 
@@ -155,30 +163,17 @@ export function receiveMessage(key, success) {
     status: 1,
     val: undefined
   }
-  return new Promise(function(resolve, reject) {
-    //web
-    if (whichPlatform() === 'web') {
-      let storage = weex.requireModule('storage')
-      console.log('receiveMessage', 'web in...')
-      // var t = setTimeout(function () {
-      storage.getItem(key, function(e) {
-        console.log('***********************************')
-        console.log('* 获取消息receiveMessage方法', key, e)
-        console.log('***********************************')
-        if (e.result == 'success') {
-          data.val = e.data
-          data.status = 0
-          storage.removeItem(key, function(r) {
-            resolve(data)
-          })
-        } else {
-          resolve(data)
-        }
-      })
-      // clearTimeout(t);
-      // }, 10);
+  console.log(key, whichPlatform())
+  const b = new BroadcastChannel(key)
+  b.onmessage = function (event) {
+    console.log('b.onmessage', key, event)
+    if (event.data) {
+      data.val = event.data
     }
-  })
+    data.status = 0
+    success(data)
+    console.log('接收消息返回', data)
+  }
 }
 
 export function modalDebug(info = '') {

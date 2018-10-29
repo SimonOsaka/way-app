@@ -1,16 +1,14 @@
 <template>
   <div>
-    <scroller class="scroller">
+    <navbar title="登录" backgroundColor="#45b5f0" height="88"></navbar>
+    <scroller class="scroller" :style="scrollerStyle">
 
-      <div class="title">
-        <text class="title_text">登录页面</text>
-      </div>
       <div class="content" v-if="loginTab == 0">
         <div>
           <input type="tel" maxlength="11" return-key-type="done" @input="userTelOninput" style="width: 702px;" class="input" placeholder="手机号" />
         </div>
         <div style="flex-direction: row; margin-top: 20px;">
-          <input type="number" maxlength="6" return-key-type="go" style="width: 351px; " @input="userValidCodeOninput" class="input" placeholder="验证码" />
+          <input type="number" maxlength="6" auto-appear="false" return-key-type="go" style="width: 351px; " @input="userValidCodeOninput" class="input" placeholder="验证码" />
           <wxc-button :text="btnGetValidCodeText" type="white" :btnStyle="{width: '341px',marginLeft: '10px'}" :disabled="btnGetValidCodeDisabled" @wxcButtonClicked="userValidCodeClicked"></wxc-button>
         </div>
       </div>
@@ -37,8 +35,7 @@
     </scroller>
 
     <wxc-dialog title="提示" :content="dialogContent" :show="dialogShow" :single="true" @wxcDialogConfirmBtnClicked="dialogConfirmBtnClicked"></wxc-dialog>
-
-  </div>
+    </div>
 </template>
 
 <script>
@@ -55,12 +52,13 @@ import {
 } from "../../tools/utils.js";
 import { http } from "../../tools/http.js";
 import category from "../../components/category.vue";
+import navbar from "../../include/navbar.vue"
 const navigator = weex.requireModule("navigator");
 const storage = weex.requireModule("storage");
 const modal = weex.requireModule("modal");
 
 export default {
-  components: { WxcButton, WxcDialog },
+  components: { WxcButton, WxcDialog, navbar },
   data: () => ({
     userTel: "",
     userValidCode: "",
@@ -74,9 +72,12 @@ export default {
     dialogShow: false,
     loginTab: 1
   }),
-  beforeCreate() {
+  created() {
     initIconfont();
     setPageTitle("登录");
+    const pageHeight = Utils.env.getPageHeight();
+    const screenHeight = Utils.env.getScreenHeight();
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
   },
   methods: {
     userTelOninput: function(event) {
@@ -87,7 +88,7 @@ export default {
       this.userName = event.value;
       console.log("userName", this.userName);
     },
-    userPasswordOninput() {
+    userPasswordOninput(event) {
       this.userPasword = event.value;
       console.log("userPasword", this.userPasword);
     },
@@ -219,7 +220,7 @@ export default {
     clickUserAgreement() {
       navigator.push({
         url: getEntryUrl("views/user/agreements"),
-        animated: true
+        animated: 'true'
       });
     },
     userNameLoginClicked() {
@@ -262,8 +263,7 @@ export default {
           ).then(
             data => {
               modalDebug("setStorageVal");
-              let tabIndex = getUrlKey("tabIndex");
-              postMessage("way:tab:selectedIndex", tabIndex ? tabIndex : 0);
+              postMessage("m:way:login", 'success');
               navigator.pop({
                 animated: "true"
               });
@@ -329,5 +329,14 @@ export default {
 }
 .link {
   color: #2395ff;
+}
+.center-text {
+  position: absolute; 
+  bottom: 25; 
+  left: 172; 
+  right: 172;
+  text-align: center; 
+  font-size: 36; 
+  font-weight: bold;
 }
 </style>

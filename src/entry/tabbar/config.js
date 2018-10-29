@@ -31,6 +31,6 @@ export default {
     iconFontMarginBottom: 8,
     iconFontColor: '#333333',
     activeIconFontColor: 'red',
-    iconFontUrl: '//at.alicdn.com/t/font_707137_i0keyt6zb4q.ttf'
+    iconFontUrl: 'https://at.alicdn.com/t/font_707137_i0keyt6zb4q.ttf'
   }
 }

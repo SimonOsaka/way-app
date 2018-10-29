@@ -1,6 +1,7 @@
 <template>
   <div>
-    <scroller class="scroller">
+    <navbar title="创建优惠" backgroundColor="#45b5f0" height="88"></navbar>
+    <scroller class="scroller" :style="scrollerStyle">
       <category title="商品分类"></category>
       <div class="content">
         <wxc-grid-select :single="true" :list="cateData" @select="params => onSelect('res3', params)">
@@ -11,7 +12,7 @@
       <input type="text" placeholder="输入商品名称" class="input" :autofocus=true @input="commodityNameOnchange" />
 
       <category title="商品价格（元）"></category>
-      <input type="number" placeholder="输入商品价格" class="input" :autofocus=true @input="commodityPriceOnchange" />
+      <input type="number" placeholder="输入商品价格" class="input" @input="commodityPriceOnchange" />
 
       <category title="商家位置"></category>
       <div>
@@ -54,6 +55,7 @@ import {
   WxcLoading,
   WxcMask
 } from 'weex-ui'
+import navbar from "../../include/navbar.vue"
 import {
   getEntryUrl,
   postMessage,
@@ -79,7 +81,8 @@ export default {
     WxcButton,
     WxcCell,
     WxcLoading,
-    WxcMask
+    WxcMask,
+    navbar
   },
   data: () => ({
     commodityCate: '',
@@ -113,6 +116,9 @@ export default {
   beforeCreate() {
     initIconfont()
     setPageTitle('发布优惠')
+    const pageHeight = Utils.env.getPageHeight();
+    const screenHeight = Utils.env.getScreenHeight();
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
 
     getStorageVal('way:city').then(
       data => {
@@ -284,10 +290,9 @@ export default {
 
             let lateTimeout = setTimeout(() => {
               clearTimeout(lateTimeout)
-              postMessage('way:tab:selectedIndex', 1)
-              navigator.push({
-                url: getEntryUrl('index'),
-                animated: 'true'
+              postMessage('m:way:discount:refresh')
+              navigator.pop({
+                animated: true
               })
             }, 2000)
           },

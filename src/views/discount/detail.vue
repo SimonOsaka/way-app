@@ -1,6 +1,7 @@
 <template>
   <div>
-    <scroller class="scroller">
+    <navbar title="优惠详情" backgroundColor="#45b5f0" height="88"></navbar>
+    <scroller class="scroller" :style="scollerStyle">
       <div>
         <wxc-noticebar type="info" notice="亲情提示：此图非实物，请以实物为准。" mode="closable"></wxc-noticebar>
       </div>
@@ -19,7 +20,7 @@
           <div slot="value" v-if="discountObj.cExpireMills" style="background-color: #fdee7f; height: 106px; width: 180px;">
             <div style="flex-direction: column; align-items: center; margin-top: 18px;">
               <text style="color: #9e495b; font-size: 24px;">距结束仅剩</text>
-              <wxc-countdown :time="discountObj.cExpireMills" tpl="{h}:{m}:{s}" @wxcOnComplete="expiredOnCompleted" :style="{marginLeft: '10px', marginRight: '0', marginTop: '5px'}" :timeBoxStyle="{backgroundColor: '#690b08', borderRadius: '6px', width:'auto', paddingLeft:'2px', paddingRight: '2px'}" :timeTextStyle="{fontSize: '24px', color: '#fff'}" :dotBoxStyle="{width: 'auto'}" :dotTextStyle="{fontSize: '24px', color: 'grey', paddingLeft:'2px', paddingRight: '2px'}">
+              <wxc-countdown :time="discountObj.cExpireMills" tpl="{h}:{m}:{s}" @wxcOnComplete="expiredOnCompleted" :style="{marginLeft: '10px', marginRight: '0', marginTop: '5px'}" :timeBoxStyle="{backgroundColor: '#690b08', borderRadius: '4px', width:'32px', paddingLeft:'2px', paddingRight: '2px'}" :timeTextStyle="{fontSize: '24px', color: '#fff'}" :dotBoxStyle="{width: '4px'}" :dotTextStyle="{fontSize: '24px', color: 'grey', paddingLeft:'2px', paddingRight: '2px'}">
               </wxc-countdown>
             </div>
           </div>
@@ -75,25 +76,17 @@
 
     <wxc-popup height="160" :show="isAutoShow" pos="bottom" @wxcPopupOverlayClicked="popupOverlayAutoClick">
       <div @click="weixinClicked" style="width: 128px; height: 128px; margin-left: 311px; margin-top: 24px;">
-        <text class="iconfont" style="font-size: 64px;">&#xe622;</text>
+        <text class="iconfont" :style="weixinStyle">&#xe622;</text>
         <text style="margin-left: 10px;">微信</text>
       </div>
     </wxc-popup>
 
-    <wxc-dialog title="功能开发中" content="请使用当前App的微信分享功能" :show="show" :single="true" @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked"></wxc-dialog>
+    <wxc-dialog title="功能开发中" content="敬请期待" :show="show" :single="true" @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked"></wxc-dialog>
 
     <wxc-mask height="80" width="240" border-radius="5" duration="200" mask-bg-color="#FFFFFF" :has-animation="false" :has-overlay="true" :show-close="false" :show="expiredShow">
       <div style="flex-direction: row; justify-content: center; align-items: center; padding-top: 5px;">
         <text class="iconfont" style="font-size: 64px;">&#xe65f;</text>
         <text style="font-size: 32px;">优惠已结束</text>
-      </div>
-    </wxc-mask>
-
-    <wxc-mask height="100" :top="24" border-radius="0" duration="200" mask-bg-color="transparent" :has-animation="true" :has-overlay="true" :show-close="false" :show="weixinShow" @wxcMaskSetHidden="weixinMaskSetHidden">
-      <div style="flex-direction: column; align-items: flex-end; position: absolute; top: 25px; right: 50px;">
-        <text class="iconfont" style="font-size: 64px; color: #fff;">&#xe728;</text>
-        <text class="iconfont" style="font-size: 48px;color: #fff;"> 请点击右上角的&#xe684;</text>
-        <text style="color: #fff;font-size: 48px;">进行分享</text>
       </div>
     </wxc-mask>
   </div>
@@ -109,6 +102,7 @@ import {
   WxcMask,
   WxcNoticebar
 } from 'weex-ui'
+import navbar from "../../include/navbar.vue"
 import {
   getEntryUrl,
   receiveMessage,
@@ -133,7 +127,8 @@ export default {
     WxcDialog,
     WxcCountdown,
     WxcMask,
-    WxcNoticebar
+    WxcNoticebar,
+    navbar
   },
   data: () => ({
     priceCellStyle: {
@@ -143,7 +138,7 @@ export default {
       paddingBottom: '10px',
       paddingRight: 0
     },
-    cellStyle: { height: 'auto' },
+    cellStyle: {},
     secondCellStyle: { paddingTop: '0' },
     discountObj: {
       id: 0,
@@ -163,34 +158,41 @@ export default {
     realUserLoginId: 0,
     realUserToken: '',
     expiredShow: false,
-    weixinShow: false
+    weixinStyle: {
+      fontSize: '64px'
+    }
   }),
   beforeCreate() {
     initIconfont()
+    const pageHeight = Utils.env.getPageHeight();
+    const screenHeight = Utils.env.getScreenHeight();
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
   },
   created() {
     console.log('created in...')
-    this.discountObj.id = getUrlKey('discountId')
-    console.log('获取地址栏参数', this.discountObj.id)
-    if (!this.discountObj.id) {
-      navigator.pop()
-      return
-    }
-
-    setStorageVal('way:discount:id', this.discountObj.id)
-
-    getStorageVal('way:user').then(
-      data => {
-        let user = JSON.parse(data)
-        this.realUserLoginId = user.userLoginId
-        this.realUserToken = user.userToken
-        console.log('realUserLoginId=', this.realUserLoginId)
-        this.discountDetailHttp()
-      },
-      error => {
-        this.discountDetailHttp()
+    // this.discountObj.id = getUrlKey('discountId')
+    getStorageVal('way:discount:id').then(data => {
+      this.discountObj.id = data
+      console.log('获取地址栏参数', this.discountObj.id)
+      if (!this.discountObj.id) {
+        navigator.pop()
+        return
       }
-    )
+
+      getStorageVal('way:user').then(
+        data => {
+          let user = JSON.parse(data)
+          this.realUserLoginId = user.userLoginId
+          this.realUserToken = user.userToken
+          console.log('realUserLoginId=', this.realUserLoginId)
+          this.discountDetailHttp()
+        },
+        error => {
+          this.discountDetailHttp()
+        }
+      )
+    })
+
     console.log('created out...')
   },
   methods: {
@@ -202,12 +204,7 @@ export default {
     },
     weixinClicked() {
       console.log('weixin clicked...')
-      let userAgent = window.navigator.userAgent
-      if (userAgent.indexOf('MicroMessenger') != -1) {
-        this.weixinShow = true
-      } else {
-        this.show = true
-      }
+      this.show = true
     },
     wxcDialogConfirmBtnClicked() {
       this.show = false
@@ -231,7 +228,7 @@ export default {
           if (data.code != 200) {
             navigator.push({
               url: getEntryUrl('404'),
-              animated: true
+              animated: 'true'
             })
             return
           }
@@ -341,7 +338,7 @@ export default {
         error => {
           navigator.push({
             url: getEntryUrl('views/user/login'),
-            animated: true
+            animated: 'true'
           })
         }
       )
@@ -359,38 +356,54 @@ export default {
       this.increaseReal('decrease', 'unreal')
     },
     clickStaticMap() {
+      console.log('click static map')
       let dest = this.discountObj.shopLng + ',' + this.discountObj.shopLat
+      console.log('dest', dest)
       let destName = encodeURIComponent(this.discountObj.position)
+      console.log('destName', destName)
       getStorageVal('way:city').then(
         data => {
           let city = JSON.parse(data)
           let start = city.lng + ',' + city.lat
 
-          window.location.href =
-            '//m.amap.com/navi/?start=' +
+          console.log('city', city, 'start', start)
+          const discountMapUrl =
+            'https://m.amap.com/navi/?start=' +
             start +
             '&dest=' +
             dest +
             '&destName=' +
             destName +
             '&naviBy=walk&key=e318d250a2b4d53d864f7d712cc069da'
+
+            console.log('discount map url', discountMapUrl)
+            setStorageVal('way:discount:mapUrl', discountMapUrl)
+
+            navigator.push({
+              url: getEntryUrl('views/discount/posMap'),
+              animated: 'true'
+            })
         },
         err => {
-          window.location.href =
-            '//m.amap.com/navi/?dest=' +
+          const discountMapUrl =
+            'https://m.amap.com/navi/?dest=' +
             dest +
             '&destName=' +
             destName +
             '&key=e318d250a2b4d53d864f7d712cc069da'
+
+          setStorageVal('way:discount:mapUrl', discountMapUrl)
+
+          navigator.push({
+            url: getEntryUrl('views/discount/posMap'),
+            animated: 'true'
+          })  
         }
       )
     },
     expiredOnCompleted() {
       console.log('优惠已结束')
       this.expiredShow = true
-    },
-    weixinMaskSetHidden() {
-      this.weixinShow = false
     }
   }
 }

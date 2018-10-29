@@ -1,18 +1,19 @@
 <template>
     <div>
+      <navbar title="已发布优惠" backgroundColor="#45b5f0" height="88"></navbar>  
       <scroller v-if="!noData" @loadmore="loadMore" loadmoreoffset="10" @scroll="discountScrollHandler" :style="scrollerStyle">
         <div class="m_cell" v-for="(discountObj, i) in discount.list" :key="i" :ref="'cell'+i">
           <div class="m_cell_split" v-if="i != 0"></div>
           <wxc-cell :has-arrow="false" :has-top-border="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false">
             <image slot="label" class="image" resize="cover" :src="discountObj.commodityImageUrl"></image>
             <div slot="title">
-              <div style="flex-direction: row; height: auto;">
+              <div style="flex-direction: row;">
                 <text class="c_name" style="width: 480px;">{{discountObj.commodityName}}</text>
               </div>
               <div style="flex-direction:row;">
                 <text class="c_name c_money" style="padding-top:4px;">¥{{discountObj.commodityPrice}}</text>
               </div>
-              <div :key="i" :index="i" style="flex-direction: row; height: auto; padding-left: 20px; margin-top: 10px;">
+              <div :key="i" :index="i" style="flex-direction: row; padding-left: 20px; margin-top: 10px;">
                   <text class="iconfont red" style="font-size: 24px;">&#xe651;</text>
                   <text class="c_real" style="color: #ccc; width: 500px;">{{discountObj.shopPosition}}</text>
               </div>
@@ -35,10 +36,11 @@ import {
   getStorageVal
 } from '../../tools/utils.js'
 import { http } from '../../tools/http.js'
+import navbar from "../../include/navbar.vue"
 const navigator = weex.requireModule('navigator')
 
 export default {
-    components: { WxcCell },
+    components: { WxcCell, navbar },
     data: () => ({
         discount: {
             list: [],
@@ -60,8 +62,10 @@ export default {
     created() {
         initIconfont()
         const pageHeight = Utils.env.getPageHeight()
+        const screenHeight = Utils.env.getScreenHeight();
         this.scrollerStyle = {
             height: pageHeight + 'px',
+            marginTop: screenHeight - pageHeight + 'px'
         }
         getStorageVal('way:user').then(
             data => {

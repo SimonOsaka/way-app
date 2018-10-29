@@ -1,6 +1,7 @@
 <template>
   <div class="content">
-    <wxc-result :type="type" padding-top="232" :custom-set="customSet" @wxcResultButtonClicked="resultButtonClick" :show="show"></wxc-result>
+    <navbar title="出错了" backgroundColor="#45b5f0" height="88"></navbar>
+    <wxc-result :type="type" padding-top="232" :custom-set="customSet" @wxcResultButtonClicked="resultButtonClick" :show="show" :style="scrollerStyle"></wxc-result>
   </div>
 </template>
  
@@ -18,11 +19,12 @@
 <script>
 import { WxcResult } from "weex-ui";
 import { setPageTitle } from "./tools/utils.js";
+import navbar from "./include/navbar.vue"
 const modal = weex.requireModule("modal");
 const navigator = weex.requireModule("navigator");
 
 export default {
-  components: { WxcResult },
+  components: { WxcResult, navbar },
   data: () => ({
     show: true,
     type: "errorPage",
@@ -37,6 +39,9 @@ export default {
   computed: {},
   beforeCreate() {
     setPageTitle("404未找到");
+    const pageHeight = Utils.env.getPageHeight();
+    const screenHeight = Utils.env.getScreenHeight();
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
   },
   methods: {
     resultButtonClick(e) {

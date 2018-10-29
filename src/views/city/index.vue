@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-    <scroller class="scroller">
+  <div>
+    <navbar title="选择城市" backgroundColor="#45b5f0" height="88"></navbar>
+    <scroller class="scroller" :style="scrollerStyle">
       <wxc-searchbar ref="wxc-searchbar" placeholder="请输入您所在的位置（例如：xx市xx区xx街）" :always-show-cancel="alwaysShowCancel" :return-key-type="returnKeyType" @wxcSearchbarInputReturned="wxcSearchbarInputOnInput"></wxc-searchbar>
       <div v-if="currentAddress != ''">
         <category title="当前地址"></category>
@@ -17,19 +18,21 @@
 </template>
 
 <script>
-import { WxcSearchbar, WxcCell } from 'weex-ui'
+import { WxcSearchbar, WxcCell, Utils } from 'weex-ui'
+import navbar from "../../include/navbar.vue"
 import {
   postMessage,
   getStorageVal,
   setPageTitle,
-  getEntryUrl
+  getEntryUrl,
+setStorageVal
 } from '../../tools/utils.js'
 import { http } from '../../tools/http.js'
 import category from '../../components/category.vue'
 const navigator = weex.requireModule('navigator')
 
 export default {
-  components: { WxcSearchbar, WxcCell, category },
+  components: { WxcSearchbar, WxcCell, category, navbar },
   data: () => ({
     searchList: [],
     keywords: '',
@@ -111,10 +114,12 @@ export default {
           _this.city.lng = loc[0]
           _this.city.lat = loc[1]
           _this.city.cityCode = cityCode
-          postMessage('way:city', JSON.stringify(_this.city))
-          navigator.push({
-            url: getEntryUrl('index'),
-            animated: 'true'
+          setStorageVal('way:city', JSON.stringify(_this.city)).then(data => {
+            console.log('设置city data')
+            postMessage('m:way:city')
+            navigator.pop({
+              animated: true
+            })
           })
         },
         function(error) {
@@ -124,6 +129,10 @@ export default {
     }
   },
   created() {
+    const pageHeight = Utils.env.getPageHeight();
+    const screenHeight = Utils.env.getScreenHeight();
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
+
     let _this = this
     getStorageVal('way:city').then(
       data => {
@@ -135,3 +144,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.scroller {
+  width: 750px;
+}
+</style>
