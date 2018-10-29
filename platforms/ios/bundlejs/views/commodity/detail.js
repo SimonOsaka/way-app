@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 82);
+/******/ 	return __webpack_require__(__webpack_require__.s = 83);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -3420,21 +3420,22 @@ function initAllCateImg() {
 /* 79 */,
 /* 80 */,
 /* 81 */,
-/* 82 */
+/* 82 */,
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(83)
+__vue_styles__.push(__webpack_require__(84)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(84)
+__vue_exports__ = __webpack_require__(85)
 
 /* template */
-var __vue_template__ = __webpack_require__(85)
+var __vue_template__ = __webpack_require__(86)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3466,7 +3467,7 @@ new Vue(module.exports)
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3494,7 +3495,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3594,6 +3595,7 @@ var navigator = weex.requireModule('navigator'); //
 //
 
 var modal = weex.requireModule('modal');
+var safari = weex.requireModule('safari');
 
 exports.default = {
   components: { WxcCell: _wxcCell2.default, WxcPopup: _wxcPopup2.default, WxcDialog: _wxcDialog2.default, WxcMask: _wxcMask2.default, navbar: _navbar2.default },
@@ -3682,7 +3684,8 @@ exports.default = {
     },
     weixinClicked: function weixinClicked() {
       console.log('weixin clicked...');
-      this.show = true;
+      // this.show = true
+      safari.openSafariUrl('http://h5.jicu.vip/views/commodity/detail.html?cid=' + this.commodityObj.id);
     },
     wxcDialogConfirmBtnClicked: function wxcDialogConfirmBtnClicked() {
       this.show = false;
@@ -3698,7 +3701,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

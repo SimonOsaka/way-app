@@ -11,6 +11,8 @@
 #import <WeexSDK/WeexSDK.h>
 #import "WXDemoViewController.h"
 #import "WXImgLoaderDefaultImpl.h"
+#import "../WeexModule/WXGeoLocationModule.h"
+#import "../WeexModule/WXSafariModule.h"
 
 @implementation WeexSDKManager
 
@@ -48,6 +50,9 @@
     [WXAppConfiguration setExternalUserAgent:@"Jicu ios app"];
     
     [WXSDKEngine initSDKEnvironment];
+    
+    [WXSDKEngine registerModule:@"location" withClass:[WXGeoLocationModule class]];
+    [WXSDKEngine registerModule:@"safari" withClass:[WXSafariModule class]];
     
     [WXSDKEngine registerHandler:[WXImgLoaderDefaultImpl new] withProtocol:@protocol(WXImgLoaderProtocol)];
     

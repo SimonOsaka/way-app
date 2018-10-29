@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 111);
+/******/ 	return __webpack_require__(__webpack_require__.s = 112);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23301,7 +23301,8 @@ function initAllCateImg() {
 /* 108 */,
 /* 109 */,
 /* 110 */,
-/* 111 */
+/* 111 */,
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23318,23 +23319,23 @@ var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _weexVueRender2.default.init(_vue2.default);
-var App = __webpack_require__(112);
+var App = __webpack_require__(113);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(113)
+  __webpack_require__(114)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(115),
-  /* template */
   __webpack_require__(116),
+  /* template */
+  __webpack_require__(117),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -23366,13 +23367,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(114);
+var content = __webpack_require__(115);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -23392,7 +23393,7 @@ if(false) {
 }
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -23406,7 +23407,7 @@ exports.push([module.i, "\n.iconfont[data-v-24ac0519] {\n  font-family: iconfont
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23506,6 +23507,7 @@ var navigator = weex.requireModule('navigator'); //
 //
 
 var modal = weex.requireModule('modal');
+var safari = weex.requireModule('safari');
 
 exports.default = {
   components: { WxcCell: _wxcCell2.default, WxcPopup: _wxcPopup2.default, WxcDialog: _wxcDialog2.default, WxcMask: _wxcMask2.default, navbar: _navbar2.default },
@@ -23594,7 +23596,8 @@ exports.default = {
     },
     weixinClicked: function weixinClicked() {
       console.log('weixin clicked...');
-      this.show = true;
+      // this.show = true
+      safari.openSafariUrl('http://h5.jicu.vip/views/commodity/detail.html?cid=' + this.commodityObj.id);
     },
     wxcDialogConfirmBtnClicked: function wxcDialogConfirmBtnClicked() {
       this.show = false;
@@ -23610,7 +23613,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

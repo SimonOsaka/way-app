@@ -15,6 +15,8 @@
 		0A996E0A1E249DAF0055CB7E /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A996E091E249DAF0055CB7E /* libstdc++.tbd */; };
 		0AE277DC1DE56A5600C6D86A /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0AE277DB1DE56A5600C6D86A /* config.xml */; };
 		59EA0DA71D2E7D19004F904A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EA0DA61D2E7D19004F904A /* Images.xcassets */; };
+		6E1DC2972186D33E001807A4 /* WXGeoLocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC2962186D33E001807A4 /* WXGeoLocationModule.m */; };
+		6E1DC29B21870823001807A4 /* WXSafariModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29A21870823001807A4 /* WXSafariModule.m */; };
 		775BEE801C1E8ECC008D1629 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 775BEE7F1C1E8ECC008D1629 /* main.m */; };
 		775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 775BEE821C1E8ECC008D1629 /* AppDelegate.m */; };
 		775BEE8B1C1E8ECC008D1629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 775BEE8A1C1E8ECC008D1629 /* Assets.xcassets */; };
@@ -60,6 +62,10 @@
 		0B4FAFDE2AD89EAFD12DB8C2 /* Pods-WeexUITestDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexUITestDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeexUITestDemo/Pods-WeexUITestDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		37DB381D5815C06F147D4D51 /* Pods-WeexDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeexDemo/Pods-WeexDemo.release.xcconfig"; sourceTree = "<group>"; };
 		59EA0DA61D2E7D19004F904A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6E1DC2962186D33E001807A4 /* WXGeoLocationModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXGeoLocationModule.m; sourceTree = "<group>"; };
+		6E1DC2982186D371001807A4 /* WXGeoLocationModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXGeoLocationModule.h; sourceTree = "<group>"; };
+		6E1DC29921870806001807A4 /* WXSafariModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXSafariModule.h; sourceTree = "<group>"; };
+		6E1DC29A21870823001807A4 /* WXSafariModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXSafariModule.m; sourceTree = "<group>"; };
 		7453E3641C9FA971001EB427 /* DemoDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoDefine.h; sourceTree = "<group>"; };
 		7475ACA01CD8444A0044E96C /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		775BEE7B1C1E8ECC008D1629 /* WeexDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeexDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +160,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6E1DC2952186D2D0001807A4 /* WeexModule */ = {
+			isa = PBXGroup;
+			children = (
+				6E1DC2982186D371001807A4 /* WXGeoLocationModule.h */,
+				6E1DC2962186D33E001807A4 /* WXGeoLocationModule.m */,
+				6E1DC29921870806001807A4 /* WXSafariModule.h */,
+				6E1DC29A21870823001807A4 /* WXSafariModule.m */,
+			);
+			path = WeexModule;
+			sourceTree = "<group>";
+		};
 		74CC79EC1C2B9FC600829368 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +246,7 @@
 		D5ADF0861C77133B00597CA6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				6E1DC2952186D2D0001807A4 /* WeexModule */,
 				0A4A05F21E0405070046E1BE /* WeexScanner */,
 				0A3122A61E1F41E30041B972 /* WeexConfig */,
 				775BEE811C1E8ECC008D1629 /* AppDelegate.h */,
@@ -322,6 +340,11 @@
 					775BEE7A1C1E8ECC008D1629 = {
 						CreatedOnToolsVersion = 7.1.1;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					775BEE931C1E8ECC008D1629 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -503,10 +526,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A3122AF1E1F41E30041B972 /* WeexSDKManager.m in Sources */,
+				6E1DC2972186D33E001807A4 /* WXGeoLocationModule.m in Sources */,
 				0A4A05FA1E0405070046E1BE /* WXDemoViewController.m in Sources */,
 				775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */,
 				0A4A05F91E0405070046E1BE /* UIViewController+WXDemoNaviBar.m in Sources */,
 				775BEE801C1E8ECC008D1629 /* main.m in Sources */,
+				6E1DC29B21870823001807A4 /* WXSafariModule.m in Sources */,
 				0A7758D71EA0D39C00AE9815 /* WXImgLoaderDefaultImpl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

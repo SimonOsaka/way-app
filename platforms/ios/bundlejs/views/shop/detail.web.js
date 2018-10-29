@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 166);
+/******/ 	return __webpack_require__(__webpack_require__.s = 167);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1091,7 +1091,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 166:
+/***/ 167:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1108,24 +1108,24 @@ var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _weexVueRender2.default.init(_vue2.default);
-var App = __webpack_require__(167);
+var App = __webpack_require__(168);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ }),
 
-/***/ 167:
+/***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(168)
+  __webpack_require__(169)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(170),
-  /* template */
   __webpack_require__(171),
+  /* template */
+  __webpack_require__(172),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -1158,13 +1158,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 168:
+/***/ 169:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(169);
+var content = __webpack_require__(170);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -1182,21 +1182,6 @@ if(false) {
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
 }
-
-/***/ }),
-
-/***/ 169:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.iconfont[data-v-dc75c858] {\n  font-family: iconfont;\n  font-size: 0.42667rem;\n  font-style: normal;\n}\n.scroller[data-v-dc75c858] {\n  width: 10rem;\n}\n.image[data-v-dc75c858] {\n  width: 10rem;\n  height: 6.66667rem;\n}\n.image_shop[data-v-dc75c858] {\n  width: 3.41333rem;\n  height: 3.41333rem;\n}\n.text_shop[data-v-dc75c858] {\n  font-size: 0.85333rem;\n  font-weight: bold;\n}\n", ""]);
-
-// exports
-
 
 /***/ }),
 
@@ -1228,6 +1213,21 @@ if(false) {
 /***/ }),
 
 /***/ 170:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.iconfont[data-v-dc75c858] {\n  font-family: iconfont;\n  font-size: 0.42667rem;\n  font-style: normal;\n}\n.scroller[data-v-dc75c858] {\n  width: 10rem;\n}\n.image[data-v-dc75c858] {\n  width: 10rem;\n  height: 6.66667rem;\n}\n.image_shop[data-v-dc75c858] {\n  width: 3.41333rem;\n  height: 3.41333rem;\n}\n.text_shop[data-v-dc75c858] {\n  font-size: 0.85333rem;\n  font-weight: bold;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 171:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1341,7 +1341,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 171:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

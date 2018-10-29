@@ -11,6 +11,7 @@
 #import <WeexSDK/WeexSDK.h>
 #import <AVFoundation/AVFoundation.h>
 #import "WeexSDKManager.h"
+#import <AMapFoundationKit/AMapFoundationKit.h>
 
 @interface AppDelegate ()
 @end
@@ -31,6 +32,8 @@
     
     // Override point for customization after application launch.
     [self startSplashScreen];
+    
+    [AMapServices sharedServices].apiKey = @"db0c9dfe7249d031356db49b23cc944a";
     
     return YES;
 }

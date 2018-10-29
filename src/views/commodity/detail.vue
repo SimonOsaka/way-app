@@ -74,6 +74,7 @@ import { http } from '../../tools/http.js'
 import navbar from "../../include/navbar.vue"
 const navigator = weex.requireModule('navigator')
 const modal = weex.requireModule('modal')
+const safari = weex.requireModule('safari')
 
 export default {
   components: { WxcCell, WxcPopup, WxcDialog, WxcMask, navbar },
@@ -100,7 +101,7 @@ export default {
     const pageHeight = Utils.env.getPageHeight();
     const screenHeight = Utils.env.getScreenHeight();
     this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
-    
+
     let _this = this
     // _this.commodityObj.id = getUrlKey('cid')
     getStorageVal('way:commodity:id').then(data => {
@@ -160,7 +161,8 @@ export default {
     },
     weixinClicked() {
       console.log('weixin clicked...')
-      this.show = true
+      // this.show = true
+      safari.openSafariUrl('http://h5.jicu.vip/views/commodity/detail.html?cid=' + this.commodityObj.id)
     },
     wxcDialogConfirmBtnClicked() {
       this.show = false

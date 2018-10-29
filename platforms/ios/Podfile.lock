@@ -1,4 +1,7 @@
 PODS:
+  - AMapFoundation-NO-IDFA (1.5.5)
+  - AMapLocation-NO-IDFA (2.6.1):
+    - AMapFoundation-NO-IDFA (~> 1.4)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -8,6 +11,7 @@ PODS:
   - WeexSDK (0.18.0.3)
 
 DEPENDENCIES:
+  - AMapLocation-NO-IDFA
   - SDWebImage (= 3.7.5)
   - SocketRocket (= 0.4.2)
   - WeexPluginLoader
@@ -15,17 +19,21 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AMapFoundation-NO-IDFA
+    - AMapLocation-NO-IDFA
     - SDWebImage
     - SocketRocket
     - WeexPluginLoader
     - WeexSDK
 
 SPEC CHECKSUMS:
+  AMapFoundation-NO-IDFA: a09d8cef57c10d4f841595829a574bcea67fc323
+  AMapLocation-NO-IDFA: ffd69b8b88f553d0b252d4967bf301ad2afff9c0
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
   WeexPluginLoader: 85c1304f8ba29864e58531614a0acfeceef1b85c
   WeexSDK: 173541f2d0042664168b305952398145c0c6039c
 
-PODFILE CHECKSUM: ec0e31166e143bcabfaa1962c9ed874f00c462e6
+PODFILE CHECKSUM: 2c37eada837f3ff159299db6073f1dd083c9414c
 
 COCOAPODS: 1.5.3

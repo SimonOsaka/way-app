@@ -119,6 +119,7 @@ import { loadCateImageUrl } from '../../tools/image.js'
 import { http } from '../../tools/http.js'
 const navigator = weex.requireModule('navigator')
 const modal = weex.requireModule('modal')
+const safari = weex.requireModule('safari')
 
 export default {
   components: {
@@ -204,7 +205,8 @@ export default {
     },
     weixinClicked() {
       console.log('weixin clicked...')
-      this.show = true
+      // this.show = true
+      safari.openSafariUrl('http://h5.jicu.vip/views/discount/detail.html?discountId=' + this.discountObj.id)
     },
     wxcDialogConfirmBtnClicked() {
       this.show = false

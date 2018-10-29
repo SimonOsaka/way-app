@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 184);
+/******/ 	return __webpack_require__(__webpack_require__.s = 185);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1133,7 +1133,7 @@ exports.push([module.i, "\n.container[data-v-29859cfc] {\n  flex-direction: row;
 
 /***/ }),
 
-/***/ 184:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1150,24 +1150,24 @@ var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _weexVueRender2.default.init(_vue2.default);
-var App = __webpack_require__(185);
+var App = __webpack_require__(186);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ }),
 
-/***/ 185:
+/***/ 186:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(186)
+  __webpack_require__(187)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(188),
-  /* template */
   __webpack_require__(189),
+  /* template */
+  __webpack_require__(190),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -1200,13 +1200,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 186:
+/***/ 187:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(187);
+var content = __webpack_require__(188);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -1227,7 +1227,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 187:
+/***/ 188:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1242,7 +1242,7 @@ exports.push([module.i, "\n.iconfont[data-v-d1ccc4ca] {\n  font-family: iconfont
 
 /***/ }),
 
-/***/ 188:
+/***/ 189:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1385,7 +1385,136 @@ exports.default = {
 
 /***/ }),
 
-/***/ 189:
+/***/ 19:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  props: {
+    dataRole: { default: 'navbar' },
+    //导航条背景色
+    backgroundColor: { default: 'black' },
+    //导航条高度
+    height: { default: 88 },
+    //导航条标题 
+    title: { default: '' },
+    //导航条标题颜色
+    titleColor: { default: 'black' },
+    //右侧按钮图片
+    rightItemSrc: { default: '' },
+    //右侧按钮标题
+    rightItemTitle: { default: '' },
+    //右侧按钮标题颜色
+    rightItemColor: { default: 'black' },
+    //左侧按钮图片
+    leftItemSrc: { default: '' },
+    //左侧按钮标题
+    leftItemTitle: { default: '' },
+    //左侧按钮颜色
+    leftItemColor: { default: 'black' }
+  },
+  methods: {
+    onclickrightitem: function onclickrightitem(e) {
+      this.$emit('naviBarRightItemClick');
+    },
+    onclickleftitem: function onclickleftitem(e) {
+      this.$emit('naviBarLeftItemClick');
+    }
+  }
+};
+
+/***/ }),
+
+/***/ 190:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1566,135 +1695,6 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-d1ccc4ca", module.exports)
   }
 }
-
-/***/ }),
-
-/***/ 19:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-  props: {
-    dataRole: { default: 'navbar' },
-    //导航条背景色
-    backgroundColor: { default: 'black' },
-    //导航条高度
-    height: { default: 88 },
-    //导航条标题 
-    title: { default: '' },
-    //导航条标题颜色
-    titleColor: { default: 'black' },
-    //右侧按钮图片
-    rightItemSrc: { default: '' },
-    //右侧按钮标题
-    rightItemTitle: { default: '' },
-    //右侧按钮标题颜色
-    rightItemColor: { default: 'black' },
-    //左侧按钮图片
-    leftItemSrc: { default: '' },
-    //左侧按钮标题
-    leftItemTitle: { default: '' },
-    //左侧按钮颜色
-    leftItemColor: { default: 'black' }
-  },
-  methods: {
-    onclickrightitem: function onclickrightitem(e) {
-      this.$emit('naviBarRightItemClick');
-    },
-    onclickleftitem: function onclickleftitem(e) {
-      this.$emit('naviBarLeftItemClick');
-    }
-  }
-};
 
 /***/ }),
 

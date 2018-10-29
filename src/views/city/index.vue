@@ -30,6 +30,7 @@ setStorageVal
 import { http } from '../../tools/http.js'
 import category from '../../components/category.vue'
 const navigator = weex.requireModule('navigator')
+const location = weex.requireModule('location')
 
 export default {
   components: { WxcSearchbar, WxcCell, category, navbar },
@@ -44,6 +45,9 @@ export default {
   }),
   beforeCreate() {
     setPageTitle('选择城市')
+    location.getCurrentLocation(function(resp) {
+      console.log('获取iOS native经纬度', resp)
+    })
   },
   methods: {
     wxcIndexlistItemClicked(i) {
