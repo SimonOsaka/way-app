@@ -1182,30 +1182,13 @@ exports.http = http;
 function http() {
   var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-  var modal = weex.requireModule("modal");
-  var network = weex.requireModule("network");
-  var ok = true;
-  network.getNetworkStatus(function (statusString) {
-    console.log("网络状态", statusString);
-    if (statusString === "NONE") {
-      modal.toast({
-        message: "\u5F53\u524D\u7F51\u7EDC\u65E0\u6CD5\u8FDE\u63A5\uFF0C\u8BF7\u68C0\u67E5\u7F51\u7EDC\u914D\u7F6E",
-        duration: 3
-      });
-      ok = false;
-    } else {
-      console.log("网络正常", statusString);
-    }
-  });
-  if (!ok) {
-    return;
-  }
   var DEFAULT_OPTION = {
     method: "GET",
     type: "json", // json、text、jsonp
     headers: {}
   };
 
+  var modal = weex.requireModule("modal");
   var stream = weex.requireModule("stream");
   var platform = weex.config.env.platform.toLowerCase();
 

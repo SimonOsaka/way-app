@@ -1,28 +1,11 @@
 export function http(OPTIONS = {}) {
-  const modal = weex.requireModule("modal");
-  const network = weex.requireModule("network");
-  let ok = true;
-  network.getNetworkStatus(function(statusString) {
-    console.log("网络状态", statusString);
-    if (statusString === "NONE") {
-      modal.toast({
-        message: `当前网络无法连接，请检查网络配置`,
-        duration: 3
-      });
-      ok = false;
-    } else {
-      console.log("网络正常", statusString);
-    }
-  });
-  if (!ok) {
-    return;
-  }
   let DEFAULT_OPTION = {
     method: "GET",
     type: "json", // json、text、jsonp
     headers: {}
   };
 
+  const modal = weex.requireModule("modal");
   const stream = weex.requireModule("stream");
   const platform = weex.config.env.platform.toLowerCase();
 
