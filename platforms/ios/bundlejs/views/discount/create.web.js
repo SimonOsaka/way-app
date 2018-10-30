@@ -20873,56 +20873,73 @@ exports.http = http;
 function http() {
   var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+  var modal = weex.requireModule("modal");
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusString) {
+    console.log("网络状态", statusString);
+    if (statusString === "NONE") {
+      modal.toast({
+        message: "\u5F53\u524D\u7F51\u7EDC\u65E0\u6CD5\u8FDE\u63A5\uFF0C\u8BF7\u68C0\u67E5\u7F51\u7EDC\u914D\u7F6E",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络正常", statusString);
+    }
+  });
+  if (!ok) {
+    return;
+  }
   var DEFAULT_OPTION = {
-    method: 'GET',
-    type: 'json', // json、text、jsonp
+    method: "GET",
+    type: "json", // json、text、jsonp
     headers: {}
   };
 
-  var stream = weex.requireModule('stream');
-  var modal = weex.requireModule('modal');
+  var stream = weex.requireModule("stream");
   var platform = weex.config.env.platform.toLowerCase();
 
   var apiRoot = void 0;
-  if (platform === 'web') {
-    apiRoot = 'http://api.jicu.vip'; //window.location.origin.replace(':8081', '')
+  if (platform === "web") {
+    apiRoot = "http://api.jicu.vip"; //window.location.origin.replace(':8081', '')
   } else {
-    if (process.env === 'test') {
+    if (process.env === "test") {
       // 测试环境域名
-      apiRoot = window.location.origin.replace(':8081', ''); //'http://your.dev.domain.com'
+      apiRoot = window.location.origin.replace(":8081", ""); //'http://your.dev.domain.com'
     } else {
       // 正式环境域名
-      apiRoot = 'http://api.jicu.vip'; //'http://your.prod.domain.com'
+      apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
     }
   }
 
   var options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
-  if (options.method === 'GET') {
+  if (options.method === "GET") {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
-        return '' + acc + key + '=' + options.params[key] + '&';
-      }, '?');
+        return "" + acc + key + "=" + options.params[key] + "&";
+      }, "?");
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
-  } else if (options.method === 'POST') {
+  } else if (options.method === "POST") {
     if (options.body) {
       options.body = JSON.stringify(options.body);
-      options.headers['Content-Type'] = 'application/json';
+      options.headers["Content-Type"] = "application/json";
     }
   }
   console.log("请求选项", options);
   return new Promise(function (resolve, reject) {
     stream.fetch(options, function (response) {
       if (response.ok) {
-        console.log('stream response', response);
+        console.log("stream response", response);
         resolve(response.data);
       } else {
         modal.toast({
-          message: 'Somthing error, ' + response.statusText,
+          message: "Somthing error, " + response.statusText,
           duration: 1
         });
-        console.log('stream reject', response);
+        console.log("stream reject", response);
         reject(response);
       }
     });
@@ -22847,6 +22864,7 @@ var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _weexVueRender2.default.init(_vue2.default);
+
 var App = __webpack_require__(119);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 

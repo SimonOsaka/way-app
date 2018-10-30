@@ -12,6 +12,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "WeexSDKManager.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
+#import "AFNetworking.h"
 
 @interface AppDelegate ()
 @end
@@ -34,6 +35,8 @@
     [self startSplashScreen];
     
     [AMapServices sharedServices].apiKey = @"db0c9dfe7249d031356db49b23cc944a";
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     return YES;
 }

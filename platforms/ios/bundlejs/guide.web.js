@@ -21255,6 +21255,7 @@ var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _weexVueRender2.default.init(_vue2.default);
+
 var App = __webpack_require__(87);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 

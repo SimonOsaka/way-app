@@ -13,6 +13,7 @@
 #import "WXImgLoaderDefaultImpl.h"
 #import "../WeexModule/WXGeoLocationModule.h"
 #import "../WeexModule/WXSafariModule.h"
+#import "../WeexModule/WXNetworkModule.h"
 
 @implementation WeexSDKManager
 
@@ -53,6 +54,7 @@
     
     [WXSDKEngine registerModule:@"location" withClass:[WXGeoLocationModule class]];
     [WXSDKEngine registerModule:@"safari" withClass:[WXSafariModule class]];
+    [WXSDKEngine registerModule:@"network" withClass:[WXNetworkModule class]];
     
     [WXSDKEngine registerHandler:[WXImgLoaderDefaultImpl new] withProtocol:@protocol(WXImgLoaderProtocol)];
     
