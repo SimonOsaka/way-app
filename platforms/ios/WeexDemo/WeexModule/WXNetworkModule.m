@@ -13,8 +13,9 @@
 static NSString* statusString = @"-";
 
 @implementation WXNetworkModule
+@synthesize weexInstance;
 
-WX_EXPORT_METHOD(@selector(getNetworkStatus:))
+WX_EXPORT_METHOD_SYNC(@selector(getNetworkStatus:))
 
 - (void) getNetworkStatus:(WXKeepAliveCallback)callback {
     [self monitorNetworkStatus];

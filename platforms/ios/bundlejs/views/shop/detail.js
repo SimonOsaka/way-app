@@ -637,7 +637,7 @@ function getUrlKey(name) {
 
 /***/ }),
 
-/***/ 10:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -647,7 +647,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(11);
+var _index = __webpack_require__(12);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -660,21 +660,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 11:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(12)
+__vue_styles__.push(__webpack_require__(13)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(13)
+__vue_exports__ = __webpack_require__(14)
 
 /* template */
-var __vue_template__ = __webpack_require__(14)
+var __vue_template__ = __webpack_require__(15)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -702,70 +702,6 @@ if (typeof __register_static_styles__ === "function") {
 
 module.exports = __vue_exports__
 
-
-/***/ }),
-
-/***/ 12:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "wxc-cell": {
-    "flexDirection": "row",
-    "alignItems": "center",
-    "paddingLeft": "24",
-    "paddingRight": "24",
-    "backgroundColor": "#ffffff"
-  },
-  "cell-margin": {
-    "marginBottom": "24"
-  },
-  "cell-title": {
-    "flex": 1
-  },
-  "cell-indent": {
-    "paddingBottom": "30",
-    "paddingTop": "30"
-  },
-  "has-desc": {
-    "paddingBottom": "18",
-    "paddingTop": "18"
-  },
-  "cell-top-border": {
-    "borderTopColor": "#e2e2e2",
-    "borderTopWidth": "1"
-  },
-  "cell-bottom-border": {
-    "borderBottomColor": "#e2e2e2",
-    "borderBottomWidth": "1"
-  },
-  "cell-label-text": {
-    "fontSize": "30",
-    "color": "#666666",
-    "width": "188",
-    "marginRight": "10"
-  },
-  "cell-arrow-icon": {
-    "width": "22",
-    "height": "22"
-  },
-  "cell-content": {
-    "color": "#333333",
-    "fontSize": "30",
-    "lineHeight": "40"
-  },
-  "cell-desc-text": {
-    "color": "#999999",
-    "fontSize": "24",
-    "lineHeight": "30",
-    "marginTop": "4",
-    "marginRight": "30"
-  },
-  "extra-content-text": {
-    "fontSize": "28",
-    "color": "#999999",
-    "marginRight": "4"
-  }
-}
 
 /***/ }),
 
@@ -858,7 +794,7 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcCell = __webpack_require__(10);
+var _wxcCell = __webpack_require__(11);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -1018,6 +954,70 @@ module.exports.render._withStripped = true
 /***/ }),
 
 /***/ 13:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "wxc-cell": {
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingLeft": "24",
+    "paddingRight": "24",
+    "backgroundColor": "#ffffff"
+  },
+  "cell-margin": {
+    "marginBottom": "24"
+  },
+  "cell-title": {
+    "flex": 1
+  },
+  "cell-indent": {
+    "paddingBottom": "30",
+    "paddingTop": "30"
+  },
+  "has-desc": {
+    "paddingBottom": "18",
+    "paddingTop": "18"
+  },
+  "cell-top-border": {
+    "borderTopColor": "#e2e2e2",
+    "borderTopWidth": "1"
+  },
+  "cell-bottom-border": {
+    "borderBottomColor": "#e2e2e2",
+    "borderBottomWidth": "1"
+  },
+  "cell-label-text": {
+    "fontSize": "30",
+    "color": "#666666",
+    "width": "188",
+    "marginRight": "10"
+  },
+  "cell-arrow-icon": {
+    "width": "22",
+    "height": "22"
+  },
+  "cell-content": {
+    "color": "#333333",
+    "fontSize": "30",
+    "lineHeight": "40"
+  },
+  "cell-desc-text": {
+    "color": "#999999",
+    "fontSize": "24",
+    "lineHeight": "30",
+    "marginTop": "4",
+    "marginRight": "30"
+  },
+  "extra-content-text": {
+    "fontSize": "28",
+    "color": "#999999",
+    "marginRight": "4"
+  }
+}
+
+/***/ }),
+
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1203,7 +1203,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1790,6 +1790,12 @@ exports.http = http;
 function http() {
   var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: "网络无连接" });
+    });
+  }
   var DEFAULT_OPTION = {
     method: "GET",
     type: "json", // json、text、jsonp
@@ -1819,12 +1825,12 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?");
+      }, "?appVersion=" + getAppVersion() + '&');
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {
     if (options.body) {
-      options.body = JSON.stringify(options.body);
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
       options.headers["Content-Type"] = "application/json";
     }
   }
@@ -1844,6 +1850,32 @@ function http() {
       }
     });
   });
+}
+
+function checkNetworkStatus() {
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = "";
+  weex.requireModule("version").getAppVersion(function (versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
 }
 
 /***/ }),

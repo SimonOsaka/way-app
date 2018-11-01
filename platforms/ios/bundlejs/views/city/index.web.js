@@ -20873,6 +20873,12 @@ exports.http = http;
 function http() {
   var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: "网络无连接" });
+    });
+  }
   var DEFAULT_OPTION = {
     method: "GET",
     type: "json", // json、text、jsonp
@@ -20902,12 +20908,12 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?");
+      }, "?appVersion=" + getAppVersion() + '&');
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {
     if (options.body) {
-      options.body = JSON.stringify(options.body);
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
       options.headers["Content-Type"] = "application/json";
     }
   }
@@ -20927,6 +20933,32 @@ function http() {
       }
     });
   });
+}
+
+function checkNetworkStatus() {
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = "";
+  weex.requireModule("version").getAppVersion(function (versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -21244,7 +21276,8 @@ if (false) {
 }
 
 /***/ }),
-/* 21 */
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21254,7 +21287,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(22);
+var _index = __webpack_require__(23);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -21266,19 +21299,19 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(23)
+  __webpack_require__(24)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(25),
-  /* template */
   __webpack_require__(26),
+  /* template */
+  __webpack_require__(27),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -21310,13 +21343,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(24);
+var content = __webpack_require__(25);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21336,7 +21369,7 @@ if(false) {
 }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -21350,7 +21383,7 @@ exports.push([module.i, "\n.wxc-cell[data-v-90e34e10] {\n  /*height: 100px;*/\n 
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21535,7 +21568,7 @@ exports.default = {
 //
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -21605,20 +21638,24 @@ if (false) {
 }
 
 /***/ }),
-/* 27 */,
-/* 28 */
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(29)
+  __webpack_require__(34)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(31),
+  __webpack_require__(36),
   /* template */
-  __webpack_require__(32),
+  __webpack_require__(37),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -21650,13 +21687,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 29 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(30);
+var content = __webpack_require__(35);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21676,7 +21713,7 @@ if(false) {
 }
 
 /***/ }),
-/* 30 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -21690,7 +21727,7 @@ exports.push([module.i, "\n.category[data-v-da633efc] {\n  margin-top: 0.26667re
 
 
 /***/ }),
-/* 31 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21729,7 +21766,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 32 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -21754,11 +21791,6 @@ if (false) {
 }
 
 /***/ }),
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
 /* 38 */,
 /* 39 */,
 /* 40 */,
@@ -22621,7 +22653,7 @@ var _utils = __webpack_require__(5);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcCell = __webpack_require__(21);
+var _wxcCell = __webpack_require__(22);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -22637,7 +22669,7 @@ var _utils3 = __webpack_require__(11);
 
 var _http = __webpack_require__(15);
 
-var _category = __webpack_require__(28);
+var _category = __webpack_require__(33);
 
 var _category2 = _interopRequireDefault(_category);
 

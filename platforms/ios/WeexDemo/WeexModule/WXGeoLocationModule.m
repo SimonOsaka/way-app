@@ -69,7 +69,7 @@ WX_EXPORT_METHOD(@selector(getCurrentLocation:))
         //修改label显示内容
         NSString *loc = [NSString stringWithFormat:@"%f,%f", location.coordinate.longitude,location.coordinate.latitude];
         NSLog(@"高德经纬度返回值，%@", loc);
-        callback(loc, false);
+        callback(loc, true);
     };
 }
 

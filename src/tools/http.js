@@ -1,4 +1,10 @@
 export function http(OPTIONS = {}) {
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise((resolve, reject) => {
+      reject({ statusText: "网络无连接" });
+    });
+  }
   let DEFAULT_OPTION = {
     method: "GET",
     type: "json", // json、text、jsonp
@@ -28,13 +34,15 @@ export function http(OPTIONS = {}) {
     if (options.params) {
       let paramStr = Object.keys(options.params).reduce(
         (acc, key) => `${acc}${key}=${options.params[key]}&`,
-        "?"
+        "?appVersion=" + getAppVersion() + '&'
       );
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {
     if (options.body) {
-      options.body = JSON.stringify(options.body);
+      options.body = JSON.stringify(
+        Object.assign(options.body, { appVerion: getAppVersion() })
+      );
       options.headers["Content-Type"] = "application/json";
     }
   }
@@ -54,4 +62,30 @@ export function http(OPTIONS = {}) {
       }
     });
   });
+}
+
+function checkNetworkStatus() {
+  const network = weex.requireModule("network");
+  let ok = true;
+  network.getNetworkStatus(function(statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  let appVertionText = "";
+  weex.requireModule("version").getAppVersion(function(versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
 }

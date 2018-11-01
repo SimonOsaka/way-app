@@ -1,4 +1,5 @@
 <template>
+<div>
   <wxc-tab-bar ref="wxc-tab-bar" :tab-titles="tabTitles" :tab-styles="tabStyles" title-type="iconFont" duration="0" @wxcTabBarCurrentTabSelected="wxcTabBarCurrentTabSelected">
     <div class="item-container" :style="contentStyle">
       <wxc-searchbar class="searchbar" placeholder="输入商品名称" theme="gray" mod="hasDep" :dep-name="city" @wxcSearchbarInputReturned="wxcSearchbarInputOnInput" @wxcSearchbarDepChooseClicked="wxcSearchbarDepChooseClicked"></wxc-searchbar>
@@ -100,11 +101,31 @@
         </wxc-cell>
       </scroller>
     </div>
+
+    <wxc-dialog title="发现新版本"
+                :show="checkAppVersionDialogData.show"
+                :single="checkAppVersionDialogData.single"
+                :cancel-text="checkAppVersionDialogData.cancelText"
+                :confirm-text="checkAppVersionDialogData.confirmText"
+                @wxcDialogCancelBtnClicked="wxcDialogCancelBtnClicked"
+                @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked">
+                <div slot="content">
+                  <div v-for="(item, i) in checkAppVersionDialogData.content" :key="i">{{item}}</div>
+                </div>
+                </wxc-dialog>
   </wxc-tab-bar>
+</div>
 </template>
 
 <script>
-import { WxcSearchbar, Utils, WxcTabBar, WxcCell, WxcButton } from "weex-ui";
+import {
+  WxcSearchbar,
+  Utils,
+  WxcTabBar,
+  WxcCell,
+  WxcButton,
+  WxcDialog
+} from "weex-ui";
 import {
   getEntryUrl,
   postMessage,
@@ -123,9 +144,10 @@ const navigator = weex.requireModule("navigator");
 const storage = weex.requireModule("storage");
 const modal = weex.requireModule("modal");
 const dom = weex.requireModule("dom");
+const version = weex.requireModule("version");
 
 export default {
-  components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton },
+  components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton, WxcDialog },
   data: () => ({
     city: "",
     cellStyle: { backgroundColor: "#ffffff" },
@@ -162,6 +184,15 @@ export default {
       cityCode: "",
       pageNum: 1,
       pageSize: 20
+    },
+    checkAppVersionDialogData: {
+      show: false,
+      single: true,
+      cancelText: "忽略本次升级",
+      confirmText: "升级",
+      content: [],
+      newAppVersion: "",
+      appStoreUrl: ""
     }
   }),
   beforeCreate() {
@@ -169,6 +200,7 @@ export default {
     getStorageVal("way:first").then(
       data => {
         console.log("app非第一次启动，不需要引导");
+        this.checkAppVersion();
       },
       error => {
         console.log("app第一次启动，开启引导");
@@ -669,6 +701,74 @@ export default {
         url: getEntryUrl("views/user/myDiscount"),
         animated: "true"
       });
+    },
+    checkAppVersion() {
+      let _this = this;
+      http({
+        method: "GET",
+        url: "/ios/app/version",
+        headers: {},
+        params: {}
+      }).then(function(data) {
+        console.log("success", data);
+        if (data.code !== 200) {
+          return;
+        }
+        getStorageVal("way:version:check:show").then(
+          ignoreAppVersion => {
+            console.log("忽略的app版本", ignoreAppVersion);
+            if (ignoreAppVersion === data.data.newAppVersion) {
+              console.log("已忽略检查app版本");
+              return;
+            }
+            _this.checkAppVersionDialog(data);
+          },
+          error => {
+            console.log("没有本地检查app版本数据");
+            _this.checkAppVersionDialog(data);
+          }
+        );
+      });
+    },
+    checkAppVersionDialog(data) {
+      console.log("版本弹窗，data", data);
+      const operation = data.data.operation;
+      if (operation === "force" || operation === "notice") {
+        console.log("版本提示", operation);
+        if (operation === "force") {
+          this.checkAppVersionDialogData.single = true;
+        } else if (operation === "notice") {
+          this.checkAppVersionDialogData.single = false;
+        }
+        this.checkAppVersionDialogData.content.push(
+          "新版本 " + data.data.newAppVersion
+        );
+        if (data.data.commentList) {
+          for (var i = 0; i < data.data.commentList.length; i++) {
+            this.checkAppVersionDialogData.content.push(
+              data.data.commentList[i]
+            );
+          }
+        }
+        this.checkAppVersionDialogData.appStoreUrl = data.data.appStoreUrl;
+        this.checkAppVersionDialogData.newAppVersion = data.data.newAppVersion;
+        this.checkAppVersionDialogData.show = true;
+        console.log("开启版本提示");
+      }
+    },
+    wxcDialogConfirmBtnClicked(e) {
+      console.log("去升级");
+      weex.requireModule("appstore").openUrl({
+        url: this.checkAppVersionDialogData.appStoreUrl
+      });
+    },
+    wxcDialogCancelBtnClicked(e) {
+      console.log("忽略本次升级");
+      this.checkAppVersionDialogData.show = false;
+      setStorageVal(
+        "way:version:check:show",
+        this.checkAppVersionDialogData.newAppVersion
+      );
     }
   }
 };

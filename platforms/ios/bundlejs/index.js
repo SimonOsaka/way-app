@@ -1182,6 +1182,12 @@ exports.http = http;
 function http() {
   var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: "网络无连接" });
+    });
+  }
   var DEFAULT_OPTION = {
     method: "GET",
     type: "json", // json、text、jsonp
@@ -1211,12 +1217,12 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?");
+      }, "?appVersion=" + getAppVersion() + '&');
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {
     if (options.body) {
-      options.body = JSON.stringify(options.body);
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
       options.headers["Content-Type"] = "application/json";
     }
   }
@@ -1238,6 +1244,32 @@ function http() {
   });
 }
 
+function checkNetworkStatus() {
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = "";
+  weex.requireModule("version").getAppVersion(function (versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
+}
+
 /***/ }),
 /* 6 */,
 /* 7 */,
@@ -1253,7 +1285,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(11);
+var _index = __webpack_require__(16);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -1268,18 +1300,40 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(12);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(12)
+__vue_styles__.push(__webpack_require__(13)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(13)
+__vue_exports__ = __webpack_require__(14)
 
 /* template */
-var __vue_template__ = __webpack_require__(14)
+var __vue_template__ = __webpack_require__(15)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -1309,7 +1363,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1372,7 +1426,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1557,7 +1611,7 @@ exports.default = {
 //
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1592,11 +1646,208 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(17)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(18)
+
+/* template */
+var __vue_template__ = __webpack_require__(19)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-overlay/index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-389bbc1c"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "wxc-overlay": {
+    "width": "750",
+    "position": "fixed",
+    "left": 0,
+    "top": 0,
+    "bottom": 0,
+    "right": 0
+  }
+}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var animation = weex.requireModule('animation');
+exports.default = {
+  props: {
+    show: {
+      type: Boolean,
+      default: true
+    },
+    hasAnimation: {
+      type: Boolean,
+      default: true
+    },
+    duration: {
+      type: [Number, String],
+      default: 300
+    },
+    timingFunction: {
+      type: Array,
+      default: function _default() {
+        return ['ease-in', 'ease-out'];
+      }
+    },
+    opacity: {
+      type: [Number, String],
+      default: 0.6
+    },
+    canAutoClose: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    overlayStyle: function overlayStyle() {
+      return {
+        opacity: this.hasAnimation ? 0 : 1,
+        backgroundColor: 'rgba(0, 0, 0,' + this.opacity + ')'
+      };
+    },
+    shouldShow: function shouldShow() {
+      var _this = this;
+
+      var show = this.show,
+          hasAnimation = this.hasAnimation;
+
+      hasAnimation && setTimeout(function () {
+        _this.appearOverlay(show);
+      }, 50);
+      return show;
+    }
+  },
+  methods: {
+    overlayClicked: function overlayClicked(e) {
+      this.canAutoClose ? this.appearOverlay(false) : this.$emit('wxcOverlayBodyClicked', {});
+    },
+    appearOverlay: function appearOverlay(bool) {
+      var _this2 = this;
+
+      var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.duration;
+      var hasAnimation = this.hasAnimation,
+          timingFunction = this.timingFunction,
+          canAutoClose = this.canAutoClose;
+
+      var needEmit = !bool && canAutoClose;
+      needEmit && this.$emit('wxcOverlayBodyClicking', {});
+      var overlayEl = this.$refs['wxc-overlay'];
+      if (hasAnimation && overlayEl) {
+        animation.transition(overlayEl, {
+          styles: {
+            opacity: bool ? 1 : 0
+          },
+          duration: duration,
+          timingFunction: timingFunction[bool ? 0 : 1],
+          delay: 0
+        }, function () {
+          needEmit && _this2.$emit('wxcOverlayBodyClicked', {});
+        });
+      } else {
+        needEmit && this.$emit('wxcOverlayBodyClicked', {});
+      }
+    }
+  }
+};
+
+/***/ }),
 /* 19 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [(_vm.show) ? _c('div', {
+    ref: "wxc-overlay",
+    staticClass: ["wxc-overlay"],
+    style: _vm.overlayStyle,
+    attrs: {
+      "hack": _vm.shouldShow
+    },
+    on: {
+      "click": _vm.overlayClicked
+    }
+  }) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1606,7 +1857,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(20);
+var _index = __webpack_require__(24);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -1618,21 +1869,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 20 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(21)
+__vue_styles__.push(__webpack_require__(25)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(22)
+__vue_exports__ = __webpack_require__(26)
 
 /* template */
-var __vue_template__ = __webpack_require__(24)
+var __vue_template__ = __webpack_require__(28)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -1662,7 +1913,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 21 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1683,7 +1934,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 22 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1707,7 +1958,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _type = __webpack_require__(23);
+var _type = __webpack_require__(27);
 
 exports.default = {
   props: {
@@ -1772,7 +2023,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1854,7 +2105,7 @@ var TEXT_FONTSIZE_STYLE_MAP = exports.TEXT_FONTSIZE_STYLE_MAP = {
 };
 
 /***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1876,16 +2127,446 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(30);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(31)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(32)
+
+/* template */
+var __vue_template__ = __webpack_require__(34)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-dialog/index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-b50148dc"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "container": {
+    "position": "fixed",
+    "width": "750",
+    "zIndex": 99999
+  },
+  "dialog-box": {
+    "position": "fixed",
+    "left": "96",
+    "width": "558",
+    "backgroundColor": "#FFFFFF"
+  },
+  "dialog-content": {
+    "paddingTop": "36",
+    "paddingBottom": "36",
+    "paddingLeft": "36",
+    "paddingRight": "36"
+  },
+  "content-title": {
+    "color": "#333333",
+    "fontSize": "36",
+    "textAlign": "center",
+    "marginBottom": "24"
+  },
+  "content-subtext": {
+    "color": "#666666",
+    "fontSize": "26",
+    "lineHeight": "36",
+    "textAlign": "center"
+  },
+  "dialog-footer": {
+    "flexDirection": "row",
+    "alignItems": "center",
+    "borderTopColor": "#F3F3F3",
+    "borderTopWidth": "1"
+  },
+  "footer-btn": {
+    "flexDirection": "row",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "flex": 1,
+    "height": "90"
+  },
+  "cancel": {
+    "borderRightColor": "#F3F3F3",
+    "borderRightWidth": "1"
+  },
+  "btn-text": {
+    "fontSize": "36",
+    "color": "#666666"
+  },
+  "no-prompt": {
+    "width": "486",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "flexDirection": "row",
+    "marginTop": "24"
+  },
+  "no-prompt-icon": {
+    "width": "24",
+    "height": "24",
+    "marginRight": "12"
+  },
+  "no-prompt-text": {
+    "fontSize": "24",
+    "color": "#A5A5A5"
+  }
+}
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _wxcOverlay = __webpack_require__(10);
+
+var _wxcOverlay2 = _interopRequireDefault(_wxcOverlay);
+
+var _type = __webpack_require__(33);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  components: { WxcOverlay: _wxcOverlay2.default },
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    single: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    content: {
+      type: String,
+      default: ''
+    },
+    top: {
+      type: Number,
+      default: 400
+    },
+    cancelText: {
+      type: String,
+      default: '取消'
+    },
+    confirmText: {
+      type: String,
+      default: '确定'
+    },
+    mainBtnColor: {
+      type: String,
+      default: '#EE9900'
+    },
+    secondBtnColor: {
+      type: String,
+      default: '#666666'
+    },
+    showNoPrompt: {
+      type: Boolean,
+      default: false
+    },
+    noPromptText: {
+      type: String,
+      default: '不再提示'
+    },
+    isChecked: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function data() {
+    return {
+      noPromptIcon: _type.UN_CHECKED,
+      pageHeight: 1334
+    };
+  },
+  created: function created() {
+    var _weex$config$env = weex.config.env,
+        deviceHeight = _weex$config$env.deviceHeight,
+        deviceWidth = _weex$config$env.deviceWidth;
+
+    this.pageHeight = deviceHeight / deviceWidth * 750;
+  },
+
+  methods: {
+    secondaryClicked: function secondaryClicked() {
+      this.$emit('wxcDialogCancelBtnClicked', {
+        type: 'cancel'
+      });
+    },
+    primaryClicked: function primaryClicked(e) {
+      this.$emit('wxcDialogConfirmBtnClicked', {
+        type: 'confirm'
+      });
+    },
+    noPromptClicked: function noPromptClicked(e) {
+      var isChecked = !this.isChecked;
+      this.noPromptIcon = isChecked ? _type.CHECKED : _type.UN_CHECKED;
+      this.$emit('wxcDialogNoPromptClicked', { isChecked: isChecked });
+    }
+  }
+};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * CopyRight (C) 2017-2022 Alibaba Group Holding Limited.
+ * Created by Tw93 on 2016/10/29.
+ */
+
+var CHECKED = exports.CHECKED = 'https://gw.alicdn.com/tfs/TB1UT3VpgMPMeJjy1XdXXasrXXa-42-42.png';
+var UN_CHECKED = exports.UN_CHECKED = 'https://gw.alicdn.com/tfs/TB1hE3VpgMPMeJjy1XdXXasrXXa-42-42.png';
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["container"]
+  }, [(_vm.show) ? _c('wxc-overlay', {
+    attrs: {
+      "show": true,
+      "hasAnimation": false
+    }
+  }) : _vm._e(), (_vm.show) ? _c('div', {
+    staticClass: ["dialog-box"],
+    style: {
+      top: _vm.top + 'px'
+    }
+  }, [_c('div', {
+    staticClass: ["dialog-content"]
+  }, [_vm._t("title", [_c('text', {
+    staticClass: ["content-title"]
+  }, [_vm._v(_vm._s(_vm.title))])]), _vm._t("content", [_c('text', {
+    staticClass: ["content-subtext"]
+  }, [_vm._v(_vm._s(_vm.content))])]), (_vm.showNoPrompt) ? _c('div', {
+    staticClass: ["no-prompt"],
+    on: {
+      "click": _vm.noPromptClicked
+    }
+  }, [_c('image', {
+    staticClass: ["no-prompt-icon"],
+    attrs: {
+      "src": _vm.noPromptIcon
+    }
+  }), _c('text', {
+    staticClass: ["no-prompt-text"]
+  }, [_vm._v(_vm._s(_vm.noPromptText))])]) : _vm._e()], 2), _c('div', {
+    staticClass: ["dialog-footer"]
+  }, [(!_vm.single) ? _c('div', {
+    staticClass: ["footer-btn", "cancel"],
+    on: {
+      "click": _vm.secondaryClicked
+    }
+  }, [_c('text', {
+    staticClass: ["btn-text"],
+    style: {
+      color: _vm.secondBtnColor
+    }
+  }, [_vm._v(_vm._s(_vm.cancelText))])]) : _vm._e(), _c('div', {
+    staticClass: ["footer-btn", "confirm"],
+    on: {
+      "click": _vm.primaryClicked
+    }
+  }, [_c('text', {
+    staticClass: ["btn-text"],
+    style: {
+      color: _vm.mainBtnColor
+    }
+  }, [_vm._v(_vm._s(_vm.confirmText))])])])]) : _vm._e()], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
 /* 35 */,
 /* 36 */,
 /* 37 */,
@@ -2709,11 +3390,15 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcButton = __webpack_require__(19);
+var _wxcDialog = __webpack_require__(29);
+
+var _wxcDialog2 = _interopRequireDefault(_wxcDialog);
+
+var _wxcButton = __webpack_require__(23);
 
 var _wxcButton2 = _interopRequireDefault(_wxcButton);
 
-var _wxcCell = __webpack_require__(10);
+var _wxcCell = __webpack_require__(11);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -2840,14 +3525,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var navigator = weex.requireModule("navigator");
 var storage = weex.requireModule("storage");
 var modal = weex.requireModule("modal");
 var dom = weex.requireModule("dom");
+var version = weex.requireModule("version");
 
 exports.default = {
-  components: { WxcSearchbar: _wxcSearchbar2.default, WxcTabBar: _wxcTabBar2.default, WxcCell: _wxcCell2.default, WxcButton: _wxcButton2.default },
+  components: { WxcSearchbar: _wxcSearchbar2.default, WxcTabBar: _wxcTabBar2.default, WxcCell: _wxcCell2.default, WxcButton: _wxcButton2.default, WxcDialog: _wxcDialog2.default },
   data: function data() {
     return {
       city: "",
@@ -2885,13 +3585,25 @@ exports.default = {
         cityCode: "",
         pageNum: 1,
         pageSize: 20
+      },
+      checkAppVersionDialogData: {
+        show: false,
+        single: true,
+        cancelText: "忽略本次升级",
+        confirmText: "升级",
+        content: [],
+        newAppVersion: "",
+        appStoreUrl: ""
       }
     };
   },
   beforeCreate: function beforeCreate() {
+    var _this2 = this;
+
     (0, _utils3.setPageTitle)("首页");
     (0, _utils3.getStorageVal)("way:first").then(function (data) {
       console.log("app非第一次启动，不需要引导");
+      _this2.checkAppVersion();
     }, function (error) {
       console.log("app第一次启动，开启引导");
       navigator.push({
@@ -2901,7 +3613,7 @@ exports.default = {
     });
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     (0, _utils3.initIconfont)();
 
@@ -2932,26 +3644,26 @@ exports.default = {
     (0, _utils3.receiveMessage)("m:way:city", function (data) {
       console.log("接收城市设置完成消息, m:way:city");
       //重新加载main
-      _this2.main.pageNum = 1;
-      _this2.main.queryList = [];
-      _this2.initMainTab();
+      _this3.main.pageNum = 1;
+      _this3.main.queryList = [];
+      _this3.initMainTab();
       //重新加载discount
-      _this2.loadDiscountTabContent();
+      _this3.loadDiscountTabContent();
     });
 
     (0, _utils3.receiveMessage)("m:way:login", function (data) {
       console.log("receive, m:way:login", data);
       if (data.status === 0 && data.val === "success") {
-        _this2.loadMyTabContent();
+        _this3.loadMyTabContent();
       }
     });
 
     (0, _utils3.receiveMessage)("m:way:discount:refresh", function (data) {
       console.log("receiveMessage, m:way:discount:refresh", data);
       if (data.status === 0) {
-        _this2.discountPageNum = 1;
-        _this2.discountList = [];
-        _this2.fetchDiscount();
+        _this3.discountPageNum = 1;
+        _this3.discountList = [];
+        _this3.fetchDiscount();
       }
     });
 
@@ -2995,29 +3707,29 @@ exports.default = {
 
   methods: {
     initMainTab: function initMainTab() {
-      var _this3 = this;
+      var _this4 = this;
 
       console.log("初始化initMainTab");
       (0, _utils3.getStorageVal)("way:city").then(function (data) {
         console.log("way:city", data);
         var cityObj = JSON.parse(data);
         (0, _utils3.modalDebug)("返回城市对象", data);
-        _this3.main.queryListNoDataShow = false;
-        _this3.main.noDataTip = "没有查询到结果";
-        _this3.main.needLocation = false;
+        _this4.main.queryListNoDataShow = false;
+        _this4.main.noDataTip = "没有查询到结果";
+        _this4.main.needLocation = false;
 
-        _this3.city = cityObj.name;
-        _this3.main.clientLng = cityObj.lng;
-        _this3.main.clientLat = cityObj.lat;
-        _this3.main.cityCode = cityObj.cityCode;
-        console.log("城市", _this3.city, _this3.main);
-        _this3.searchbarHttp();
+        _this4.city = cityObj.name;
+        _this4.main.clientLng = cityObj.lng;
+        _this4.main.clientLat = cityObj.lat;
+        _this4.main.cityCode = cityObj.cityCode;
+        console.log("城市", _this4.city, _this4.main);
+        _this4.searchbarHttp();
       }, function (err) {
         console.log("way:city", err);
-        _this3.main.queryListNoDataShow = true;
-        _this3.main.noDataTip = "我需要你的位置信息";
-        _this3.main.needLocation = true;
-        _this3.city = "我在哪...";
+        _this4.main.queryListNoDataShow = true;
+        _this4.main.noDataTip = "我需要你的位置信息";
+        _this4.main.needLocation = true;
+        _this4.city = "我在哪...";
       });
     },
     wxcTabBarCurrentTabSelected: function wxcTabBarCurrentTabSelected(e) {
@@ -3046,7 +3758,7 @@ exports.default = {
       }
     },
     loadDiscountTabContent: function loadDiscountTabContent() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.discountList.splice(0, this.discountList.length);
       this.discountPageNum = 1;
@@ -3055,24 +3767,24 @@ exports.default = {
         console.log("加载discount tab后", user);
         // this.discountRealUserLoginId = user.userLoginId;
         // this.userToken = user.userToken;
-        _this4.fetchDiscount();
+        _this5.fetchDiscount();
       }, function (error) {
-        _this4.discountRealUserLoginId = 0;
-        _this4.fetchDiscount();
+        _this5.discountRealUserLoginId = 0;
+        _this5.fetchDiscount();
       });
     },
     loadMyTabContent: function loadMyTabContent() {
-      var _this5 = this;
+      var _this6 = this;
 
       console.log("加载my tab");
       (0, _utils3.getStorageVal)("way:user").then(function (data) {
         var user = JSON.parse(data);
         console.log("加载my tab后", user);
-        _this5.my.nickname = user.userNickName;
-        _this5.my.userLoginId = user.userLoginId;
-        _this5.my.userToken = user.userToken;
+        _this6.my.nickname = user.userNickName;
+        _this6.my.userLoginId = user.userLoginId;
+        _this6.my.userToken = user.userToken;
       }, function (error) {
-        _this5.my.userLoginId = 0;
+        _this6.my.userLoginId = 0;
       });
     },
     wxcSearchbarDepChooseClicked: function wxcSearchbarDepChooseClicked() {
@@ -3085,7 +3797,7 @@ exports.default = {
       this.searchbarHttp();
     },
     fetchDiscount: function fetchDiscount() {
-      var _this6 = this;
+      var _this7 = this;
 
       var _this = this;
       (0, _utils3.getStorageVal)("way:city").then(function (data) {
@@ -3095,7 +3807,7 @@ exports.default = {
         _this.discountCityCode = city.cityCode;
         _this.fetchDiscountHttp();
       }, function (e) {
-        _this6.$refs["wxc-tab-bar"].setPage(0);
+        _this7.$refs["wxc-tab-bar"].setPage(0);
         navigator.push({
           url: (0, _utils3.getEntryUrl)("views/city/index"),
           animated: "true"
@@ -3103,7 +3815,7 @@ exports.default = {
       });
     },
     fetchDiscountHttp: function fetchDiscountHttp() {
-      var _this7 = this;
+      var _this8 = this;
 
       var _this = this;
       (0, _http.http)({
@@ -3124,9 +3836,9 @@ exports.default = {
         if (data.code != 200) {
           return;
         }
-        _this7.discountInit = true;
+        _this8.discountInit = true;
 
-        _this7.discountPageNum++;
+        _this8.discountPageNum++;
 
         var discountDataList = data.data;
 
@@ -3369,6 +4081,64 @@ exports.default = {
         url: (0, _utils3.getEntryUrl)("views/user/myDiscount"),
         animated: "true"
       });
+    },
+    checkAppVersion: function checkAppVersion() {
+      var _this = this;
+      (0, _http.http)({
+        method: "GET",
+        url: "/ios/app/version",
+        headers: {},
+        params: {}
+      }).then(function (data) {
+        console.log("success", data);
+        if (data.code !== 200) {
+          return;
+        }
+        (0, _utils3.getStorageVal)("way:version:check:show").then(function (ignoreAppVersion) {
+          console.log("忽略的app版本", ignoreAppVersion);
+          if (ignoreAppVersion === data.data.newAppVersion) {
+            console.log("已忽略检查app版本");
+            return;
+          }
+          _this.checkAppVersionDialog(data);
+        }, function (error) {
+          console.log("没有本地检查app版本数据");
+          _this.checkAppVersionDialog(data);
+        });
+      });
+    },
+    checkAppVersionDialog: function checkAppVersionDialog(data) {
+      console.log("版本弹窗，data", data);
+      var operation = data.data.operation;
+      if (operation === "force" || operation === "notice") {
+        console.log("版本提示", operation);
+        if (operation === "force") {
+          this.checkAppVersionDialogData.single = true;
+        } else if (operation === "notice") {
+          this.checkAppVersionDialogData.single = false;
+        }
+        this.checkAppVersionDialogData.content.push("新版本 " + data.data.newAppVersion);
+        if (data.data.commentList) {
+          for (var i = 0; i < data.data.commentList.length; i++) {
+            this.checkAppVersionDialogData.content.push(data.data.commentList[i]);
+          }
+        }
+        this.checkAppVersionDialogData.appStoreUrl = data.data.appStoreUrl;
+        this.checkAppVersionDialogData.newAppVersion = data.data.newAppVersion;
+        this.checkAppVersionDialogData.show = true;
+        console.log("开启版本提示");
+      }
+    },
+    wxcDialogConfirmBtnClicked: function wxcDialogConfirmBtnClicked(e) {
+      console.log("去升级");
+      weex.requireModule("appstore").openUrl({
+        url: this.checkAppVersionDialogData.appStoreUrl
+      });
+    },
+    wxcDialogCancelBtnClicked: function wxcDialogCancelBtnClicked(e) {
+      console.log("忽略本次升级");
+      this.checkAppVersionDialogData.show = false;
+      (0, _utils3.setStorageVal)("way:version:check:show", this.checkAppVersionDialogData.newAppVersion);
     }
   }
 };
@@ -3916,7 +4686,7 @@ exports.default = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('wxc-tab-bar', {
+  return _c('div', [_c('wxc-tab-bar', {
     ref: "wxc-tab-bar",
     attrs: {
       "tabTitles": _vm.tabTitles,
@@ -4314,7 +5084,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "wxcButtonClicked": _vm.logoutClicked
     }
-  })], 1)]) : _vm._e()], 1)])])
+  })], 1)]) : _vm._e()], 1)]), _c('wxc-dialog', {
+    attrs: {
+      "title": "发现新版本",
+      "show": _vm.checkAppVersionDialogData.show,
+      "single": _vm.checkAppVersionDialogData.single,
+      "cancelText": _vm.checkAppVersionDialogData.cancelText,
+      "confirmText": _vm.checkAppVersionDialogData.confirmText
+    },
+    on: {
+      "wxcDialogCancelBtnClicked": _vm.wxcDialogCancelBtnClicked,
+      "wxcDialogConfirmBtnClicked": _vm.wxcDialogConfirmBtnClicked
+    }
+  }, [_c('div', {
+    attrs: {
+      "slot": "content"
+    },
+    slot: "content"
+  }, _vm._l((_vm.checkAppVersionDialogData.content), function(item, i) {
+    return _c('div', {
+      key: i
+    }, [_vm._v(_vm._s(item))])
+  }))])], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 

@@ -637,7 +637,7 @@ function getUrlKey(name) {
 
 /***/ }),
 
-/***/ 10:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -647,7 +647,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(11);
+var _index = __webpack_require__(12);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -660,21 +660,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 11:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(12)
+__vue_styles__.push(__webpack_require__(13)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(13)
+__vue_exports__ = __webpack_require__(14)
 
 /* template */
-var __vue_template__ = __webpack_require__(14)
+var __vue_template__ = __webpack_require__(15)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -705,7 +705,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -769,7 +769,228 @@ module.exports = {
 
 /***/ }),
 
-/***/ 13:
+/***/ 137:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(138)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(139)
+
+/* template */
+var __vue_template__ = __webpack_require__(140)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/myDiscount.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-e40037b2"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
+/***/ 138:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "fontFamily": "iconfont",
+    "fontSize": "32",
+    "fontStyle": "normal"
+  },
+  "image": {
+    "width": "140",
+    "height": "140",
+    "marginRight": "10",
+    "borderRadius": "10"
+  },
+  "c_name": {
+    "paddingLeft": "20"
+  },
+  "c_money": {
+    "color": "#FF0000"
+  },
+  "red": {
+    "color": "#FF0000"
+  },
+  "c_real": {
+    "fontSize": "24"
+  }
+}
+
+/***/ }),
+
+/***/ 139:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _wxcCell = __webpack_require__(11);
+
+var _wxcCell2 = _interopRequireDefault(_wxcCell);
+
+var _utils3 = __webpack_require__(1);
+
+var _http = __webpack_require__(5);
+
+var _navbar = __webpack_require__(6);
+
+var _navbar2 = _interopRequireDefault(_navbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var navigator = weex.requireModule('navigator');
+
+exports.default = {
+    components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
+    data: function data() {
+        return {
+            discount: {
+                list: [],
+                pageNum: 1,
+                pageSize: 10
+            },
+            my: {
+                userLoginId: 0,
+                userToken: ''
+            },
+            noData: false,
+            scrollerStyle: {
+                width: '750px'
+            }
+        };
+    },
+    beforeCreate: function beforeCreate() {
+        (0, _utils3.setPageTitle)('我发布的优惠信息');
+    },
+    created: function created() {
+        var _this2 = this;
+
+        (0, _utils3.initIconfont)();
+        var pageHeight = _utils2.default.env.getPageHeight();
+        var screenHeight = _utils2.default.env.getScreenHeight();
+        this.scrollerStyle = {
+            height: pageHeight + 'px',
+            marginTop: screenHeight - pageHeight + 'px'
+        };
+        (0, _utils3.getStorageVal)('way:user').then(function (data) {
+            var user = JSON.parse(data);
+            _this2.my.userLoginId = user.userLoginId;
+            _this2.my.userToken = user.userToken;
+            _this2.getDiscountList();
+        }, function (error) {
+            _this2.my.userLoginId = 0;
+            navigator.pop();
+        });
+    },
+
+    methods: {
+        loadMore: function loadMore(event) {
+            this.getDiscountList();
+        },
+        discountScrollHandler: function discountScrollHandler(e) {
+            console.log(e.contentOffset.y);
+        },
+        getDiscountList: function getDiscountList() {
+            console.log('加载优惠信息列表');
+            var _this = this;
+            (0, _http.http)({
+                method: 'POST',
+                url: '/discount/user',
+                headers: {
+                    token: this.my.userToken
+                },
+                body: {
+                    realUserLoginId: this.my.userLoginId,
+                    pageNum: this.discount.pageNum++,
+                    pageSize: this.discount.pageSize
+                }
+            }).then(function (data) {
+                if (data.code != 200) {
+                    return;
+                }
+
+                if (data.data.length !== 0) {
+                    data.data.forEach(function (discount) {
+                        _this.discount.list.push(discount);
+                    });
+                }
+                _this.noData = _this.discount.list.length === 0;
+            });
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -955,263 +1176,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ 137:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(138)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(139)
-
-/* template */
-var __vue_template__ = __webpack_require__(140)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/myDiscount.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-e40037b2"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-module.exports.el = 'true'
-new Vue(module.exports)
-
-
-/***/ }),
-
-/***/ 138:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "fontFamily": "iconfont",
-    "fontSize": "32",
-    "fontStyle": "normal"
-  },
-  "image": {
-    "width": "140",
-    "height": "140",
-    "marginRight": "10",
-    "borderRadius": "10"
-  },
-  "c_name": {
-    "paddingLeft": "20"
-  },
-  "c_money": {
-    "color": "#FF0000"
-  },
-  "red": {
-    "color": "#FF0000"
-  },
-  "c_real": {
-    "fontSize": "24"
-  }
-}
-
-/***/ }),
-
-/***/ 139:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _utils = __webpack_require__(0);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _wxcCell = __webpack_require__(10);
-
-var _wxcCell2 = _interopRequireDefault(_wxcCell);
-
-var _utils3 = __webpack_require__(1);
-
-var _http = __webpack_require__(5);
-
-var _navbar = __webpack_require__(6);
-
-var _navbar2 = _interopRequireDefault(_navbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var navigator = weex.requireModule('navigator');
-
-exports.default = {
-    components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
-    data: function data() {
-        return {
-            discount: {
-                list: [],
-                pageNum: 1,
-                pageSize: 10
-            },
-            my: {
-                userLoginId: 0,
-                userToken: ''
-            },
-            noData: false,
-            scrollerStyle: {
-                width: '750px'
-            }
-        };
-    },
-    beforeCreate: function beforeCreate() {
-        (0, _utils3.setPageTitle)('我发布的优惠信息');
-    },
-    created: function created() {
-        var _this2 = this;
-
-        (0, _utils3.initIconfont)();
-        var pageHeight = _utils2.default.env.getPageHeight();
-        var screenHeight = _utils2.default.env.getScreenHeight();
-        this.scrollerStyle = {
-            height: pageHeight + 'px',
-            marginTop: screenHeight - pageHeight + 'px'
-        };
-        (0, _utils3.getStorageVal)('way:user').then(function (data) {
-            var user = JSON.parse(data);
-            _this2.my.userLoginId = user.userLoginId;
-            _this2.my.userToken = user.userToken;
-            _this2.getDiscountList();
-        }, function (error) {
-            _this2.my.userLoginId = 0;
-            navigator.pop();
-        });
-    },
-
-    methods: {
-        loadMore: function loadMore(event) {
-            this.getDiscountList();
-        },
-        discountScrollHandler: function discountScrollHandler(e) {
-            console.log(e.contentOffset.y);
-        },
-        getDiscountList: function getDiscountList() {
-            console.log('加载优惠信息列表');
-            var _this = this;
-            (0, _http.http)({
-                method: 'POST',
-                url: '/discount/user',
-                headers: {
-                    token: this.my.userToken
-                },
-                body: {
-                    realUserLoginId: this.my.userLoginId,
-                    pageNum: this.discount.pageNum++,
-                    pageSize: this.discount.pageSize
-                }
-            }).then(function (data) {
-                if (data.code != 200) {
-                    return;
-                }
-
-                if (data.data.length !== 0) {
-                    data.data.forEach(function (discount) {
-                        _this.discount.list.push(discount);
-                    });
-                }
-                _this.noData = _this.discount.list.length === 0;
-            });
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 14:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    class: ['wxc-cell', _vm.hasTopBorder && 'cell-top-border', _vm.hasBottomBorder && 'cell-bottom-border', _vm.hasMargin && 'cell-margin', _vm.hasVerticalIndent && 'cell-indent', _vm.desc && 'has-desc'],
-    style: _vm.cellStyle,
-    attrs: {
-      "accessible": _vm.autoAccessible,
-      "ariaLabel": (_vm.label + "," + _vm.title + "," + _vm.desc)
-    },
-    on: {
-      "click": _vm.cellClicked
-    }
-  }, [_vm._t("label", [(_vm.label) ? _c('div', [_c('text', {
-    staticClass: ["cell-label-text"]
-  }, [_vm._v(_vm._s(_vm.label))])]) : _vm._e()]), _c('div', {
-    staticClass: ["cell-title"]
-  }, [_vm._t("title", [_c('text', {
-    staticClass: ["cell-content"]
-  }, [_vm._v(_vm._s(_vm.title))]), (_vm.desc) ? _c('text', {
-    staticClass: ["cell-desc-text"]
-  }, [_vm._v(_vm._s(_vm.desc))]) : _vm._e()])], 2), _vm._t("value"), _vm._t("default"), (_vm.extraContent) ? _c('text', {
-    staticClass: ["extra-content-text"]
-  }, [_vm._v(_vm._s(_vm.extraContent))]) : _vm._e(), (_vm.hasArrow) ? _c('image', {
-    staticClass: ["cell-arrow-icon"],
-    attrs: {
-      "src": _vm.arrowIcon,
-      "ariaHidden": true
-    }
-  }) : _vm._e()], 2)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-
 /***/ 140:
 /***/ (function(module, exports) {
 
@@ -1318,6 +1282,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       color: "#cccccc"
     }
   }, [_vm._v(" 未发布优惠信息 ")])])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 15:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    class: ['wxc-cell', _vm.hasTopBorder && 'cell-top-border', _vm.hasBottomBorder && 'cell-bottom-border', _vm.hasMargin && 'cell-margin', _vm.hasVerticalIndent && 'cell-indent', _vm.desc && 'has-desc'],
+    style: _vm.cellStyle,
+    attrs: {
+      "accessible": _vm.autoAccessible,
+      "ariaLabel": (_vm.label + "," + _vm.title + "," + _vm.desc)
+    },
+    on: {
+      "click": _vm.cellClicked
+    }
+  }, [_vm._t("label", [(_vm.label) ? _c('div', [_c('text', {
+    staticClass: ["cell-label-text"]
+  }, [_vm._v(_vm._s(_vm.label))])]) : _vm._e()]), _c('div', {
+    staticClass: ["cell-title"]
+  }, [_vm._t("title", [_c('text', {
+    staticClass: ["cell-content"]
+  }, [_vm._v(_vm._s(_vm.title))]), (_vm.desc) ? _c('text', {
+    staticClass: ["cell-desc-text"]
+  }, [_vm._v(_vm._s(_vm.desc))]) : _vm._e()])], 2), _vm._t("value"), _vm._t("default"), (_vm.extraContent) ? _c('text', {
+    staticClass: ["extra-content-text"]
+  }, [_vm._v(_vm._s(_vm.extraContent))]) : _vm._e(), (_vm.hasArrow) ? _c('image', {
+    staticClass: ["cell-arrow-icon"],
+    attrs: {
+      "src": _vm.arrowIcon,
+      "ariaHidden": true
+    }
+  }) : _vm._e()], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -1874,6 +1874,12 @@ exports.http = http;
 function http() {
   var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: "网络无连接" });
+    });
+  }
   var DEFAULT_OPTION = {
     method: "GET",
     type: "json", // json、text、jsonp
@@ -1903,12 +1909,12 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?");
+      }, "?appVersion=" + getAppVersion() + '&');
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {
     if (options.body) {
-      options.body = JSON.stringify(options.body);
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
       options.headers["Content-Type"] = "application/json";
     }
   }
@@ -1928,6 +1934,32 @@ function http() {
       }
     });
   });
+}
+
+function checkNetworkStatus() {
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = "";
+  weex.requireModule("version").getAppVersion(function (versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
 }
 
 /***/ }),

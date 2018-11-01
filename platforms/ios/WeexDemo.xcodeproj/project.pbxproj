@@ -18,6 +18,8 @@
 		6E1DC2972186D33E001807A4 /* WXGeoLocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC2962186D33E001807A4 /* WXGeoLocationModule.m */; };
 		6E1DC29B21870823001807A4 /* WXSafariModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29A21870823001807A4 /* WXSafariModule.m */; };
 		6E1DC29E21886316001807A4 /* WXNetworkModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29D21886316001807A4 /* WXNetworkModule.m */; };
+		6E4DB5342189B27000E2968C /* WXVersionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DB5332189B27000E2968C /* WXVersionModule.m */; };
+		6E4DB537218ABA3D00E2968C /* WXAppStoreModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DB536218ABA3D00E2968C /* WXAppStoreModule.m */; };
 		775BEE801C1E8ECC008D1629 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 775BEE7F1C1E8ECC008D1629 /* main.m */; };
 		775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 775BEE821C1E8ECC008D1629 /* AppDelegate.m */; };
 		775BEE8B1C1E8ECC008D1629 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 775BEE8A1C1E8ECC008D1629 /* Assets.xcassets */; };
@@ -69,6 +71,10 @@
 		6E1DC29A21870823001807A4 /* WXSafariModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXSafariModule.m; sourceTree = "<group>"; };
 		6E1DC29C218862FA001807A4 /* WXNetworkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXNetworkModule.h; sourceTree = "<group>"; };
 		6E1DC29D21886316001807A4 /* WXNetworkModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXNetworkModule.m; sourceTree = "<group>"; };
+		6E4DB5322189B26200E2968C /* WXVersionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXVersionModule.h; sourceTree = "<group>"; };
+		6E4DB5332189B27000E2968C /* WXVersionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXVersionModule.m; sourceTree = "<group>"; };
+		6E4DB535218ABA2C00E2968C /* WXAppStoreModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXAppStoreModule.h; sourceTree = "<group>"; };
+		6E4DB536218ABA3D00E2968C /* WXAppStoreModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXAppStoreModule.m; sourceTree = "<group>"; };
 		7453E3641C9FA971001EB427 /* DemoDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoDefine.h; sourceTree = "<group>"; };
 		7475ACA01CD8444A0044E96C /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		775BEE7B1C1E8ECC008D1629 /* WeexDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeexDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +178,10 @@
 				6E1DC29A21870823001807A4 /* WXSafariModule.m */,
 				6E1DC29C218862FA001807A4 /* WXNetworkModule.h */,
 				6E1DC29D21886316001807A4 /* WXNetworkModule.m */,
+				6E4DB5322189B26200E2968C /* WXVersionModule.h */,
+				6E4DB5332189B27000E2968C /* WXVersionModule.m */,
+				6E4DB535218ABA2C00E2968C /* WXAppStoreModule.h */,
+				6E4DB536218ABA3D00E2968C /* WXAppStoreModule.m */,
 			);
 			path = WeexModule;
 			sourceTree = "<group>";
@@ -533,7 +543,9 @@
 				0A3122AF1E1F41E30041B972 /* WeexSDKManager.m in Sources */,
 				6E1DC29E21886316001807A4 /* WXNetworkModule.m in Sources */,
 				6E1DC2972186D33E001807A4 /* WXGeoLocationModule.m in Sources */,
+				6E4DB5342189B27000E2968C /* WXVersionModule.m in Sources */,
 				0A4A05FA1E0405070046E1BE /* WXDemoViewController.m in Sources */,
+				6E4DB537218ABA3D00E2968C /* WXAppStoreModule.m in Sources */,
 				775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */,
 				0A4A05F91E0405070046E1BE /* UIViewController+WXDemoNaviBar.m in Sources */,
 				775BEE801C1E8ECC008D1629 /* main.m in Sources */,
