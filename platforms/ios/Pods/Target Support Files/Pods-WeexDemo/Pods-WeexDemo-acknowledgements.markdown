@@ -34,6 +34,14 @@ Copyright © 2014 AutoNavi. All Rights Reserved.
 Copyright © 2014 AutoNavi. All Rights Reserved.
 
 
+## JCore
+
+Copyright jpush.cn
+
+## JPush
+
+Copyright jiguang.cn
+
 ## SDWebImage
 
 Copyright (c) 2009 Olivier Poitrey <rs@dailymotion.com>
@@ -75,6 +83,11 @@ THE SOFTWARE.
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+
+## WechatOpenSDK
+
+Copyright 2018 tencent.com. All rights reserved.
 
 
 ## WeexPluginLoader

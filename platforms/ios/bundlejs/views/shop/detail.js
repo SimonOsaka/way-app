@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 125);
+/******/ 	return __webpack_require__(__webpack_require__.s = 127);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -705,21 +705,21 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 125:
+/***/ 127:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(126)
+__vue_styles__.push(__webpack_require__(128)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(127)
+__vue_exports__ = __webpack_require__(129)
 
 /* template */
-var __vue_template__ = __webpack_require__(128)
+var __vue_template__ = __webpack_require__(130)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -752,7 +752,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 126:
+/***/ 128:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -780,7 +780,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 127:
+/***/ 129:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -894,65 +894,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ 128:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('navbar', {
-    attrs: {
-      "title": "商家详情",
-      "backgroundColor": "#45b5f0",
-      "height": "88"
-    }
-  }), _c('scroller', {
-    staticClass: ["scroller"],
-    style: _vm.scrollerStyle
-  }, [_c('div', {
-    staticStyle: {
-      flexDirection: "column",
-      alignItems: "center",
-      justiceContent: "center",
-      paddingTop: "10px",
-      paddingBottom: "10px"
-    }
-  }, [_c('image', {
-    staticClass: ["image_shop"],
-    attrs: {
-      "src": _vm.shop.shopLogoUrl
-    }
-  }), _c('text', {
-    staticClass: ["text_shop"]
-  }, [_vm._v(_vm._s(_vm.shop.shopName))])]), _c('div', {
-    staticStyle: {
-      marginTop: "10px"
-    }
-  }, [_c('wxc-cell', {
-    attrs: {
-      "label": "商家地址：",
-      "title": _vm.shop.shopAddress,
-      "hasArrow": false,
-      "hasBottomBorder": true
-    }
-  }), _c('wxc-cell', {
-    attrs: {
-      "label": "商家电话：",
-      "title": _vm.shop.shopTel,
-      "hasArrow": false,
-      "hasBottomBorder": true
-    }
-  }), _c('wxc-cell', {
-    attrs: {
-      "label": "营业时间：",
-      "title": _vm.shop.shopBusinessTimeAll,
-      "hasArrow": false,
-      "hasBottomBorder": true
-    }
-  })], 1)])], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-
 /***/ 13:
 /***/ (function(module, exports) {
 
@@ -1014,6 +955,65 @@ module.exports = {
     "marginRight": "4"
   }
 }
+
+/***/ }),
+
+/***/ 130:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('navbar', {
+    attrs: {
+      "title": "商家详情",
+      "backgroundColor": "#45b5f0",
+      "height": "88"
+    }
+  }), _c('scroller', {
+    staticClass: ["scroller"],
+    style: _vm.scrollerStyle
+  }, [_c('div', {
+    staticStyle: {
+      flexDirection: "column",
+      alignItems: "center",
+      justiceContent: "center",
+      paddingTop: "10px",
+      paddingBottom: "10px"
+    }
+  }, [_c('image', {
+    staticClass: ["image_shop"],
+    attrs: {
+      "src": _vm.shop.shopLogoUrl
+    }
+  }), _c('text', {
+    staticClass: ["text_shop"]
+  }, [_vm._v(_vm._s(_vm.shop.shopName))])]), _c('div', {
+    staticStyle: {
+      marginTop: "10px"
+    }
+  }, [_c('wxc-cell', {
+    attrs: {
+      "label": "商家地址：",
+      "title": _vm.shop.shopAddress,
+      "hasArrow": false,
+      "hasBottomBorder": true
+    }
+  }), _c('wxc-cell', {
+    attrs: {
+      "label": "商家电话：",
+      "title": _vm.shop.shopTel,
+      "hasArrow": false,
+      "hasBottomBorder": true
+    }
+  }), _c('wxc-cell', {
+    attrs: {
+      "label": "营业时间：",
+      "title": _vm.shop.shopBusinessTimeAll,
+      "hasArrow": false,
+      "hasBottomBorder": true
+    }
+  })], 1)])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -1806,18 +1806,8 @@ function http() {
   var stream = weex.requireModule("stream");
   var platform = weex.config.env.platform.toLowerCase();
 
-  var apiRoot = void 0;
-  if (platform === "web") {
-    apiRoot = "http://api.jicu.vip"; //window.location.origin.replace(':8081', '')
-  } else {
-    if (process.env === "test") {
-      // 测试环境域名
-      apiRoot = window.location.origin.replace(":8081", ""); //'http://your.dev.domain.com'
-    } else {
-      // 正式环境域名
-      apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-    }
-  }
+  // 正式环境域名
+  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
 
   var options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
@@ -1825,7 +1815,7 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?appVersion=" + getAppVersion() + '&');
+      }, "?appVersion=" + getAppVersion() + "&");
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {

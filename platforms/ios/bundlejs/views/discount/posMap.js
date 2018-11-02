@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 121);
+/******/ 	return __webpack_require__(__webpack_require__.s = 123);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -637,21 +637,21 @@ function getUrlKey(name) {
 
 /***/ }),
 
-/***/ 121:
+/***/ 123:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(122)
+__vue_styles__.push(__webpack_require__(124)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(123)
+__vue_exports__ = __webpack_require__(125)
 
 /* template */
-var __vue_template__ = __webpack_require__(124)
+var __vue_template__ = __webpack_require__(126)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -684,7 +684,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 122:
+/***/ 124:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -699,7 +699,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 123:
+/***/ 125:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -773,7 +773,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 124:
+/***/ 126:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1363,18 +1363,8 @@ function http() {
   var stream = weex.requireModule("stream");
   var platform = weex.config.env.platform.toLowerCase();
 
-  var apiRoot = void 0;
-  if (platform === "web") {
-    apiRoot = "http://api.jicu.vip"; //window.location.origin.replace(':8081', '')
-  } else {
-    if (process.env === "test") {
-      // 测试环境域名
-      apiRoot = window.location.origin.replace(":8081", ""); //'http://your.dev.domain.com'
-    } else {
-      // 正式环境域名
-      apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-    }
-  }
+  // 正式环境域名
+  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
 
   var options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
@@ -1382,7 +1372,7 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?appVersion=" + getAppVersion() + '&');
+      }, "?appVersion=" + getAppVersion() + "&");
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {

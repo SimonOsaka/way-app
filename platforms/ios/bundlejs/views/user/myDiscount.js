@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 137);
+/******/ 	return __webpack_require__(__webpack_require__.s = 139);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -769,21 +769,21 @@ module.exports = {
 
 /***/ }),
 
-/***/ 137:
+/***/ 139:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(138)
+__vue_styles__.push(__webpack_require__(140)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(139)
+__vue_exports__ = __webpack_require__(141)
 
 /* template */
-var __vue_template__ = __webpack_require__(140)
+var __vue_template__ = __webpack_require__(142)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -813,180 +813,6 @@ module.exports = __vue_exports__
 module.exports.el = 'true'
 new Vue(module.exports)
 
-
-/***/ }),
-
-/***/ 138:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "fontFamily": "iconfont",
-    "fontSize": "32",
-    "fontStyle": "normal"
-  },
-  "image": {
-    "width": "140",
-    "height": "140",
-    "marginRight": "10",
-    "borderRadius": "10"
-  },
-  "c_name": {
-    "paddingLeft": "20"
-  },
-  "c_money": {
-    "color": "#FF0000"
-  },
-  "red": {
-    "color": "#FF0000"
-  },
-  "c_real": {
-    "fontSize": "24"
-  }
-}
-
-/***/ }),
-
-/***/ 139:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _utils = __webpack_require__(0);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _wxcCell = __webpack_require__(11);
-
-var _wxcCell2 = _interopRequireDefault(_wxcCell);
-
-var _utils3 = __webpack_require__(1);
-
-var _http = __webpack_require__(5);
-
-var _navbar = __webpack_require__(6);
-
-var _navbar2 = _interopRequireDefault(_navbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var navigator = weex.requireModule('navigator');
-
-exports.default = {
-    components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
-    data: function data() {
-        return {
-            discount: {
-                list: [],
-                pageNum: 1,
-                pageSize: 10
-            },
-            my: {
-                userLoginId: 0,
-                userToken: ''
-            },
-            noData: false,
-            scrollerStyle: {
-                width: '750px'
-            }
-        };
-    },
-    beforeCreate: function beforeCreate() {
-        (0, _utils3.setPageTitle)('我发布的优惠信息');
-    },
-    created: function created() {
-        var _this2 = this;
-
-        (0, _utils3.initIconfont)();
-        var pageHeight = _utils2.default.env.getPageHeight();
-        var screenHeight = _utils2.default.env.getScreenHeight();
-        this.scrollerStyle = {
-            height: pageHeight + 'px',
-            marginTop: screenHeight - pageHeight + 'px'
-        };
-        (0, _utils3.getStorageVal)('way:user').then(function (data) {
-            var user = JSON.parse(data);
-            _this2.my.userLoginId = user.userLoginId;
-            _this2.my.userToken = user.userToken;
-            _this2.getDiscountList();
-        }, function (error) {
-            _this2.my.userLoginId = 0;
-            navigator.pop();
-        });
-    },
-
-    methods: {
-        loadMore: function loadMore(event) {
-            this.getDiscountList();
-        },
-        discountScrollHandler: function discountScrollHandler(e) {
-            console.log(e.contentOffset.y);
-        },
-        getDiscountList: function getDiscountList() {
-            console.log('加载优惠信息列表');
-            var _this = this;
-            (0, _http.http)({
-                method: 'POST',
-                url: '/discount/user',
-                headers: {
-                    token: this.my.userToken
-                },
-                body: {
-                    realUserLoginId: this.my.userLoginId,
-                    pageNum: this.discount.pageNum++,
-                    pageSize: this.discount.pageSize
-                }
-            }).then(function (data) {
-                if (data.code != 200) {
-                    return;
-                }
-
-                if (data.data.length !== 0) {
-                    data.data.forEach(function (discount) {
-                        _this.discount.list.push(discount);
-                    });
-                }
-                _this.noData = _this.discount.list.length === 0;
-            });
-        }
-    }
-};
 
 /***/ }),
 
@@ -1177,6 +1003,180 @@ exports.default = {
 /***/ }),
 
 /***/ 140:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "fontFamily": "iconfont",
+    "fontSize": "32",
+    "fontStyle": "normal"
+  },
+  "image": {
+    "width": "140",
+    "height": "140",
+    "marginRight": "10",
+    "borderRadius": "10"
+  },
+  "c_name": {
+    "paddingLeft": "20"
+  },
+  "c_money": {
+    "color": "#FF0000"
+  },
+  "red": {
+    "color": "#FF0000"
+  },
+  "c_real": {
+    "fontSize": "24"
+  }
+}
+
+/***/ }),
+
+/***/ 141:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _wxcCell = __webpack_require__(11);
+
+var _wxcCell2 = _interopRequireDefault(_wxcCell);
+
+var _utils3 = __webpack_require__(1);
+
+var _http = __webpack_require__(5);
+
+var _navbar = __webpack_require__(6);
+
+var _navbar2 = _interopRequireDefault(_navbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var navigator = weex.requireModule('navigator');
+
+exports.default = {
+    components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
+    data: function data() {
+        return {
+            discount: {
+                list: [],
+                pageNum: 1,
+                pageSize: 10
+            },
+            my: {
+                userLoginId: 0,
+                userToken: ''
+            },
+            noData: false,
+            scrollerStyle: {
+                width: '750px'
+            }
+        };
+    },
+    beforeCreate: function beforeCreate() {
+        (0, _utils3.setPageTitle)('我发布的优惠信息');
+    },
+    created: function created() {
+        var _this2 = this;
+
+        (0, _utils3.initIconfont)();
+        var pageHeight = _utils2.default.env.getPageHeight();
+        var screenHeight = _utils2.default.env.getScreenHeight();
+        this.scrollerStyle = {
+            height: pageHeight + 'px',
+            marginTop: screenHeight - pageHeight + 'px'
+        };
+        (0, _utils3.getStorageVal)('way:user').then(function (data) {
+            var user = JSON.parse(data);
+            _this2.my.userLoginId = user.userLoginId;
+            _this2.my.userToken = user.userToken;
+            _this2.getDiscountList();
+        }, function (error) {
+            _this2.my.userLoginId = 0;
+            navigator.pop();
+        });
+    },
+
+    methods: {
+        loadMore: function loadMore(event) {
+            this.getDiscountList();
+        },
+        discountScrollHandler: function discountScrollHandler(e) {
+            console.log(e.contentOffset.y);
+        },
+        getDiscountList: function getDiscountList() {
+            console.log('加载优惠信息列表');
+            var _this = this;
+            (0, _http.http)({
+                method: 'POST',
+                url: '/discount/user',
+                headers: {
+                    token: this.my.userToken
+                },
+                body: {
+                    realUserLoginId: this.my.userLoginId,
+                    pageNum: this.discount.pageNum++,
+                    pageSize: this.discount.pageSize
+                }
+            }).then(function (data) {
+                if (data.code != 200) {
+                    return;
+                }
+
+                if (data.data.length !== 0) {
+                    data.data.forEach(function (discount) {
+                        _this.discount.list.push(discount);
+                    });
+                }
+                _this.noData = _this.discount.list.length === 0;
+            });
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 142:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1890,18 +1890,8 @@ function http() {
   var stream = weex.requireModule("stream");
   var platform = weex.config.env.platform.toLowerCase();
 
-  var apiRoot = void 0;
-  if (platform === "web") {
-    apiRoot = "http://api.jicu.vip"; //window.location.origin.replace(':8081', '')
-  } else {
-    if (process.env === "test") {
-      // 测试环境域名
-      apiRoot = window.location.origin.replace(":8081", ""); //'http://your.dev.domain.com'
-    } else {
-      // 正式环境域名
-      apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-    }
-  }
+  // 正式环境域名
+  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
 
   var options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
@@ -1909,7 +1899,7 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?appVersion=" + getAppVersion() + '&');
+      }, "?appVersion=" + getAppVersion() + "&");
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {

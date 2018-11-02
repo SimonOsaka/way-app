@@ -12,7 +12,7 @@
 @implementation WXAppStoreModule
 @synthesize weexInstance;
 
-WX_EXPORT_METHOD_SYNC(@selector(openUrl:))
+WX_EXPORT_METHOD(@selector(openUrl:))
 
 - (void) openUrl:(NSString*)url {
     NSLog(@"苹果商店url: %@", url);

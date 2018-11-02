@@ -15,18 +15,8 @@ export function http(OPTIONS = {}) {
   const stream = weex.requireModule("stream");
   const platform = weex.config.env.platform.toLowerCase();
 
-  let apiRoot;
-  if (platform === "web") {
-    apiRoot = "http://api.jicu.vip"; //window.location.origin.replace(':8081', '')
-  } else {
-    if (process.env === "test") {
-      // 测试环境域名
-      apiRoot = window.location.origin.replace(":8081", ""); //'http://your.dev.domain.com'
-    } else {
-      // 正式环境域名
-      apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-    }
-  }
+  // 正式环境域名
+  let apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
 
   let options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
@@ -34,7 +24,7 @@ export function http(OPTIONS = {}) {
     if (options.params) {
       let paramStr = Object.keys(options.params).reduce(
         (acc, key) => `${acc}${key}=${options.params[key]}&`,
-        "?appVersion=" + getAppVersion() + '&'
+        "?appVersion=" + getAppVersion() + "&"
       );
       options.url = options.url.concat(paramStr).slice(0, -1);
     }

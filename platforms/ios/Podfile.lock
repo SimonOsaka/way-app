@@ -17,10 +17,14 @@ PODS:
   - AMapFoundation-NO-IDFA (1.5.5)
   - AMapLocation-NO-IDFA (2.6.1):
     - AMapFoundation-NO-IDFA (~> 1.4)
+  - JCore (1.2.5)
+  - JPush (3.1.1):
+    - JCore (~> 1.2.0)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
   - SocketRocket (0.4.2)
+  - WechatOpenSDK (1.8.3)
   - WeexPluginLoader (0.0.1.9.1):
     - WeexSDK
   - WeexSDK (0.18.0.3)
@@ -28,18 +32,23 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - AMapLocation-NO-IDFA
+  - JPush (= 3.1.1)
   - SDWebImage (= 3.7.5)
   - SocketRocket (= 0.4.2)
+  - WechatOpenSDK
   - WeexPluginLoader
-  - WeexSDK
+  - WeexSDK (= 0.18.0.3)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - AMapFoundation-NO-IDFA
     - AMapLocation-NO-IDFA
+    - JCore
+    - JPush
     - SDWebImage
     - SocketRocket
+    - WechatOpenSDK
     - WeexPluginLoader
     - WeexSDK
 
@@ -47,11 +56,14 @@ SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   AMapFoundation-NO-IDFA: a09d8cef57c10d4f841595829a574bcea67fc323
   AMapLocation-NO-IDFA: ffd69b8b88f553d0b252d4967bf301ad2afff9c0
+  JCore: 14706de2640b25fb77dbd02332696491407f37c9
+  JPush: fe916067d4b87553a2fb9edd6dd72c026a0e0686
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
+  WechatOpenSDK: 3117412f8aafde4758cac1e8d20b93c67cafcfef
   WeexPluginLoader: 85c1304f8ba29864e58531614a0acfeceef1b85c
   WeexSDK: 173541f2d0042664168b305952398145c0c6039c
 
-PODFILE CHECKSUM: de4a96bb86878437eb6d87946c0e8ed3963f96db
+PODFILE CHECKSUM: 3882030620d9fdddbba13b16658e0b7da1517e89
 
 COCOAPODS: 1.5.3

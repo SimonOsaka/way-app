@@ -76,6 +76,11 @@ const plugins = [
     banner: '// { "framework": "Vue"} \n',
     raw: true,
     exclude: 'Vue'
+  }),
+  new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': 'common'
+    }
   })
 ];
 

@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 106);
+/******/ 	return __webpack_require__(__webpack_require__.s = 107);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1198,18 +1198,8 @@ function http() {
   var stream = weex.requireModule("stream");
   var platform = weex.config.env.platform.toLowerCase();
 
-  var apiRoot = void 0;
-  if (platform === "web") {
-    apiRoot = "http://api.jicu.vip"; //window.location.origin.replace(':8081', '')
-  } else {
-    if (process.env === "test") {
-      // 测试环境域名
-      apiRoot = window.location.origin.replace(":8081", ""); //'http://your.dev.domain.com'
-    } else {
-      // 正式环境域名
-      apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-    }
-  }
+  // 正式环境域名
+  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
 
   var options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
@@ -1217,7 +1207,7 @@ function http() {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
         return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?appVersion=" + getAppVersion() + '&');
+      }, "?appVersion=" + getAppVersion() + "&");
       options.url = options.url.concat(paramStr).slice(0, -1);
     }
   } else if (options.method === "POST") {
@@ -3476,21 +3466,22 @@ function initAllCateImg() {
 /* 103 */,
 /* 104 */,
 /* 105 */,
-/* 106 */
+/* 106 */,
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(107)
+__vue_styles__.push(__webpack_require__(108)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(108)
+__vue_exports__ = __webpack_require__(109)
 
 /* template */
-var __vue_template__ = __webpack_require__(120)
+var __vue_template__ = __webpack_require__(122)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3522,7 +3513,7 @@ new Vue(module.exports)
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3550,7 +3541,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3564,7 +3555,7 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcNoticebar = __webpack_require__(109);
+var _wxcNoticebar = __webpack_require__(110);
 
 var _wxcNoticebar2 = _interopRequireDefault(_wxcNoticebar);
 
@@ -3572,7 +3563,7 @@ var _wxcMask = __webpack_require__(36);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
-var _wxcCountdown = __webpack_require__(115);
+var _wxcCountdown = __webpack_require__(116);
 
 var _wxcCountdown2 = _interopRequireDefault(_wxcCountdown);
 
@@ -3598,9 +3589,11 @@ var _image = __webpack_require__(52);
 
 var _http = __webpack_require__(5);
 
+var _discount = __webpack_require__(121);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var navigator = weex.requireModule('navigator'); //
+//
 //
 //
 //
@@ -3695,8 +3688,11 @@ var navigator = weex.requireModule('navigator'); //
 //
 //
 
-var modal = weex.requireModule('modal');
-var safari = weex.requireModule('safari');
+var navigator = weex.requireModule("navigator");
+var modal = weex.requireModule("modal");
+var safari = weex.requireModule("safari");
+var weixin = weex.requireModule("weixin");
+var globalEvent = weex.requireModule("globalEvent");
 
 exports.default = {
   components: {
@@ -3711,34 +3707,34 @@ exports.default = {
   data: function data() {
     return {
       priceCellStyle: {
-        height: '106px',
-        backgroundColor: '#E61414',
-        paddingTop: '10px',
-        paddingBottom: '10px',
+        height: "106px",
+        backgroundColor: "#E61414",
+        paddingTop: "10px",
+        paddingBottom: "10px",
         paddingRight: 0
       },
       cellStyle: {},
-      secondCellStyle: { paddingTop: '0' },
+      secondCellStyle: { paddingTop: "0" },
       discountObj: {
         id: 0,
-        cPicUrl: '',
-        cName: '',
-        cPrice: '',
-        position: '',
-        staticMapUrl: ''
+        cPicUrl: "",
+        cName: "",
+        cPrice: "",
+        position: "",
+        staticMapUrl: ""
       },
       discountReal: {
-        real: '',
-        unreal: '',
-        highlight: ''
+        real: "",
+        unreal: "",
+        highlight: ""
       },
       isAutoShow: false,
       show: false,
       realUserLoginId: 0,
-      realUserToken: '',
+      realUserToken: "",
       expiredShow: false,
       weixinStyle: {
-        fontSize: '64px'
+        fontSize: "64px"
       }
     };
   },
@@ -3746,33 +3742,41 @@ exports.default = {
     (0, _utils3.initIconfont)();
     var pageHeight = _utils2.default.env.getPageHeight();
     var screenHeight = _utils2.default.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' };
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + "px" };
   },
   created: function created() {
     var _this2 = this;
 
-    console.log('created in...');
+    console.log("created in...");
     // this.discountObj.id = getUrlKey('discountId')
-    (0, _utils3.getStorageVal)('way:discount:id').then(function (data) {
+    (0, _utils3.getStorageVal)("way:discount:id").then(function (data) {
       _this2.discountObj.id = data;
-      console.log('获取地址栏参数', _this2.discountObj.id);
+      console.log("获取地址栏参数", _this2.discountObj.id);
       if (!_this2.discountObj.id) {
         navigator.pop();
         return;
       }
 
-      (0, _utils3.getStorageVal)('way:user').then(function (data) {
+      (0, _utils3.getStorageVal)("way:user").then(function (data) {
         var user = JSON.parse(data);
         _this2.realUserLoginId = user.userLoginId;
         _this2.realUserToken = user.userToken;
-        console.log('realUserLoginId=', _this2.realUserLoginId);
+        console.log("realUserLoginId=", _this2.realUserLoginId);
         _this2.discountDetailHttp();
       }, function (error) {
         _this2.discountDetailHttp();
       });
+
+      globalEvent.addEventListener("weixinCallback", function (data) {
+        console.log("微信分享优惠详情callback的结果", data);
+        modal.toast({
+          message: "分享成功",
+          duration: 1
+        });
+      });
     });
 
-    console.log('created out...');
+    console.log("created out...");
   },
 
   methods: {
@@ -3783,32 +3787,41 @@ exports.default = {
       this.isAutoShow = true;
     },
     weixinClicked: function weixinClicked() {
-      console.log('weixin clicked...');
-      // this.show = true
-      safari.openSafariUrl('http://h5.jicu.vip/views/discount/detail.html?discountId=' + this.discountObj.id);
+      console.log("weixin clicked...");
+      (0, _discount.getWeixinShareWebpage)({
+        discountId: this.discountObj.id,
+        shareType: "session"
+      }).then(function (resp) {
+        if (resp.code !== 200) {
+          return;
+        }
+        var weixinParams = resp.data;
+        console.log("微信分享优惠详情，请求参数", weixinParams);
+        weixin.shareWebpage(weixinParams);
+      });
     },
     wxcDialogConfirmBtnClicked: function wxcDialogConfirmBtnClicked() {
       this.show = false;
     },
     discountDetailHttp: function discountDetailHttp() {
       var _this = this;
-      console.log('realUserLoginId', this.realUserLoginId);
+      console.log("realUserLoginId", this.realUserLoginId);
       (0, _http.http)({
-        method: 'GET',
-        url: '/discount/getDetail',
+        method: "GET",
+        url: "/discount/getDetail",
         headers: {
-          token: this.realUserToken || ''
+          token: this.realUserToken || ""
         },
         params: {
           discountId: this.discountObj.id,
           realUserLoginId: this.realUserLoginId
         }
       }).then(function (data) {
-        console.log('success', data);
+        console.log("success", data);
         if (data.code != 200) {
           navigator.push({
-            url: (0, _utils3.getEntryUrl)('404'),
-            animated: 'true'
+            url: (0, _utils3.getEntryUrl)("404"),
+            animated: "true"
           });
           return;
         }
@@ -3818,15 +3831,15 @@ exports.default = {
 
         if (discountDetail.commodityPrice >= 0) {
           var strPrice = discountDetail.commodityPrice.toString();
-          var dotPos = strPrice.indexOf('.');
+          var dotPos = strPrice.indexOf(".");
           if (dotPos != -1) {
             _this.discountObj.lPrice = strPrice.slice(0, dotPos);
             _this.discountObj.rPrice = strPrice.slice(dotPos);
           } else {
             _this.discountObj.lPrice = strPrice;
-            console.log('商品价格', _this.discountObj.lPrice);
+            console.log("商品价格", _this.discountObj.lPrice);
           }
-          // _this.discountObj.cPrice = discountDetail.commodityPrice;
+          _this.discountObj.cPrice = discountDetail.commodityPrice;
         }
         _this.discountObj.position = discountDetail.shopPosition;
         _this.discountObj.cCate = discountDetail.commodityCate;
@@ -3839,34 +3852,34 @@ exports.default = {
         _this.discountObj.commodityUnreal = discountDetail.commodityUnreal;
         _this.discountObj.realType = discountDetail.realType;
         _this.discountReal = {
-          real: discountDetail.commodityReal > 0 ? discountDetail.commodityReal : '好评',
-          unreal: discountDetail.commodityUnreal > 0 ? discountDetail.commodityUnreal : '差评',
-          highlight: discountDetail.realType == 0 ? 'real' : discountDetail.realType == 1 ? 'unreal' : ''
+          real: discountDetail.commodityReal > 0 ? discountDetail.commodityReal : "好评",
+          unreal: discountDetail.commodityUnreal > 0 ? discountDetail.commodityUnreal : "差评",
+          highlight: discountDetail.realType == 0 ? "real" : discountDetail.realType == 1 ? "unreal" : ""
         };
 
         (0, _utils3.setPageTitle)(_this.discountObj.cName);
         (0, _utils3.setOgImage)(_this.discountObj.commodityImageUrl);
       }, function (error) {
-        console.error('failure', error);
+        console.error("failure", error);
       });
     },
     increaseReal: function increaseReal(operate, realType) {
       var _this = this;
-      (0, _utils3.getStorageVal)('way:user').then(function (data) {
+      (0, _utils3.getStorageVal)("way:user").then(function (data) {
         var user = JSON.parse(data);
         var realUserLoginId = user.userLoginId;
         var userToken = user.userToken;
         var discountId = _this.discountObj.id;
         var url = void 0;
-        if (operate == 'increase') {
-          url = '/discount/real/increase';
-        } else if (operate == 'decrease') {
-          url = '/discount/real/decrease';
+        if (operate == "increase") {
+          url = "/discount/real/increase";
+        } else if (operate == "decrease") {
+          url = "/discount/real/decrease";
         } else {
           return;
         }
         (0, _http.http)({
-          method: 'POST',
+          method: "POST",
           url: url,
           headers: {
             token: userToken
@@ -3886,75 +3899,78 @@ exports.default = {
           }
 
           var discountRealItem = data.data;
-          var realCount = discountRealItem.discountReal == 0 ? '好评' : discountRealItem.discountReal;
+          var realCount = discountRealItem.discountReal == 0 ? "好评" : discountRealItem.discountReal;
 
-          var unrealCount = discountRealItem.discountUnReal == 0 ? '差评' : discountRealItem.discountUnReal;
+          var unrealCount = discountRealItem.discountUnReal == 0 ? "差评" : discountRealItem.discountUnReal;
 
           _this.discountReal = {
             real: realCount,
             unreal: unrealCount,
-            highlight: operate == 'increase' ? realType : ''
+            highlight: operate == "increase" ? realType : ""
           };
         });
       }, function (error) {
         navigator.push({
-          url: (0, _utils3.getEntryUrl)('views/user/login'),
-          animated: 'true'
+          url: (0, _utils3.getEntryUrl)("views/user/login"),
+          animated: "true"
         });
       });
     },
     clickIncreaseReal: function clickIncreaseReal() {
-      this.increaseReal('increase', 'real');
+      this.increaseReal("increase", "real");
     },
     clickDecreaseReal: function clickDecreaseReal() {
-      this.increaseReal('decrease', 'real');
+      this.increaseReal("decrease", "real");
     },
     clickIncreaseUnreal: function clickIncreaseUnreal() {
-      this.increaseReal('increase', 'unreal');
+      this.increaseReal("increase", "unreal");
     },
     clickDecreaseUnreal: function clickDecreaseUnreal() {
-      this.increaseReal('decrease', 'unreal');
+      this.increaseReal("decrease", "unreal");
     },
     clickStaticMap: function clickStaticMap() {
-      console.log('click static map');
-      var dest = this.discountObj.shopLng + ',' + this.discountObj.shopLat;
-      console.log('dest', dest);
+      console.log("click static map");
+      var dest = this.discountObj.shopLng + "," + this.discountObj.shopLat;
+      console.log("dest", dest);
       var destName = encodeURIComponent(this.discountObj.position);
-      console.log('destName', destName);
-      (0, _utils3.getStorageVal)('way:city').then(function (data) {
+      console.log("destName", destName);
+      (0, _utils3.getStorageVal)("way:city").then(function (data) {
         var city = JSON.parse(data);
-        var start = city.lng + ',' + city.lat;
+        var start = city.lng + "," + city.lat;
 
-        console.log('city', city, 'start', start);
-        var discountMapUrl = 'https://m.amap.com/navi/?start=' + start + '&dest=' + dest + '&destName=' + destName + '&naviBy=walk&key=e318d250a2b4d53d864f7d712cc069da';
+        console.log("city", city, "start", start);
+        var discountMapUrl = "https://m.amap.com/navi/?start=" + start + "&dest=" + dest + "&destName=" + destName + "&naviBy=walk&key=e318d250a2b4d53d864f7d712cc069da";
 
-        console.log('discount map url', discountMapUrl);
-        (0, _utils3.setStorageVal)('way:discount:mapUrl', discountMapUrl);
+        console.log("discount map url", discountMapUrl);
+        (0, _utils3.setStorageVal)("way:discount:mapUrl", discountMapUrl);
 
         navigator.push({
-          url: (0, _utils3.getEntryUrl)('views/discount/posMap'),
-          animated: 'true'
+          url: (0, _utils3.getEntryUrl)("views/discount/posMap"),
+          animated: "true"
         });
       }, function (err) {
-        var discountMapUrl = 'https://m.amap.com/navi/?dest=' + dest + '&destName=' + destName + '&key=e318d250a2b4d53d864f7d712cc069da';
+        var discountMapUrl = "https://m.amap.com/navi/?dest=" + dest + "&destName=" + destName + "&key=e318d250a2b4d53d864f7d712cc069da";
 
-        (0, _utils3.setStorageVal)('way:discount:mapUrl', discountMapUrl);
+        (0, _utils3.setStorageVal)("way:discount:mapUrl", discountMapUrl);
 
         navigator.push({
-          url: (0, _utils3.getEntryUrl)('views/discount/posMap'),
-          animated: 'true'
+          url: (0, _utils3.getEntryUrl)("views/discount/posMap"),
+          animated: "true"
         });
       });
     },
     expiredOnCompleted: function expiredOnCompleted() {
-      console.log('优惠已结束');
+      console.log("优惠已结束");
       this.expiredShow = true;
     }
+  },
+  destroyed: function destroyed() {
+    globalEvent.removeEventListener("weixinCallback");
   }
 };
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3964,7 +3980,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(110);
+var _index = __webpack_require__(111);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -3976,21 +3992,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(111)
+__vue_styles__.push(__webpack_require__(112)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(112)
+__vue_exports__ = __webpack_require__(113)
 
 /* template */
-var __vue_template__ = __webpack_require__(114)
+var __vue_template__ = __webpack_require__(115)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -4020,7 +4036,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -4061,7 +4077,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4071,7 +4087,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(113);
+var _type = __webpack_require__(114);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -4251,7 +4267,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4277,7 +4293,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4319,7 +4335,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4329,7 +4345,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(116);
+var _index = __webpack_require__(117);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -4341,21 +4357,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(117)
+__vue_styles__.push(__webpack_require__(118)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(118)
+__vue_exports__ = __webpack_require__(119)
 
 /* template */
-var __vue_template__ = __webpack_require__(119)
+var __vue_template__ = __webpack_require__(120)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -4385,7 +4401,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -4396,7 +4412,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4627,7 +4643,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4700,7 +4716,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 120 */
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getWeixinShareWebpage = getWeixinShareWebpage;
+
+var _http = __webpack_require__(5);
+
+function getWeixinShareWebpage(params) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/weixin/webpage/discount",
+    headers: {},
+    body: params
+  });
+}
+
+/***/ }),
+/* 122 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

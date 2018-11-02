@@ -16,6 +16,7 @@
 #import "../WeexModule/WXNetworkModule.h"
 #import "../WeexModule/WXVersionModule.h"
 #import "../WeexModule/WXAppStoreModule.h"
+#import "../WeexModule/WXWeixinModule.h"
 
 @implementation WeexSDKManager
 
@@ -59,6 +60,7 @@
     [WXSDKEngine registerModule:@"network" withClass:[WXNetworkModule class]];
     [WXSDKEngine registerModule:@"version" withClass:[WXVersionModule class]];
     [WXSDKEngine registerModule:@"appstore" withClass:[WXAppStoreModule class]];
+    [WXSDKEngine registerModule:@"weixin" withClass:[WXWeixinModule class]];
     
     [WXSDKEngine registerHandler:[WXImgLoaderDefaultImpl new] withProtocol:@protocol(WXImgLoaderProtocol)];
     

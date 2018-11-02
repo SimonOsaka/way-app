@@ -145,6 +145,7 @@ const storage = weex.requireModule("storage");
 const modal = weex.requireModule("modal");
 const dom = weex.requireModule("dom");
 const version = weex.requireModule("version");
+const appstore = weex.requireModule("appstore");
 
 export default {
   components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton, WxcDialog },
@@ -703,6 +704,7 @@ export default {
       });
     },
     checkAppVersion() {
+      console.log("开始app版本检查");
       let _this = this;
       http({
         method: "GET",
@@ -758,9 +760,7 @@ export default {
     },
     wxcDialogConfirmBtnClicked(e) {
       console.log("去升级");
-      weex.requireModule("appstore").openUrl({
-        url: this.checkAppVersionDialogData.appStoreUrl
-      });
+      appstore.openUrl(this.checkAppVersionDialogData.appStoreUrl);
     },
     wxcDialogCancelBtnClicked(e) {
       console.log("忽略本次升级");

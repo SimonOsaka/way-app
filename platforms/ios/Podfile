@@ -3,12 +3,14 @@ platform :ios, '8.0'
 #inhibit_all_warnings!
 
 def common
-	pod 'WeexSDK'
+	pod 'WeexSDK', '0.18.0.3'
     pod 'WeexPluginLoader'
     pod 'SDWebImage', '3.7.5'
     pod 'SocketRocket', '0.4.2'
-    pod 'AMapLocation-NO-IDFA' #无IDFA版定位 SDK 
+    pod 'AMapLocation-NO-IDFA' #高德地图，无IDFA版定位 SDK 
     pod 'AFNetworking', '~> 3.0' #网络
+    pod 'WechatOpenSDK' #微信SDK
+    pod 'JPush', '3.1.1' #极光推送
 end
 
 target 'WeexDemo' do

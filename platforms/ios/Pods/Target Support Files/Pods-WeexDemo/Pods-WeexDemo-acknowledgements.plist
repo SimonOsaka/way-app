@@ -65,6 +65,26 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright jpush.cn</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>JCore</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright jiguang.cn</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>JPush</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Copyright (c) 2009 Olivier Poitrey &lt;rs@dailymotion.com&gt;
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -115,6 +135,17 @@ THE SOFTWARE.
 			<string>Apache License, Version 2.0</string>
 			<key>Title</key>
 			<string>SocketRocket</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright 2018 tencent.com. All rights reserved.
+</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>WechatOpenSDK</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
