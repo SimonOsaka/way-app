@@ -140,12 +140,14 @@ import {
 } from "./tools/utils.js";
 import tabbarConfig from "./entry/tabbar/config.js";
 import { http } from "./tools/http.js";
+import { syncUserDevice } from "./api/user.js";
 const navigator = weex.requireModule("navigator");
 const storage = weex.requireModule("storage");
 const modal = weex.requireModule("modal");
 const dom = weex.requireModule("dom");
 const version = weex.requireModule("version");
 const appstore = weex.requireModule("appstore");
+const dictionary = weex.requireModule("dictionary");
 
 export default {
   components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton, WxcDialog },
@@ -202,6 +204,7 @@ export default {
       data => {
         console.log("app非第一次启动，不需要引导");
         this.checkAppVersion();
+        this.requestSyncUserDevice();
       },
       error => {
         console.log("app第一次启动，开启引导");
@@ -216,28 +219,6 @@ export default {
     initIconfont();
 
     this.initMainTab();
-    // getStorageVal("way:tab:selectedIndex").then(
-    //   index => {
-    //     this.switchTabContent(index);
-    //     this.$refs["wxc-tab-bar"].setPage(index);
-    //   },
-    //   error => {}
-    // );
-    // alert("外面");
-    // receiveMessage('way:tab:selectedIndex').then(data => {
-    //   console.log('接收消息selectedIndex', data)
-    //   // alert("里面");
-    //   if (data.val) {
-    //     // alert("tab1");
-    //     let index = data.val
-    //     this.switchTabContent(index)
-    //     this.$refs['wxc-tab-bar'].setPage(index)
-    //   } else {
-    //     // alert("tab0");
-    //     console.log('tab0初始化')
-    //     this.initMainTab()
-    //   }
-    // })
 
     receiveMessage("m:way:city", data => {
       console.log("接收城市设置完成消息, m:way:city");
@@ -253,6 +234,7 @@ export default {
       console.log("receive, m:way:login", data);
       if (data.status === 0 && data.val === "success") {
         this.loadMyTabContent();
+        this.requestSyncUserDevice();
       }
     });
 
@@ -769,6 +751,41 @@ export default {
         "way:version:check:show",
         this.checkAppVersionDialogData.newAppVersion
       );
+    },
+    requestSyncUserDevice() {
+      getStorageVal("way:user").then(data => {
+        let longitude = 0;
+        let latitude = 0;
+        dictionary.getDict("longitude", function(resp) {
+          console.log("获取iOS native经度", resp);
+          longitude = resp;
+        });
+        dictionary.getDict("latitude", function(resp) {
+          console.log("获取iOS native纬度", resp);
+          latitude = resp;
+        });
+        let deviceToken = "";
+        dictionary.getDict('deviceToken', function(resp) {
+          console.log("首页-获取iOS deviceToken", resp);
+          deviceToken = resp;
+        });
+        let jpushRegId = "";
+        dictionary.getDict('jpushRegId', function(resp) {
+          console.log("首页-获取iOS jpushRegId", resp);
+          jpushRegId = resp;
+        });
+        const user = JSON.parse(data);
+        const userLoginId = user.userLoginId;
+        const syncParams = {
+          userLoginId: userLoginId,
+          deviceToken: deviceToken,
+          jpushRegId: jpushRegId,
+          latitude: latitude,
+          longitude: longitude
+        };
+        console.log("首页-syncUserDevice", syncParams);
+        syncUserDevice(syncParams);
+      });
     }
   }
 };

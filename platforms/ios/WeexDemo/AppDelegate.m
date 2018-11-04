@@ -14,6 +14,8 @@
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "AFNetworking.h"
 #import "WXApiManager.h"
+#import "GlobalDict.h"
+#import "AMap/AMapManager.h"
 
 // 引入 JPush 功能所需头文件
 #import "JPUSHService.h"
@@ -45,6 +47,7 @@
     [self startSplashScreen];
     
     [AMapServices sharedServices].apiKey = @"db0c9dfe7249d031356db49b23cc944a";
+    [AMapManager start];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
@@ -73,7 +76,12 @@
                           channel:@"jicu_ios"
                  apsForProduction:NO
             ];
-    
+#if DEBUG
+    [[GlobalDict shared] addDict:@"gogogo" key:@"deviceToken"];
+    [[GlobalDict shared] addDict:@"kingkong" key:@"jpushRegId"];
+    [[GlobalDict shared] addDict:@"latitude" key:@"36.489342"];
+    [[GlobalDict shared] addDict:@"longitude" key:@"116.938920"];
+#endif
     return YES;
 }
 
@@ -149,9 +157,12 @@
     NSLog(@"设备deviceToken：%@", deviceToken);
     /// Required - 注册 DeviceToken
     [JPUSHService registerDeviceToken:deviceToken];
+    NSString* deviceTokenString = [[NSString alloc] initWithData:deviceToken encoding:NSUTF8StringEncoding];
+    [[GlobalDict shared] addDict:deviceTokenString key:@"deviceToken"];
     
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
         NSLog(@"获取resCode : %d,registrationID: %@",resCode,registrationID);
+        [[GlobalDict shared] addDict:registrationID key:@"jpushRegId"];
     }];
 }
 

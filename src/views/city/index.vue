@@ -18,59 +18,62 @@
 </template>
 
 <script>
-import { WxcSearchbar, WxcCell, Utils } from 'weex-ui'
-import navbar from "../../include/navbar.vue"
+import { WxcSearchbar, WxcCell, Utils } from "weex-ui";
+import navbar from "../../include/navbar.vue";
 import {
   postMessage,
   getStorageVal,
   setPageTitle,
   getEntryUrl,
-setStorageVal
-} from '../../tools/utils.js'
-import { http } from '../../tools/http.js'
-import category from '../../components/category.vue'
-const navigator = weex.requireModule('navigator')
-const location = weex.requireModule('location')
+  setStorageVal
+} from "../../tools/utils.js";
+import { http } from "../../tools/http.js";
+import category from "../../components/category.vue";
+const navigator = weex.requireModule("navigator");
+const dictionary = weex.requireModule("dictionary");
 
 export default {
   components: { WxcSearchbar, WxcCell, category, navbar },
   data: () => ({
     searchList: [],
-    keywords: '',
+    keywords: "",
     alwaysShowCancel: false,
-    returnKeyType: 'done',
+    returnKeyType: "done",
     inputTimeout: null,
-    currentAddress: '',
+    currentAddress: "",
     city: {}
   }),
   beforeCreate() {
-    setPageTitle('选择城市')
-    location.getCurrentLocation(function(resp) {
-      console.log('获取iOS native经纬度', resp)
-    })
+    setPageTitle("选择城市");
+    dictionary.getDict("longitude", function(resp) {
+      console.log("获取iOS native经度", resp);
+    });
+    dictionary.getDict("latitude", function(resp) {
+      console.log("获取iOS native纬度", resp);
+    });
   },
   methods: {
     wxcIndexlistItemClicked(i) {
-      console.log(i)
-      let rs = this.searchList[i]
-      this.city = { name: rs.addressTitle }
-      this.regeo(rs.addressLocation)
+      console.log(i);
+      let rs = this.searchList[i];
+      this.city = { name: rs.addressTitle };
+      this.regeo(rs.addressLocation);
     },
     wxcSearchbarInputOnInput(e) {
-      this.keywords = e.value
+      this.keywords = e.value;
       if (this.inputTimeout) {
-        clearTimeout(this.inputTimeout)
+        clearTimeout(this.inputTimeout);
       }
-      let _this = this
+      let _this = this;
       this.inputTimeout = setTimeout(() => {
-        this.inputTipsFetch()
-      }, 500)
+        this.inputTipsFetch();
+      }, 500);
     },
     inputTipsFetch() {
-      let _this = this
+      let _this = this;
       http({
-        method: 'POST',
-        url: '/amap/inputtips',
+        method: "POST",
+        url: "/amap/inputtips",
         headers: {},
         body: {
           keywords: this.keywords
@@ -78,28 +81,28 @@ export default {
       }).then(
         function(data) {
           if (data.code != 200) {
-            return
+            return;
           }
-          _this.searchList.splice(0, _this.searchList.length)
-          let inputTipsList = data.data
+          _this.searchList.splice(0, _this.searchList.length);
+          let inputTipsList = data.data;
           inputTipsList.forEach(tip => {
             _this.searchList.push({
               addressTitle: tip.name,
               addressDesc: tip.district + tip.address,
               addressLocation: tip.location
-            })
-          })
+            });
+          });
         },
         function(error) {
-          console.error('failure', error)
+          console.error("failure", error);
         }
-      )
+      );
     },
     regeo(location) {
-      let _this = this
+      let _this = this;
       http({
-        method: 'POST',
-        url: '/amap/regeo',
+        method: "POST",
+        url: "/amap/regeo",
         headers: {},
         body: {
           location: location
@@ -107,46 +110,46 @@ export default {
       }).then(
         function(data) {
           if (data.code != 200) {
-            return
+            return;
           }
 
-          let regeoData = data.data
-          let cityCode = regeoData.cityCode
+          let regeoData = data.data;
+          let cityCode = regeoData.cityCode;
 
-          let loc = location.split(',')
+          let loc = location.split(",");
 
-          _this.city.lng = loc[0]
-          _this.city.lat = loc[1]
-          _this.city.cityCode = cityCode
-          setStorageVal('way:city', JSON.stringify(_this.city)).then(data => {
-            console.log('设置city data')
-            postMessage('m:way:city')
+          _this.city.lng = loc[0];
+          _this.city.lat = loc[1];
+          _this.city.cityCode = cityCode;
+          setStorageVal("way:city", JSON.stringify(_this.city)).then(data => {
+            console.log("设置city data");
+            postMessage("m:way:city");
             navigator.pop({
               animated: true
-            })
-          })
+            });
+          });
         },
         function(error) {
-          console.error('failure', error)
+          console.error("failure", error);
         }
-      )
+      );
     }
   },
   created() {
     const pageHeight = Utils.env.getPageHeight();
     const screenHeight = Utils.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
+    this.scrollerStyle = { marginTop: screenHeight - pageHeight + "px" };
 
-    let _this = this
-    getStorageVal('way:city').then(
+    let _this = this;
+    getStorageVal("way:city").then(
       data => {
-        let city = JSON.parse(data)
-        _this.currentAddress = city.name
+        let city = JSON.parse(data);
+        _this.currentAddress = city.name;
       },
       error => {}
-    )
+    );
   }
-}
+};
 </script>
 
 <style scoped>

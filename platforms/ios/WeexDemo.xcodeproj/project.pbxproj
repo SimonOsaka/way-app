@@ -15,10 +15,12 @@
 		0A996E0A1E249DAF0055CB7E /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A996E091E249DAF0055CB7E /* libstdc++.tbd */; };
 		0AE277DC1DE56A5600C6D86A /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0AE277DB1DE56A5600C6D86A /* config.xml */; };
 		59EA0DA71D2E7D19004F904A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EA0DA61D2E7D19004F904A /* Images.xcassets */; };
-		6E1DC2972186D33E001807A4 /* WXGeoLocationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC2962186D33E001807A4 /* WXGeoLocationModule.m */; };
 		6E1DC29B21870823001807A4 /* WXSafariModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29A21870823001807A4 /* WXSafariModule.m */; };
 		6E1DC29E21886316001807A4 /* WXNetworkModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29D21886316001807A4 /* WXNetworkModule.m */; };
 		6E34C0AD218B28940006CA15 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E34C0AC218B28940006CA15 /* WXApiManager.m */; };
+		6E34C0B1218EBCBD0006CA15 /* GlobalDict.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E34C0B0218EBCBD0006CA15 /* GlobalDict.m */; };
+		6E34C0B4218EC8370006CA15 /* WXDictionaryModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E34C0B3218EC8370006CA15 /* WXDictionaryModule.m */; };
+		6E34C0B8218ED7EF0006CA15 /* AMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E34C0B7218ED7EF0006CA15 /* AMapManager.m */; };
 		6E4DB5342189B27000E2968C /* WXVersionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DB5332189B27000E2968C /* WXVersionModule.m */; };
 		6E4DB537218ABA3D00E2968C /* WXAppStoreModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DB536218ABA3D00E2968C /* WXAppStoreModule.m */; };
 		6E4DB53A218AD02000E2968C /* WXWeixinModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DB539218AD02000E2968C /* WXWeixinModule.m */; };
@@ -67,8 +69,6 @@
 		0B4FAFDE2AD89EAFD12DB8C2 /* Pods-WeexUITestDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexUITestDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeexUITestDemo/Pods-WeexUITestDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		37DB381D5815C06F147D4D51 /* Pods-WeexDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeexDemo/Pods-WeexDemo.release.xcconfig"; sourceTree = "<group>"; };
 		59EA0DA61D2E7D19004F904A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		6E1DC2962186D33E001807A4 /* WXGeoLocationModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXGeoLocationModule.m; sourceTree = "<group>"; };
-		6E1DC2982186D371001807A4 /* WXGeoLocationModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXGeoLocationModule.h; sourceTree = "<group>"; };
 		6E1DC29921870806001807A4 /* WXSafariModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXSafariModule.h; sourceTree = "<group>"; };
 		6E1DC29A21870823001807A4 /* WXSafariModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXSafariModule.m; sourceTree = "<group>"; };
 		6E1DC29C218862FA001807A4 /* WXNetworkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXNetworkModule.h; sourceTree = "<group>"; };
@@ -76,6 +76,12 @@
 		6E34C0AB218B28940006CA15 /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
 		6E34C0AC218B28940006CA15 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		6E34C0AE218C248A0006CA15 /* WeexDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WeexDemo.entitlements; sourceTree = "<group>"; };
+		6E34C0AF218EBCA70006CA15 /* GlobalDict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDict.h; sourceTree = "<group>"; };
+		6E34C0B0218EBCBD0006CA15 /* GlobalDict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDict.m; sourceTree = "<group>"; };
+		6E34C0B2218EC8280006CA15 /* WXDictionaryModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXDictionaryModule.h; sourceTree = "<group>"; };
+		6E34C0B3218EC8370006CA15 /* WXDictionaryModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXDictionaryModule.m; sourceTree = "<group>"; };
+		6E34C0B6218ED7DC0006CA15 /* AMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMapManager.h; sourceTree = "<group>"; };
+		6E34C0B7218ED7EF0006CA15 /* AMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMapManager.m; sourceTree = "<group>"; };
 		6E4DB5322189B26200E2968C /* WXVersionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXVersionModule.h; sourceTree = "<group>"; };
 		6E4DB5332189B27000E2968C /* WXVersionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXVersionModule.m; sourceTree = "<group>"; };
 		6E4DB535218ABA2C00E2968C /* WXAppStoreModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXAppStoreModule.h; sourceTree = "<group>"; };
@@ -179,8 +185,6 @@
 		6E1DC2952186D2D0001807A4 /* WeexModule */ = {
 			isa = PBXGroup;
 			children = (
-				6E1DC2982186D371001807A4 /* WXGeoLocationModule.h */,
-				6E1DC2962186D33E001807A4 /* WXGeoLocationModule.m */,
 				6E1DC29921870806001807A4 /* WXSafariModule.h */,
 				6E1DC29A21870823001807A4 /* WXSafariModule.m */,
 				6E1DC29C218862FA001807A4 /* WXNetworkModule.h */,
@@ -189,6 +193,8 @@
 				6E4DB5332189B27000E2968C /* WXVersionModule.m */,
 				6E4DB535218ABA2C00E2968C /* WXAppStoreModule.h */,
 				6E4DB536218ABA3D00E2968C /* WXAppStoreModule.m */,
+				6E34C0B2218EC8280006CA15 /* WXDictionaryModule.h */,
+				6E34C0B3218EC8370006CA15 /* WXDictionaryModule.m */,
 				6E4DB538218AD01700E2968C /* WXWeixinModule.h */,
 				6E4DB539218AD02000E2968C /* WXWeixinModule.m */,
 			);
@@ -202,6 +208,15 @@
 				6E34C0AC218B28940006CA15 /* WXApiManager.m */,
 			);
 			path = Weixin;
+			sourceTree = "<group>";
+		};
+		6E34C0B5218ED7BC0006CA15 /* AMap */ = {
+			isa = PBXGroup;
+			children = (
+				6E34C0B7218ED7EF0006CA15 /* AMapManager.m */,
+				6E34C0B6218ED7DC0006CA15 /* AMapManager.h */,
+			);
+			path = AMap;
 			sourceTree = "<group>";
 		};
 		74CC79EC1C2B9FC600829368 /* Demo */ = {
@@ -280,6 +295,9 @@
 		D5ADF0861C77133B00597CA6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				6E34C0B5218ED7BC0006CA15 /* AMap */,
+				6E34C0B0218EBCBD0006CA15 /* GlobalDict.m */,
+				6E34C0AF218EBCA70006CA15 /* GlobalDict.h */,
 				6E34C0AA218B27FE0006CA15 /* Weixin */,
 				6E1DC2952186D2D0001807A4 /* WeexModule */,
 				0A4A05F21E0405070046E1BE /* WeexScanner */,
@@ -563,12 +581,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E34C0B1218EBCBD0006CA15 /* GlobalDict.m in Sources */,
 				6E4DB53A218AD02000E2968C /* WXWeixinModule.m in Sources */,
+				6E34C0B8218ED7EF0006CA15 /* AMapManager.m in Sources */,
 				0A3122AF1E1F41E30041B972 /* WeexSDKManager.m in Sources */,
 				6E1DC29E21886316001807A4 /* WXNetworkModule.m in Sources */,
-				6E1DC2972186D33E001807A4 /* WXGeoLocationModule.m in Sources */,
 				6E34C0AD218B28940006CA15 /* WXApiManager.m in Sources */,
 				6E4DB5342189B27000E2968C /* WXVersionModule.m in Sources */,
+				6E34C0B4218EC8370006CA15 /* WXDictionaryModule.m in Sources */,
 				0A4A05FA1E0405070046E1BE /* WXDemoViewController.m in Sources */,
 				6E4DB537218ABA3D00E2968C /* WXAppStoreModule.m in Sources */,
 				775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */,

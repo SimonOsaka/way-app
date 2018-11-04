@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 163);
+/******/ 	return __webpack_require__(__webpack_require__.s = 164);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -431,10 +431,103 @@ function getUrlKey(name) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.http = http;
+function http() {
+  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: "网络无连接" });
+    });
+  }
+  var DEFAULT_OPTION = {
+    method: "GET",
+    type: "json", // json、text、jsonp
+    headers: {}
+  };
+
+  var modal = weex.requireModule("modal");
+  var stream = weex.requireModule("stream");
+  var platform = weex.config.env.platform.toLowerCase();
+
+  // 正式环境域名
+  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
+
+  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
+  options.url = apiRoot + options.url;
+  if (options.method === "GET") {
+    if (options.params) {
+      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
+        return "" + acc + key + "=" + options.params[key] + "&";
+      }, "?appVersion=" + getAppVersion() + "&");
+      options.url = options.url.concat(paramStr).slice(0, -1);
+    }
+  } else if (options.method === "POST") {
+    if (options.body) {
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
+      options.headers["Content-Type"] = "application/json";
+    }
+  }
+  console.log("请求选项", options);
+  return new Promise(function (resolve, reject) {
+    stream.fetch(options, function (response) {
+      if (response.ok) {
+        console.log("stream response", response);
+        resolve(response.data);
+      } else {
+        modal.toast({
+          message: "Somthing error, " + response.statusText,
+          duration: 1
+        });
+        console.log("stream reject", response);
+        reject(response);
+      }
+    });
+  });
+}
+
+function checkNetworkStatus() {
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = "";
+  weex.requireModule("version").getAppVersion(function (versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
+}
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var required = __webpack_require__(13)
-  , qs = __webpack_require__(14)
+var required = __webpack_require__(14)
+  , qs = __webpack_require__(15)
   , protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i
   , slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
 
@@ -848,7 +941,7 @@ module.exports = URL;
 
 /***/ }),
 
-/***/ 13:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -894,7 +987,7 @@ module.exports = function required(port, protocol) {
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -974,99 +1067,6 @@ exports.parse = querystring;
 
 /***/ }),
 
-/***/ 15:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.http = http;
-function http() {
-  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  if (!checkNetworkStatus()) {
-    console.log("终止网络请求");
-    return new Promise(function (resolve, reject) {
-      reject({ statusText: "网络无连接" });
-    });
-  }
-  var DEFAULT_OPTION = {
-    method: "GET",
-    type: "json", // json、text、jsonp
-    headers: {}
-  };
-
-  var modal = weex.requireModule("modal");
-  var stream = weex.requireModule("stream");
-  var platform = weex.config.env.platform.toLowerCase();
-
-  // 正式环境域名
-  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-
-  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
-  options.url = apiRoot + options.url;
-  if (options.method === "GET") {
-    if (options.params) {
-      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
-        return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?appVersion=" + getAppVersion() + "&");
-      options.url = options.url.concat(paramStr).slice(0, -1);
-    }
-  } else if (options.method === "POST") {
-    if (options.body) {
-      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
-      options.headers["Content-Type"] = "application/json";
-    }
-  }
-  console.log("请求选项", options);
-  return new Promise(function (resolve, reject) {
-    stream.fetch(options, function (response) {
-      if (response.ok) {
-        console.log("stream response", response);
-        resolve(response.data);
-      } else {
-        modal.toast({
-          message: "Somthing error, " + response.statusText,
-          duration: 1
-        });
-        console.log("stream reject", response);
-        reject(response);
-      }
-    });
-  });
-}
-
-function checkNetworkStatus() {
-  var network = weex.requireModule("network");
-  var ok = true;
-  network.getNetworkStatus(function (statusText) {
-    if (statusText === "NONE") {
-      console.log("checkNetworkStatus", "当前没有网络");
-      weex.requireModule("modal").toast({
-        message: "网络无法连接，请检查网络配置",
-        duration: 3
-      });
-      ok = false;
-    } else {
-      console.log("网络连接正常");
-    }
-  });
-  return ok;
-}
-
-function getAppVersion() {
-  var appVertionText = "";
-  weex.requireModule("version").getAppVersion(function (versionText) {
-    appVertionText = versionText;
-  });
-  return appVertionText;
-}
-
-/***/ }),
-
 /***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1112,7 +1112,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 163:
+/***/ 164:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1130,24 +1130,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _weexVueRender2.default.init(_vue2.default);
 
-var App = __webpack_require__(164);
+var App = __webpack_require__(165);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ }),
 
-/***/ 164:
+/***/ 165:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(165)
+  __webpack_require__(166)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(167),
-  /* template */
   __webpack_require__(168),
+  /* template */
+  __webpack_require__(169),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -1180,13 +1180,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 165:
+/***/ 166:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(166);
+var content = __webpack_require__(167);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -1207,7 +1207,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 166:
+/***/ 167:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1222,7 +1222,7 @@ exports.push([module.i, "\n.wrapper[data-v-6c110b80] {\n  flex-direction: column
 
 /***/ }),
 
-/***/ 167:
+/***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1242,7 +1242,7 @@ var _navbar = __webpack_require__(16);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
-var _http = __webpack_require__(15);
+var _http = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1296,7 +1296,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 168:
+/***/ 169:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1943,7 +1943,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                                                                                                                                                                                                                                                                                 * Created by Tw93 on 17/11/01
                                                                                                                                                                                                                                                                                 */
 
-var _urlParse = __webpack_require__(12);
+var _urlParse = __webpack_require__(13);
 
 var _urlParse2 = _interopRequireDefault(_urlParse);
 

@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 143);
+/******/ 	return __webpack_require__(__webpack_require__.s = 144);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -515,7 +515,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                                                                                                                                                                                                                                                                                 * Created by Tw93 on 17/11/01
                                                                                                                                                                                                                                                                                 */
 
-var _urlParse = __webpack_require__(12);
+var _urlParse = __webpack_require__(13);
 
 var _urlParse2 = _interopRequireDefault(_urlParse);
 
@@ -20320,10 +20320,102 @@ function getUrlKey(name) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.http = http;
+function http() {
+  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: "网络无连接" });
+    });
+  }
+  var DEFAULT_OPTION = {
+    method: "GET",
+    type: "json", // json、text、jsonp
+    headers: {}
+  };
+
+  var modal = weex.requireModule("modal");
+  var stream = weex.requireModule("stream");
+  var platform = weex.config.env.platform.toLowerCase();
+
+  // 正式环境域名
+  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
+
+  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
+  options.url = apiRoot + options.url;
+  if (options.method === "GET") {
+    if (options.params) {
+      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
+        return "" + acc + key + "=" + options.params[key] + "&";
+      }, "?appVersion=" + getAppVersion() + "&");
+      options.url = options.url.concat(paramStr).slice(0, -1);
+    }
+  } else if (options.method === "POST") {
+    if (options.body) {
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
+      options.headers["Content-Type"] = "application/json";
+    }
+  }
+  console.log("请求选项", options);
+  return new Promise(function (resolve, reject) {
+    stream.fetch(options, function (response) {
+      if (response.ok) {
+        console.log("stream response", response);
+        resolve(response.data);
+      } else {
+        modal.toast({
+          message: "Somthing error, " + response.statusText,
+          duration: 1
+        });
+        console.log("stream reject", response);
+        reject(response);
+      }
+    });
+  });
+}
+
+function checkNetworkStatus() {
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = "";
+  weex.requireModule("version").getAppVersion(function (versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var required = __webpack_require__(13)
-  , qs = __webpack_require__(14)
+var required = __webpack_require__(14)
+  , qs = __webpack_require__(15)
   , protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i
   , slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
 
@@ -20736,7 +20828,7 @@ module.exports = URL;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20781,7 +20873,7 @@ module.exports = function required(port, protocol) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20858,98 +20950,6 @@ function querystringify(obj, prefix) {
 exports.stringify = querystringify;
 exports.parse = querystring;
 
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.http = http;
-function http() {
-  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  if (!checkNetworkStatus()) {
-    console.log("终止网络请求");
-    return new Promise(function (resolve, reject) {
-      reject({ statusText: "网络无连接" });
-    });
-  }
-  var DEFAULT_OPTION = {
-    method: "GET",
-    type: "json", // json、text、jsonp
-    headers: {}
-  };
-
-  var modal = weex.requireModule("modal");
-  var stream = weex.requireModule("stream");
-  var platform = weex.config.env.platform.toLowerCase();
-
-  // 正式环境域名
-  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-
-  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
-  options.url = apiRoot + options.url;
-  if (options.method === "GET") {
-    if (options.params) {
-      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
-        return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?appVersion=" + getAppVersion() + "&");
-      options.url = options.url.concat(paramStr).slice(0, -1);
-    }
-  } else if (options.method === "POST") {
-    if (options.body) {
-      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
-      options.headers["Content-Type"] = "application/json";
-    }
-  }
-  console.log("请求选项", options);
-  return new Promise(function (resolve, reject) {
-    stream.fetch(options, function (response) {
-      if (response.ok) {
-        console.log("stream response", response);
-        resolve(response.data);
-      } else {
-        modal.toast({
-          message: "Somthing error, " + response.statusText,
-          duration: 1
-        });
-        console.log("stream reject", response);
-        reject(response);
-      }
-    });
-  });
-}
-
-function checkNetworkStatus() {
-  var network = weex.requireModule("network");
-  var ok = true;
-  network.getNetworkStatus(function (statusText) {
-    if (statusText === "NONE") {
-      console.log("checkNetworkStatus", "当前没有网络");
-      weex.requireModule("modal").toast({
-        message: "网络无法连接，请检查网络配置",
-        duration: 3
-      });
-      ok = false;
-    } else {
-      console.log("网络连接正常");
-    }
-  });
-  return ok;
-}
-
-function getAppVersion() {
-  var appVertionText = "";
-  weex.requireModule("version").getAppVersion(function (versionText) {
-    appVertionText = versionText;
-  });
-  return appVertionText;
-}
 
 /***/ }),
 /* 16 */
@@ -23219,7 +23219,7 @@ exports.initAllCateImg = initAllCateImg;
 
 var _utils = __webpack_require__(11);
 
-var _http = __webpack_require__(15);
+var _http = __webpack_require__(12);
 
 var modal = weex.requireModule("modal");
 
@@ -23354,7 +23354,8 @@ function initAllCateImg() {
 /* 140 */,
 /* 141 */,
 /* 142 */,
-/* 143 */
+/* 143 */,
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23372,23 +23373,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _weexVueRender2.default.init(_vue2.default);
 
-var App = __webpack_require__(144);
+var App = __webpack_require__(145);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(145)
+  __webpack_require__(146)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(147),
+  __webpack_require__(148),
   /* template */
-  __webpack_require__(162),
+  __webpack_require__(163),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -23420,13 +23421,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(146);
+var content = __webpack_require__(147);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -23446,7 +23447,7 @@ if(false) {
 }
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -23460,7 +23461,7 @@ exports.push([module.i, "\n.iconfont[data-v-23260ba9] {\n  font-family: iconfont
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23474,7 +23475,7 @@ var _utils = __webpack_require__(4);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcNoticebar = __webpack_require__(148);
+var _wxcNoticebar = __webpack_require__(149);
 
 var _wxcNoticebar2 = _interopRequireDefault(_wxcNoticebar);
 
@@ -23482,7 +23483,7 @@ var _wxcMask = __webpack_require__(52);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
-var _wxcCountdown = __webpack_require__(155);
+var _wxcCountdown = __webpack_require__(156);
 
 var _wxcCountdown2 = _interopRequireDefault(_wxcCountdown);
 
@@ -23506,9 +23507,9 @@ var _utils3 = __webpack_require__(11);
 
 var _image = __webpack_require__(71);
 
-var _http = __webpack_require__(15);
+var _http = __webpack_require__(12);
 
-var _discount = __webpack_require__(161);
+var _discount = __webpack_require__(162);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23889,7 +23890,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23899,7 +23900,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(149);
+var _index = __webpack_require__(150);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -23911,19 +23912,19 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(150)
+  __webpack_require__(151)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(152),
+  __webpack_require__(153),
   /* template */
-  __webpack_require__(154),
+  __webpack_require__(155),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -23955,13 +23956,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(151);
+var content = __webpack_require__(152);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -23981,7 +23982,7 @@ if(false) {
 }
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -23995,7 +23996,7 @@ exports.push([module.i, "\n.wxc-noticebar[data-v-5bac4d0a] {\n  width: 10rem;\n 
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24005,7 +24006,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(153);
+var _type = __webpack_require__(154);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -24185,7 +24186,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24211,7 +24212,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -24280,7 +24281,7 @@ if (false) {
 }
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24290,7 +24291,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(156);
+var _index = __webpack_require__(157);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -24302,19 +24303,19 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(157)
+  __webpack_require__(158)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(159),
-  /* template */
   __webpack_require__(160),
+  /* template */
+  __webpack_require__(161),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -24346,13 +24347,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(158);
+var content = __webpack_require__(159);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -24372,7 +24373,7 @@ if(false) {
 }
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -24386,7 +24387,7 @@ exports.push([module.i, "\n.time-dot-wrap[data-v-3c67ddf1] {\n  flex-direction: 
 
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24617,7 +24618,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -24751,7 +24752,7 @@ if (false) {
 }
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24762,7 +24763,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getWeixinShareWebpage = getWeixinShareWebpage;
 
-var _http = __webpack_require__(15);
+var _http = __webpack_require__(12);
 
 function getWeixinShareWebpage(params) {
   return (0, _http.http)({
@@ -24774,7 +24775,7 @@ function getWeixinShareWebpage(params) {
 }
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

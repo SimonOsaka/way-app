@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 88);
+/******/ 	return __webpack_require__(__webpack_require__.s = 89);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,7 +81,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                                                                                                                                                                                                                                                                                 * Created by Tw93 on 17/11/01
                                                                                                                                                                                                                                                                                 */
 
-var _urlParse = __webpack_require__(2);
+var _urlParse = __webpack_require__(3);
 
 var _urlParse2 = _interopRequireDefault(_urlParse);
 
@@ -640,10 +640,102 @@ function getUrlKey(name) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.http = http;
+function http() {
+  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (!checkNetworkStatus()) {
+    console.log("终止网络请求");
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: "网络无连接" });
+    });
+  }
+  var DEFAULT_OPTION = {
+    method: "GET",
+    type: "json", // json、text、jsonp
+    headers: {}
+  };
+
+  var modal = weex.requireModule("modal");
+  var stream = weex.requireModule("stream");
+  var platform = weex.config.env.platform.toLowerCase();
+
+  // 正式环境域名
+  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
+
+  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
+  options.url = apiRoot + options.url;
+  if (options.method === "GET") {
+    if (options.params) {
+      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
+        return "" + acc + key + "=" + options.params[key] + "&";
+      }, "?appVersion=" + getAppVersion() + "&");
+      options.url = options.url.concat(paramStr).slice(0, -1);
+    }
+  } else if (options.method === "POST") {
+    if (options.body) {
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
+      options.headers["Content-Type"] = "application/json";
+    }
+  }
+  console.log("请求选项", options);
+  return new Promise(function (resolve, reject) {
+    stream.fetch(options, function (response) {
+      if (response.ok) {
+        console.log("stream response", response);
+        resolve(response.data);
+      } else {
+        modal.toast({
+          message: "Somthing error, " + response.statusText,
+          duration: 1
+        });
+        console.log("stream reject", response);
+        reject(response);
+      }
+    });
+  });
+}
+
+function checkNetworkStatus() {
+  var network = weex.requireModule("network");
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === "NONE") {
+      console.log("checkNetworkStatus", "当前没有网络");
+      weex.requireModule("modal").toast({
+        message: "网络无法连接，请检查网络配置",
+        duration: 3
+      });
+      ok = false;
+    } else {
+      console.log("网络连接正常");
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = "";
+  weex.requireModule("version").getAppVersion(function (versionText) {
+    appVertionText = versionText;
+  });
+  return appVertionText;
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var required = __webpack_require__(3),
-    qs = __webpack_require__(4),
+var required = __webpack_require__(4),
+    qs = __webpack_require__(5),
     protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i,
     slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
 
@@ -1049,7 +1141,7 @@ URL.qs = qs;
 module.exports = URL;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1094,7 +1186,7 @@ module.exports = function required(port, protocol) {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1167,98 +1259,6 @@ function querystringify(obj, prefix) {
 //
 exports.stringify = querystringify;
 exports.parse = querystring;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.http = http;
-function http() {
-  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  if (!checkNetworkStatus()) {
-    console.log("终止网络请求");
-    return new Promise(function (resolve, reject) {
-      reject({ statusText: "网络无连接" });
-    });
-  }
-  var DEFAULT_OPTION = {
-    method: "GET",
-    type: "json", // json、text、jsonp
-    headers: {}
-  };
-
-  var modal = weex.requireModule("modal");
-  var stream = weex.requireModule("stream");
-  var platform = weex.config.env.platform.toLowerCase();
-
-  // 正式环境域名
-  var apiRoot = "http://api.jicu.vip"; //'http://your.prod.domain.com'
-
-  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
-  options.url = apiRoot + options.url;
-  if (options.method === "GET") {
-    if (options.params) {
-      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
-        return "" + acc + key + "=" + options.params[key] + "&";
-      }, "?appVersion=" + getAppVersion() + "&");
-      options.url = options.url.concat(paramStr).slice(0, -1);
-    }
-  } else if (options.method === "POST") {
-    if (options.body) {
-      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
-      options.headers["Content-Type"] = "application/json";
-    }
-  }
-  console.log("请求选项", options);
-  return new Promise(function (resolve, reject) {
-    stream.fetch(options, function (response) {
-      if (response.ok) {
-        console.log("stream response", response);
-        resolve(response.data);
-      } else {
-        modal.toast({
-          message: "Somthing error, " + response.statusText,
-          duration: 1
-        });
-        console.log("stream reject", response);
-        reject(response);
-      }
-    });
-  });
-}
-
-function checkNetworkStatus() {
-  var network = weex.requireModule("network");
-  var ok = true;
-  network.getNetworkStatus(function (statusText) {
-    if (statusText === "NONE") {
-      console.log("checkNetworkStatus", "当前没有网络");
-      weex.requireModule("modal").toast({
-        message: "网络无法连接，请检查网络配置",
-        duration: 3
-      });
-      ok = false;
-    } else {
-      console.log("网络连接正常");
-    }
-  });
-  return ok;
-}
-
-function getAppVersion() {
-  var appVertionText = "";
-  weex.requireModule("version").getAppVersion(function (versionText) {
-    appVertionText = versionText;
-  });
-  return appVertionText;
-}
 
 /***/ }),
 /* 6 */
@@ -2970,21 +2970,22 @@ module.exports.render._withStripped = true
 /* 85 */,
 /* 86 */,
 /* 87 */,
-/* 88 */
+/* 88 */,
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(89)
+__vue_styles__.push(__webpack_require__(90)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(90)
+__vue_exports__ = __webpack_require__(91)
 
 /* template */
-var __vue_template__ = __webpack_require__(106)
+var __vue_template__ = __webpack_require__(107)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3016,7 +3017,7 @@ new Vue(module.exports)
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3058,7 +3059,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3076,7 +3077,7 @@ var _wxcMask = __webpack_require__(36);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
-var _wxcLoading = __webpack_require__(91);
+var _wxcLoading = __webpack_require__(92);
 
 var _wxcLoading2 = _interopRequireDefault(_wxcLoading);
 
@@ -3088,7 +3089,7 @@ var _wxcButton = __webpack_require__(23);
 
 var _wxcButton2 = _interopRequireDefault(_wxcButton);
 
-var _wxcGridSelect = __webpack_require__(97);
+var _wxcGridSelect = __webpack_require__(98);
 
 var _wxcGridSelect2 = _interopRequireDefault(_wxcGridSelect);
 
@@ -3098,7 +3099,7 @@ var _navbar2 = _interopRequireDefault(_navbar);
 
 var _utils3 = __webpack_require__(1);
 
-var _http = __webpack_require__(5);
+var _http = __webpack_require__(2);
 
 var _category = __webpack_require__(35);
 
@@ -3378,7 +3379,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3388,7 +3389,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(92);
+var _index = __webpack_require__(93);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -3400,21 +3401,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(93)
+__vue_styles__.push(__webpack_require__(94)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(94)
+__vue_exports__ = __webpack_require__(95)
 
 /* template */
-var __vue_template__ = __webpack_require__(96)
+var __vue_template__ = __webpack_require__(97)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3444,7 +3445,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3490,7 +3491,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3500,7 +3501,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(95);
+var _type = __webpack_require__(96);
 
 var _utils = __webpack_require__(0);
 
@@ -3676,7 +3677,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3694,7 +3695,7 @@ var BLACK_GIF = exports.BLACK_GIF = 'https://img.alicdn.com/tfs/TB1Ep_9NVXXXXb8X
 var PART = exports.PART = 'https://gtms02.alicdn.com/tfs/TB1y4QbSXXXXXbgapXXXXXXXXXX-50-50.gif';
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3728,7 +3729,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3738,7 +3739,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(98);
+var _index = __webpack_require__(99);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -3750,21 +3751,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(99)
+__vue_styles__.push(__webpack_require__(100)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(100)
+__vue_exports__ = __webpack_require__(101)
 
 /* template */
-var __vue_template__ = __webpack_require__(105)
+var __vue_template__ = __webpack_require__(106)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3794,7 +3795,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3806,7 +3807,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3838,7 +3839,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _option = __webpack_require__(101);
+var _option = __webpack_require__(102);
 
 var _option2 = _interopRequireDefault(_option);
 
@@ -3963,21 +3964,21 @@ exports.default = {
 };
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(102)
+__vue_styles__.push(__webpack_require__(103)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(103)
+__vue_exports__ = __webpack_require__(104)
 
 /* template */
-var __vue_template__ = __webpack_require__(104)
+var __vue_template__ = __webpack_require__(105)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -4007,7 +4008,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -4035,7 +4036,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4182,7 +4183,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4209,7 +4210,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4243,7 +4244,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

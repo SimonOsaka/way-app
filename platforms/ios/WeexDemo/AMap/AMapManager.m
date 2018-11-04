@@ -1,40 +1,41 @@
 //
-//  WeexGeoLocationModule.m
-//  WeexDemo
+//  GlobalDict.m
 //
-//  Created by 许忠亮 on 2018/10/29.
-//  Copyright © 2018 taobao. All rights reserved.
 //
-
-#import "WXGeoLocationModule.h"
+//
+#import "AMapManager.h"
+#import "GlobalDict.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 
 #define DefaultLocationTimeout 10
 #define DefaultReGeocodeTimeout 5
 
-@interface WXGeoLocationModule() <AMapLocationManagerDelegate>
+@implementation AMapManager
 
-@property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
-
-@end
-
-@implementation WXGeoLocationModule
-
-WX_EXPORT_METHOD(@selector(getCurrentLocation:))
-
-
-- (void) getCurrentLocation:(WXKeepAliveCallback)callback {
-    NSLog(@"getCurrentLocation");
-    [self initCompleteBlock:callback];
-
-    [self configLocationManager];
-    
-    //进行单次定位请求
-    [self.locationManager requestLocationWithReGeocode:NO completionBlock:self.completionBlock];
+#pragma mark - LifeCycle
++(instancetype)start {
+    static dispatch_once_t onceToken;
+    static AMapManager *instance;
+    dispatch_once(&onceToken, ^{
+        instance = [[AMapManager alloc] initManager];
+    });
+    return instance;
 }
 
-- (void)initCompleteBlock:(WXKeepAliveCallback)callback
+- (instancetype) initManager {
+    self = [super init];
+    if (self) {
+        [self initCompleteBlock];
+        [self configLocationManager];
+        //进行单次定位请求
+        [self.locationManager requestLocationWithReGeocode:NO completionBlock:self.completionBlock];
+    }
+    return self;
+}
+
+#pragma mark - initCompleteBlock
+- (void)initCompleteBlock
 {
     self.completionBlock = ^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error)
     {
@@ -67,9 +68,10 @@ WX_EXPORT_METHOD(@selector(getCurrentLocation:))
         }
         
         //修改label显示内容
-        NSString *loc = [NSString stringWithFormat:@"%f,%f", location.coordinate.longitude,location.coordinate.latitude];
-        NSLog(@"高德经纬度返回值，%@", loc);
-        callback(loc, true);
+        NSString *longitude = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+        NSString *latitude = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+        [[GlobalDict shared] addDict:longitude key:@"longitude"];
+        [[GlobalDict shared] addDict:latitude key:@"latitude"];
     };
 }
 
@@ -77,7 +79,7 @@ WX_EXPORT_METHOD(@selector(getCurrentLocation:))
 {
     self.locationManager = [[AMapLocationManager alloc] init];
     
-    [self.locationManager setDelegate:self];
+    [self.locationManager setDelegate: self];
     
     //设置期望定位精度
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
@@ -94,5 +96,4 @@ WX_EXPORT_METHOD(@selector(getCurrentLocation:))
     //设置逆地理超时时间
     [self.locationManager setReGeocodeTimeout:DefaultReGeocodeTimeout];
 }
-
 @end

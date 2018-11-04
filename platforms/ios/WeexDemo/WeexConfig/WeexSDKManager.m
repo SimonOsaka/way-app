@@ -11,12 +11,12 @@
 #import <WeexSDK/WeexSDK.h>
 #import "WXDemoViewController.h"
 #import "WXImgLoaderDefaultImpl.h"
-#import "../WeexModule/WXGeoLocationModule.h"
 #import "../WeexModule/WXSafariModule.h"
 #import "../WeexModule/WXNetworkModule.h"
 #import "../WeexModule/WXVersionModule.h"
 #import "../WeexModule/WXAppStoreModule.h"
 #import "../WeexModule/WXWeixinModule.h"
+#import "../WeexModule/WXDictionaryModule.h"
 
 @implementation WeexSDKManager
 
@@ -55,12 +55,12 @@
     
     [WXSDKEngine initSDKEnvironment];
     
-    [WXSDKEngine registerModule:@"location" withClass:[WXGeoLocationModule class]];
     [WXSDKEngine registerModule:@"safari" withClass:[WXSafariModule class]];
     [WXSDKEngine registerModule:@"network" withClass:[WXNetworkModule class]];
     [WXSDKEngine registerModule:@"version" withClass:[WXVersionModule class]];
     [WXSDKEngine registerModule:@"appstore" withClass:[WXAppStoreModule class]];
     [WXSDKEngine registerModule:@"weixin" withClass:[WXWeixinModule class]];
+    [WXSDKEngine registerModule:@"dictionary" withClass:[WXDictionaryModule class]];
     
     [WXSDKEngine registerHandler:[WXImgLoaderDefaultImpl new] withProtocol:@protocol(WXImgLoaderProtocol)];
     
