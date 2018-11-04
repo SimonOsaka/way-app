@@ -6,7 +6,7 @@
         </div>
         <indicator class="indicator"></indicator>
         </slider>
-        <wxc-button text="我要进入" type="blue" size="full" :btnStyle="{ position: 'relative', bottom: '200px', left: '24px', visibility: visible}"
+        <wxc-button text="开始使用" type="white" size="big" :btnStyle="{ position: 'relative', bottom: '260px', left: '206px', visibility: visible}"
               @wxcButtonClicked="wxcButtonClicked"></wxc-button>
     </div>
 </template>

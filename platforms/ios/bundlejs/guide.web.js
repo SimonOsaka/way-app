@@ -21485,13 +21485,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {}
   })], 2), _vm._v(" "), _c('wxc-button', {
     attrs: {
-      "text": "我要进入",
-      "type": "blue",
-      "size": "full",
+      "text": "开始使用",
+      "type": "white",
+      "size": "big",
       "btnStyle": {
         position: 'relative',
-        bottom: '200px',
-        left: '24px',
+        bottom: '260px',
+        left: '206px',
         visibility: _vm.visible
       },
       "data-evt-wxcButtonClicked": ""
