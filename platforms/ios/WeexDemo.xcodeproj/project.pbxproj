@@ -69,6 +69,7 @@
 		0B4FAFDE2AD89EAFD12DB8C2 /* Pods-WeexUITestDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexUITestDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeexUITestDemo/Pods-WeexUITestDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		37DB381D5815C06F147D4D51 /* Pods-WeexDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeexDemo/Pods-WeexDemo.release.xcconfig"; sourceTree = "<group>"; };
 		59EA0DA61D2E7D19004F904A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6E13FC4D219185B400A393E1 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		6E1DC29921870806001807A4 /* WXSafariModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXSafariModule.h; sourceTree = "<group>"; };
 		6E1DC29A21870823001807A4 /* WXSafariModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXSafariModule.m; sourceTree = "<group>"; };
 		6E1DC29C218862FA001807A4 /* WXNetworkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXNetworkModule.h; sourceTree = "<group>"; };
@@ -305,6 +306,7 @@
 				775BEE811C1E8ECC008D1629 /* AppDelegate.h */,
 				775BEE821C1E8ECC008D1629 /* AppDelegate.m */,
 				7453E3641C9FA971001EB427 /* DemoDefine.h */,
+				6E13FC4D219185B400A393E1 /* PrefixHeader.pch */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -392,7 +394,8 @@
 				TargetAttributes = {
 					775BEE7A1C1E8ECC008D1629 = {
 						CreatedOnToolsVersion = 7.1.1;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 2SKZHQ6Q2Y;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -720,8 +723,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WeexDemo/WeexDemo.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -729,6 +733,7 @@
 					"$(PROJECT_DIR)/WeexDemo",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PREFIX_HEADER = "$(SRCROOT)/WeexDemo/PrefixHeader.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "WeexDemo/WeexDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -752,6 +757,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xzl.jicu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -763,8 +769,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WeexDemo/WeexDemo.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -772,6 +779,7 @@
 					"$(PROJECT_DIR)/WeexDemo",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PREFIX_HEADER = "$(SRCROOT)/WeexDemo/PrefixHeader.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "WeexDemo/WeexDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -795,6 +803,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xzl.jicu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

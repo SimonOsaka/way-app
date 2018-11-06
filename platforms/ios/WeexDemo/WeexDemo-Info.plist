@@ -2,8 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>weixin</string>
+		<string>wechat</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
 	<string>急促</string>
 	<key>CFBundleExecutable</key>
@@ -27,6 +32,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>weixin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wxe49647d07bf7a3b0</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

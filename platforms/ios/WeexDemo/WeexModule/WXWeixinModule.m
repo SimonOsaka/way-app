@@ -35,7 +35,7 @@ WX_EXPORT_METHOD(@selector(shareWebpage:))
     SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
     req.bText = NO;
     req.message = message;
-    if ([shareType isEqualToString:@"session"]){
+    if ([shareType isEqualToString:@"session"]) {
         req.scene = WXSceneSession;
     } else if ([shareType isEqualToString:@"timeline"]) {
         req.scene = WXSceneTimeline;
@@ -54,13 +54,22 @@ WX_EXPORT_METHOD(@selector(shareWebpage:))
     CGFloat compression = 0.9f;
     CGFloat maxCompression = 0.1f;
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:photourl]];//[UIImage imageWithData:imageData];
+     [self imageSize:image];
     NSData *compressedData = UIImageJPEGRepresentation(image, compression);
     while ([compressedData length] > maxFileSize && compression > maxCompression) {
         compression -= 0.1;
         compressedData = UIImageJPEGRepresentation(image, compression);
     }
     UIImage *compressedImage = [UIImage imageWithData:compressedData];
+    [self imageSize:compressedImage];
     return compressedImage;
+}
+
+- (void) imageSize:(UIImage*) image {
+//    NSData * imageData = UIImageJPEGRepresentation(image, .5);
+    
+//    NSLog(@"图片大小：%f", [imageData length] / 1000.0);
+    
 }
 
 

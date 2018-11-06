@@ -24,7 +24,8 @@
 - (void)onResp:(BaseResp *)resp {
     NSLog(@"微信返回：%@", resp);
     if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
-        [[WXSDKManager bridgeMgr].topInstance fireGlobalEvent:@"weixinCallback" params:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", resp.errCode],@"errCode",resp.errStr, @"errStr", nil]];
+        [[WXSDKManager bridgeMgr].topInstance fireGlobalEvent:@"weixinCallback" params:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", resp.errCode],@"errCode",resp.errStr, @"errStr",
+                                                                                       [NSString stringWithFormat:@"%d",resp.type] ,@"type", nil]];
     }
 }
 

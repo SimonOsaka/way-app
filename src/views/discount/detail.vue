@@ -20,7 +20,7 @@
           <div slot="value" v-if="discountObj.cExpireMills" style="background-color: #fdee7f; height: 106px; width: 180px;">
             <div style="flex-direction: column; align-items: center; margin-top: 18px;">
               <text style="color: #9e495b; font-size: 24px;">距结束仅剩</text>
-              <wxc-countdown :time="discountObj.cExpireMills" tpl="{h}:{m}:{s}" @wxcOnComplete="expiredOnCompleted" :style="{marginLeft: '10px', marginRight: '0', marginTop: '5px'}" :timeBoxStyle="{backgroundColor: '#690b08', borderRadius: '4px', width:'32px', paddingLeft:'2px', paddingRight: '2px'}" :timeTextStyle="{fontSize: '24px', color: '#fff'}" :dotBoxStyle="{width: '4px'}" :dotTextStyle="{fontSize: '24px', color: 'grey', paddingLeft:'2px', paddingRight: '2px'}">
+              <wxc-countdown :time="discountObj.cExpireMills" tpl="{h}:{m}:{s}" @wxcOnComplete="expiredOnCompleted" :style="{marginLeft: '10px', marginRight: '0', marginTop: '5px'}" :timeBoxStyle="{backgroundColor: '#690b08', borderRadius: '4px', width:'38px', paddingLeft:'2px', paddingRight: '2px'}" :timeTextStyle="{fontSize: '24px', color: '#fff'}" :dotBoxStyle="{width: '4px'}" :dotTextStyle="{fontSize: '24px', color: 'grey', paddingLeft:'4px', paddingRight: '4px'}">
               </wxc-countdown>
             </div>
           </div>
@@ -75,9 +75,15 @@
     </scroller>
 
     <wxc-popup height="160" :show="isAutoShow" pos="bottom" @wxcPopupOverlayClicked="popupOverlayAutoClick">
-      <div @click="weixinClicked" style="width: 128px; height: 128px; margin-left: 311px; margin-top: 24px;">
-        <text class="iconfont" :style="weixinStyle">&#xe622;</text>
-        <text style="margin-left: 10px;">微信</text>
+      <div style="flex-direction: row; padding-left: 247px;">
+        <div @click="weixinClicked('session')" style="width: 128px; height: 128px; margin-top: 24px;">
+          <text class="iconfont" :style="weixinStyle">&#xe622;</text>
+          <text style="font-size: 24px;">微信好友</text>
+        </div>
+        <div @click="weixinClicked('timeline')" style="width: 128px; height: 128px; margin-top: 24px;">
+          <text class="iconfont" :style="{fontSize: '64px', paddingLeft: '24px'}">&#xe701;</text>
+          <text style="font-size: 24px;">微信朋友圈</text>
+        </div>
       </div>
     </wxc-popup>
 
@@ -196,12 +202,18 @@ export default {
         }
       );
 
+      let _this = this;
       globalEvent.addEventListener("weixinCallback", function(data) {
         console.log("微信分享优惠详情callback的结果", data);
-        modal.toast({
-          message: "分享成功",
-          duration: 1
-        });
+        if (data) {
+          if (data.errCode == "0") {
+            modal.toast({
+              message: "分享成功",
+              duration: 1
+            });
+          }
+        }
+        _this.isAutoShow = false;
       });
     });
 
@@ -214,12 +226,13 @@ export default {
     shareClicked() {
       this.isAutoShow = true;
     },
-    weixinClicked() {
+    weixinClicked(shareType) {
       console.log("weixin clicked...");
       getWeixinShareWebpage({
         discountId: this.discountObj.id,
-        shareType: "session"
+        shareType: shareType
       }).then(resp => {
+        console.log('微信返回', resp);
         if (resp.code !== 200) {
           return;
         }

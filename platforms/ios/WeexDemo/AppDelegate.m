@@ -8,14 +8,13 @@
 
 #import "AppDelegate.h"
 #import "DemoDefine.h"
-#import <WeexSDK/WeexSDK.h>
 #import <AVFoundation/AVFoundation.h>
-#import "WeexSDKManager.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "AFNetworking.h"
 #import "WXApiManager.h"
 #import "GlobalDict.h"
 #import "AMap/AMapManager.h"
+#import "WeexConfig/WeexSDKManager.h"
 
 // 引入 JPush 功能所需头文件
 #import "JPUSHService.h"

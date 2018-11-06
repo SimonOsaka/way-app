@@ -23607,6 +23607,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var navigator = weex.requireModule("navigator");
 var modal = weex.requireModule("modal");
@@ -23687,12 +23693,18 @@ exports.default = {
         _this2.discountDetailHttp();
       });
 
+      var _this = _this2;
       globalEvent.addEventListener("weixinCallback", function (data) {
         console.log("微信分享优惠详情callback的结果", data);
-        modal.toast({
-          message: "分享成功",
-          duration: 1
-        });
+        if (data) {
+          if (data.errCode == "0") {
+            modal.toast({
+              message: "分享成功",
+              duration: 1
+            });
+          }
+        }
+        _this.isAutoShow = false;
       });
     });
 
@@ -23706,12 +23718,13 @@ exports.default = {
     shareClicked: function shareClicked() {
       this.isAutoShow = true;
     },
-    weixinClicked: function weixinClicked() {
+    weixinClicked: function weixinClicked(shareType) {
       console.log("weixin clicked...");
       (0, _discount.getWeixinShareWebpage)({
         discountId: this.discountObj.id,
-        shareType: "session"
+        shareType: shareType
       }).then(function (resp) {
+        console.log('微信返回', resp);
         if (resp.code !== 200) {
           return;
         }
@@ -24930,7 +24943,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "timeBoxStyle": {
         backgroundColor: '#690b08',
         borderRadius: '4px',
-        width: '32px',
+        width: '38px',
         paddingLeft: '2px',
         paddingRight: '2px'
       },
@@ -24944,8 +24957,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "dotTextStyle": {
         fontSize: '24px',
         color: 'grey',
-        paddingLeft: '2px',
-        paddingRight: '2px'
+        paddingLeft: '4px',
+        paddingRight: '4px'
       },
       "data-evt-wxcOnComplete": ""
     },
@@ -25285,9 +25298,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: " weex-ct weex-div",
     staticStyle: {
+      "-webkit-box-orient": "horizontal",
+      "-webkit-box-direction": "normal",
+      "-webkit-flex-direction": "row",
+      "flex-direction": "row",
+      "padding-left": "3.29333rem"
+    },
+    attrs: {
+      "weex-type": "div"
+    }
+  }, [_c('div', {
+    staticClass: " weex-ct weex-div",
+    staticStyle: {
       "width": "1.70667rem",
       "height": "1.70667rem",
-      "margin-left": "4.14667rem",
       "margin-top": "0.32rem"
     },
     attrs: {
@@ -25298,7 +25322,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.$stopOuterA,
       "weex$tap": function($event) {
         $event.stopPropagation();
-        return _vm.weixinClicked($event)
+        _vm.weixinClicked('session')
       }
     }
   }, [_c('p', {
@@ -25310,12 +25334,47 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("")]), _vm._v(" "), _c('p', {
     staticClass: " weex-el weex-text",
     staticStyle: {
-      "margin-left": "0.13333rem"
+      "font-size": "0.32rem"
     },
     attrs: {
       "weex-type": "text"
     }
-  }, [_vm._v("微信")])])]), _vm._v(" "), _c('wxc-dialog', {
+  }, [_vm._v("微信好友")])]), _vm._v(" "), _c('div', {
+    staticClass: " weex-ct weex-div",
+    staticStyle: {
+      "width": "1.70667rem",
+      "height": "1.70667rem",
+      "margin-top": "0.32rem"
+    },
+    attrs: {
+      "weex-type": "div",
+      "data-evt-click": ""
+    },
+    on: {
+      "click": _vm.$stopOuterA,
+      "weex$tap": function($event) {
+        $event.stopPropagation();
+        _vm.weixinClicked('timeline')
+      }
+    }
+  }, [_c('p', {
+    staticClass: "iconfont weex-el weex-text",
+    style: ({
+      fontSize: _vm._px2rem('64px', 75),
+      paddingLeft: _vm._px2rem('24px', 75)
+    }),
+    attrs: {
+      "weex-type": "text"
+    }
+  }, [_vm._v("")]), _vm._v(" "), _c('p', {
+    staticClass: " weex-el weex-text",
+    staticStyle: {
+      "font-size": "0.32rem"
+    },
+    attrs: {
+      "weex-type": "text"
+    }
+  }, [_vm._v("微信朋友圈")])])])]), _vm._v(" "), _c('wxc-dialog', {
     attrs: {
       "title": "功能开发中",
       "content": "敬请期待",

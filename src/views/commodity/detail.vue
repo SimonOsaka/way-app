@@ -9,7 +9,7 @@
         <wxc-cell :has-arrow="false" :has-bottom-border="true" :cell-style="cellStyle">
           <div slot="label">
             <div style="flex-direction: row;">
-              <text style="width: 600px;">{{commodityObj.cName}}</text>
+              <text style="width: 660px;">{{commodityObj.cName}}</text>
             </div>
             <!--
             <div style="flex-direction:row; margin-top: 10px;">
@@ -18,10 +18,10 @@
             </div>
             -->
           </div>
-          <div slot="value" style="flex-direction: row; width: 110px;">
-            <div @click="popupOverlayClicked">
-              <text class="iconfont">&#xe6f3; 分享</text>
-              <text></text>
+          <div slot="value">
+            <div @click="popupOverlayClicked" style="flex-direction: column;">
+              <text class="iconfont" style="font-size: 42px;">&#xe6f3;</text>
+              <text style="font-size: 22px;">分享</text>
             </div>
           </div>
         </wxc-cell>
@@ -43,9 +43,15 @@
     </scroller>
 
     <wxc-popup height="160" :show="isAutoShow" pos="bottom" @wxcPopupOverlayClicked="popupOverlayAutoClick">
-      <div @click="weixinClicked" style="width: 128px; height: 128px; margin-left: 311px; margin-top: 24px;">
-        <text class="iconfont" :style="weixinIconStyle">&#xe622;</text>
-        <text style="margin-left: 10px;">微信</text>
+      <div style="flex-direction: row; padding-left: 247px;">
+        <div @click="weixinClicked('session')" style="width: 128px; height: 128px; margin-top: 24px;">
+          <text class="iconfont" :style="weixinStyle">&#xe622;</text>
+          <text style="font-size: 24px;">微信好友</text>
+        </div>
+        <div @click="weixinClicked('timeline')" style="width: 128px; height: 128px; margin-top: 24px;">
+          <text class="iconfont" :style="{fontSize: '64px', paddingLeft: '24px'}">&#xe701;</text>
+          <text style="font-size: 24px;">微信朋友圈</text>
+        </div>
       </div>
     </wxc-popup>
 
@@ -82,7 +88,7 @@ export default {
   components: { WxcCell, WxcPopup, WxcDialog, WxcMask, navbar },
   data: () => ({
     cellStyle: {},
-    weixinIconStyle: {
+    weixinStyle: {
       fontSize: "64px"
     },
     commodityObj: {
@@ -120,10 +126,15 @@ export default {
 
     globalEvent.addEventListener("weixinCallback", function(data) {
       console.log("微信分享商品详情callback的结果", data);
-      modal.toast({
-        message: "分享成功",
-        duration: 1
-      });
+      if (data) {
+        if (data.errCode == "0") {
+          modal.toast({
+            message: "分享成功",
+            duration: 1
+          });
+        }
+      }
+      _this.isAutoShow = false;
     });
 
     console.log("商品详情id", _this.commodityObj.id);
@@ -169,11 +180,11 @@ export default {
     popupOverlayClicked() {
       this.isAutoShow = true;
     },
-    weixinClicked() {
+    weixinClicked(shareType) {
       console.log("weixin clicked...");
       getWeixinShareWebpage({
         commodityId: this.commodityObj.id,
-        shareType: "session"
+        shareType: shareType
       }).then(resp => {
         console.log('微信返回', resp);
         if (resp.code !== 200) {

@@ -3618,6 +3618,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var navigator = weex.requireModule("navigator");
 var modal = weex.requireModule("modal");
@@ -3629,7 +3635,7 @@ exports.default = {
   data: function data() {
     return {
       cellStyle: {},
-      weixinIconStyle: {
+      weixinStyle: {
         fontSize: "64px"
       },
       commodityObj: {
@@ -3670,10 +3676,15 @@ exports.default = {
 
     globalEvent.addEventListener("weixinCallback", function (data) {
       console.log("微信分享商品详情callback的结果", data);
-      modal.toast({
-        message: "分享成功",
-        duration: 1
-      });
+      if (data) {
+        if (data.errCode == "0") {
+          modal.toast({
+            message: "分享成功",
+            duration: 1
+          });
+        }
+      }
+      _this.isAutoShow = false;
     });
 
     console.log("商品详情id", _this.commodityObj.id);
@@ -3717,11 +3728,11 @@ exports.default = {
     popupOverlayClicked: function popupOverlayClicked() {
       this.isAutoShow = true;
     },
-    weixinClicked: function weixinClicked() {
+    weixinClicked: function weixinClicked(shareType) {
       console.log("weixin clicked...");
       (0, _commodity.getWeixinShareWebpage)({
         commodityId: this.commodityObj.id,
-        shareType: "session"
+        shareType: shareType
       }).then(function (resp) {
         console.log('微信返回', resp);
         if (resp.code !== 200) {
@@ -3812,24 +3823,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('text', {
     staticStyle: {
-      width: "600px"
+      width: "660px"
     }
   }, [_vm._v(_vm._s(_vm.commodityObj.cName))])])]), _c('div', {
-    staticStyle: {
-      flexDirection: "row",
-      width: "110px"
-    },
     attrs: {
       "slot": "value"
     },
     slot: "value"
   }, [_c('div', {
+    staticStyle: {
+      flexDirection: "column"
+    },
     on: {
       "click": _vm.popupOverlayClicked
     }
   }, [_c('text', {
-    staticClass: ["iconfont"]
-  }, [_vm._v(" 分享")]), _c('text')])])])], 1), _c('div', [_c('wxc-cell', {
+    staticClass: ["iconfont"],
+    staticStyle: {
+      fontSize: "42px"
+    }
+  }, [_vm._v("")]), _c('text', {
+    staticStyle: {
+      fontSize: "22px"
+    }
+  }, [_vm._v("分享")])])])])], 1), _c('div', [_c('wxc-cell', {
     attrs: {
       "hasArrow": false,
       "hasBottomBorder": true,
@@ -3891,22 +3908,49 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticStyle: {
+      flexDirection: "row",
+      paddingLeft: "247px"
+    }
+  }, [_c('div', {
+    staticStyle: {
       width: "128px",
       height: "128px",
-      marginLeft: "311px",
       marginTop: "24px"
     },
     on: {
-      "click": _vm.weixinClicked
+      "click": function($event) {
+        _vm.weixinClicked('session')
+      }
     }
   }, [_c('text', {
     staticClass: ["iconfont"],
-    style: _vm.weixinIconStyle
+    style: _vm.weixinStyle
   }, [_vm._v("")]), _c('text', {
     staticStyle: {
-      marginLeft: "10px"
+      fontSize: "24px"
     }
-  }, [_vm._v("微信")])])]), _c('wxc-dialog', {
+  }, [_vm._v("微信好友")])]), _c('div', {
+    staticStyle: {
+      width: "128px",
+      height: "128px",
+      marginTop: "24px"
+    },
+    on: {
+      "click": function($event) {
+        _vm.weixinClicked('timeline')
+      }
+    }
+  }, [_c('text', {
+    staticClass: ["iconfont"],
+    style: {
+      fontSize: '64px',
+      paddingLeft: '24px'
+    }
+  }, [_vm._v("")]), _c('text', {
+    staticStyle: {
+      fontSize: "24px"
+    }
+  }, [_vm._v("微信朋友圈")])])])]), _c('wxc-dialog', {
     attrs: {
       "title": "功能开发中",
       "content": "敬请期待",

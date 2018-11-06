@@ -3688,6 +3688,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var navigator = weex.requireModule("navigator");
 var modal = weex.requireModule("modal");
@@ -3768,12 +3774,18 @@ exports.default = {
         _this2.discountDetailHttp();
       });
 
+      var _this = _this2;
       globalEvent.addEventListener("weixinCallback", function (data) {
         console.log("微信分享优惠详情callback的结果", data);
-        modal.toast({
-          message: "分享成功",
-          duration: 1
-        });
+        if (data) {
+          if (data.errCode == "0") {
+            modal.toast({
+              message: "分享成功",
+              duration: 1
+            });
+          }
+        }
+        _this.isAutoShow = false;
       });
     });
 
@@ -3787,12 +3799,13 @@ exports.default = {
     shareClicked: function shareClicked() {
       this.isAutoShow = true;
     },
-    weixinClicked: function weixinClicked() {
+    weixinClicked: function weixinClicked(shareType) {
       console.log("weixin clicked...");
       (0, _discount.getWeixinShareWebpage)({
         discountId: this.discountObj.id,
-        shareType: "session"
+        shareType: shareType
       }).then(function (resp) {
+        console.log('微信返回', resp);
         if (resp.code !== 200) {
           return;
         }
@@ -4830,7 +4843,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "timeBoxStyle": {
         backgroundColor: '#690b08',
         borderRadius: '4px',
-        width: '32px',
+        width: '38px',
         paddingLeft: '2px',
         paddingRight: '2px'
       },
@@ -4844,8 +4857,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "dotTextStyle": {
         fontSize: '24px',
         color: 'grey',
-        paddingLeft: '2px',
-        paddingRight: '2px'
+        paddingLeft: '4px',
+        paddingRight: '4px'
       }
     },
     on: {
@@ -5041,22 +5054,49 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticStyle: {
+      flexDirection: "row",
+      paddingLeft: "247px"
+    }
+  }, [_c('div', {
+    staticStyle: {
       width: "128px",
       height: "128px",
-      marginLeft: "311px",
       marginTop: "24px"
     },
     on: {
-      "click": _vm.weixinClicked
+      "click": function($event) {
+        _vm.weixinClicked('session')
+      }
     }
   }, [_c('text', {
     staticClass: ["iconfont"],
     style: _vm.weixinStyle
   }, [_vm._v("")]), _c('text', {
     staticStyle: {
-      marginLeft: "10px"
+      fontSize: "24px"
     }
-  }, [_vm._v("微信")])])]), _c('wxc-dialog', {
+  }, [_vm._v("微信好友")])]), _c('div', {
+    staticStyle: {
+      width: "128px",
+      height: "128px",
+      marginTop: "24px"
+    },
+    on: {
+      "click": function($event) {
+        _vm.weixinClicked('timeline')
+      }
+    }
+  }, [_c('text', {
+    staticClass: ["iconfont"],
+    style: {
+      fontSize: '64px',
+      paddingLeft: '24px'
+    }
+  }, [_vm._v("")]), _c('text', {
+    staticStyle: {
+      fontSize: "24px"
+    }
+  }, [_vm._v("微信朋友圈")])])])]), _c('wxc-dialog', {
     attrs: {
       "title": "功能开发中",
       "content": "敬请期待",
