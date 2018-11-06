@@ -70,8 +70,8 @@
         //修改label显示内容
         NSString *longitude = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
         NSString *latitude = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-        [[GlobalDict shared] addDict:longitude key:@"longitude"];
-        [[GlobalDict shared] addDict:latitude key:@"latitude"];
+        [[GlobalDict shared] setDict:longitude key:@"longitude"];
+        [[GlobalDict shared] setDict:latitude key:@"latitude"];
     };
 }
 

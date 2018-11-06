@@ -148,6 +148,7 @@ const dom = weex.requireModule("dom");
 const version = weex.requireModule("version");
 const appstore = weex.requireModule("appstore");
 const dictionary = weex.requireModule("dictionary");
+const globalEvent = weex.requireModule("globalEvent");
 
 export default {
   components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton, WxcDialog },
@@ -214,6 +215,30 @@ export default {
         });
       }
     );
+
+    globalEvent.addEventListener("receiveNotify", function(params) {
+      console.log('接收receiveNotify', params);
+      if (params) {
+        const nType = params['nType'];
+        if (nType == "1") {
+          console.log('通知-跳转商品详情');
+          const cid = params['cid'];
+          setStorageVal("way:commodity:id", cid);
+          navigator.push({
+            url: getEntryUrl("views/commodity/detail"),
+            animated: "true"
+          });
+        } else if (nType == "2") {
+          console.log('通知-跳转优惠详情');
+          const did = params['did'];
+          setStorageVal("way:discount:id", did);
+          navigator.push({
+            url: getEntryUrl("views/discount/detail"),
+            animated: "true"
+          });
+        }
+      }
+    });
   },
   created() {
     initIconfont();

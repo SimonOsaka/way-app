@@ -23358,6 +23358,7 @@ var dom = weex.requireModule("dom");
 var version = weex.requireModule("version");
 var appstore = weex.requireModule("appstore");
 var dictionary = weex.requireModule("dictionary");
+var globalEvent = weex.requireModule("globalEvent");
 
 exports.default = {
   components: { WxcSearchbar: _wxcSearchbar2.default, WxcTabBar: _wxcTabBar2.default, WxcCell: _wxcCell2.default, WxcButton: _wxcButton2.default, WxcDialog: _wxcDialog2.default },
@@ -23424,6 +23425,30 @@ exports.default = {
         url: (0, _utils3.getEntryUrl)("guide"),
         animated: "false"
       });
+    });
+
+    globalEvent.addEventListener("receiveNotify", function (params) {
+      console.log('接收receiveNotify', params);
+      if (params) {
+        var nType = params['nType'];
+        if (nType == "1") {
+          console.log('通知-跳转商品详情');
+          var cid = params['cid'];
+          (0, _utils3.setStorageVal)("way:commodity:id", cid);
+          navigator.push({
+            url: (0, _utils3.getEntryUrl)("views/commodity/detail"),
+            animated: "true"
+          });
+        } else if (nType == "2") {
+          console.log('通知-跳转优惠详情');
+          var did = params['did'];
+          (0, _utils3.setStorageVal)("way:discount:id", did);
+          navigator.push({
+            url: (0, _utils3.getEntryUrl)("views/discount/detail"),
+            animated: "true"
+          });
+        }
+      }
     });
   },
   created: function created() {
