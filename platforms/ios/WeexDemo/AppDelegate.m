@@ -75,10 +75,10 @@
                  apsForProduction:NO
             ];
 #if TARGET_IPHONE_SIMULATOR
-    [[GlobalDict shared] addDict:@"simulator_device_token" key:@"deviceToken"];
-    [[GlobalDict shared] addDict:@"simulator_jpushRegId" key:@"jpushRegId"];
-    [[GlobalDict shared] addDict:@"36.489342" key:@"latitude"];
-    [[GlobalDict shared] addDict:@"116.938920" key:@"longitude"];
+    [[GlobalDict shared] setDict:@"simulator_device_token" key:@"deviceToken"];
+    [[GlobalDict shared] setDict:@"simulator_jpushRegId" key:@"jpushRegId"];
+    [[GlobalDict shared] setDict:@"36.489342" key:@"latitude"];
+    [[GlobalDict shared] setDict:@"116.938920" key:@"longitude"];
 #endif
     
     NSLog(@"完成启动");
@@ -202,7 +202,6 @@
     NSDictionary * userInfo = notification.request.content.userInfo;
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
-        [JPUSHService resetBadge];
     }
     completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有 Badge、Sound、Alert 三种类型可以选择设置
 }
@@ -214,6 +213,7 @@
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         NSLog(@"从通知打开：%@", userInfo);
         [self notifyWeex:userInfo];
         [JPUSHService resetBadge];
@@ -225,7 +225,6 @@
     NSLog(@"iOS7 通知");
     // Required, iOS 7 Support
     [JPUSHService handleRemoteNotification:userInfo];
-    [JPUSHService resetBadge];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -233,7 +232,6 @@
     NSLog(@"iOS6 通知");
     // Required, For systems with less than or equal to iOS 6
     [JPUSHService handleRemoteNotification:userInfo];
-    [JPUSHService resetBadge];
 }
 
 - (void) notifyWeex:(NSDictionary*)notifyDict {

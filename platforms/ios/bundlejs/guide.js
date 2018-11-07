@@ -1582,6 +1582,8 @@ var navigator = weex.requireModule("navigator"); //
 //
 //
 
+var rootview = weex.requireModule("rootview");
+
 exports.default = {
   components: { WxcButton: _wxcButton2.default },
   data: function data() {
@@ -1601,6 +1603,7 @@ exports.default = {
     wxcButtonClicked: function wxcButtonClicked(e) {
       console.log("点击进入应用");
       (0, _utils3.setStorageVal)("way:first", "done");
+      rootview.refresh();
       navigator.pop({
         animated: false
       });
@@ -1668,7 +1671,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["indicator"]
   })], 2), _c('wxc-button', {
     attrs: {
-      "text": "开始使用",
+      "text": "立即体验",
       "type": "white",
       "size": "big",
       "btnStyle": {

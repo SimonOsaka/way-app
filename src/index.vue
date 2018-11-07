@@ -149,6 +149,7 @@ const version = weex.requireModule("version");
 const appstore = weex.requireModule("appstore");
 const dictionary = weex.requireModule("dictionary");
 const globalEvent = weex.requireModule("globalEvent");
+const titlebar = weex.requireModule("titlebar");
 
 export default {
   components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton, WxcDialog },
@@ -200,7 +201,7 @@ export default {
     }
   }),
   beforeCreate() {
-    setPageTitle("首页");
+    initIconfont();
     getStorageVal("way:first").then(
       data => {
         console.log("app非第一次启动，不需要引导");
@@ -241,7 +242,7 @@ export default {
     });
   },
   created() {
-    initIconfont();
+    titlebar.setTitle("首页");
 
     this.initMainTab();
 
@@ -354,15 +355,18 @@ export default {
       console.log("switch to index ", index);
       if (index == 1) {
         setPageTitle("优惠信息");
+        titlebar.setTitle("优惠信息");
         if (!this.discountInit) {
           this.loadDiscountTabContent();
         }
       } else if (index == 2) {
         console.log("into my tab");
         setPageTitle("个人信息");
+        titlebar.setTitle("我的主页");
         this.loadMyTabContent();
       } else {
         setPageTitle("首页");
+        titlebar.setTitle("首页");
         console.log("init first tab", this.main.init);
         if (this.main.init == false) {
           this.main.init = true;
@@ -423,6 +427,7 @@ export default {
         },
         e => {
           this.$refs["wxc-tab-bar"].setPage(0);
+          titlebar.setTitle("首页");
           navigator.push({
             url: getEntryUrl("views/city/index"),
             animated: "true"

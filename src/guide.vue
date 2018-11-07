@@ -6,7 +6,7 @@
         </div>
         <indicator class="indicator"></indicator>
         </slider>
-        <wxc-button text="开始使用" type="white" size="big" :btnStyle="{ position: 'relative', bottom: '260px', left: '206px', visibility: visible}"
+        <wxc-button text="立即体验" type="white" size="big" :btnStyle="{ position: 'relative', bottom: '260px', left: '206px', visibility: visible}"
               @wxcButtonClicked="wxcButtonClicked"></wxc-button>
     </div>
 </template>
@@ -16,6 +16,7 @@ import { Utils, WxcButton } from "weex-ui";
 import { setPageTitle, setStorageVal } from "./tools/utils.js";
 import { guide1, guide2, guide3 } from "./tools/guide.js";
 const navigator = weex.requireModule("navigator");
+const rootview = weex.requireModule("rootview");
 
 export default {
   components: { WxcButton },
@@ -34,6 +35,7 @@ export default {
     wxcButtonClicked(e) {
       console.log("点击进入应用");
       setStorageVal("way:first", "done");
+      rootview.refresh();
       navigator.pop({
         animated: false
       });

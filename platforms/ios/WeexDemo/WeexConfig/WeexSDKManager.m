@@ -17,6 +17,8 @@
 #import "../WeexModule/WXAppStoreModule.h"
 #import "../WeexModule/WXWeixinModule.h"
 #import "../WeexModule/WXDictionaryModule.h"
+#import "../WeexModule/WXTitleBarModule.h"
+#import "../WeexModule/WXRootViewModule.h"
 
 @implementation WeexSDKManager
 
@@ -61,6 +63,8 @@
     [WXSDKEngine registerModule:@"appstore" withClass:[WXAppStoreModule class]];
     [WXSDKEngine registerModule:@"weixin" withClass:[WXWeixinModule class]];
     [WXSDKEngine registerModule:@"dictionary" withClass:[WXDictionaryModule class]];
+    [WXSDKEngine registerModule:@"titlebar" withClass:[WXTitleBarModule class]];
+    [WXSDKEngine registerModule:@"rootview" withClass:[WXRootViewModule class]];
     
     [WXSDKEngine registerHandler:[WXImgLoaderDefaultImpl new] withProtocol:@protocol(WXImgLoaderProtocol)];
     

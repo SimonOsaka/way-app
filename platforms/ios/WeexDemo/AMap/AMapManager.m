@@ -18,6 +18,7 @@
     static dispatch_once_t onceToken;
     static AMapManager *instance;
     dispatch_once(&onceToken, ^{
+        NSLog(@"高德地图-单例创建start");
         instance = [[AMapManager alloc] initManager];
     });
     return instance;
@@ -37,6 +38,7 @@
 #pragma mark - initCompleteBlock
 - (void)initCompleteBlock
 {
+    NSLog(@"高德地图-初始化initCompleteBlock");
     self.completionBlock = ^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error)
     {
         if (error != nil && error.code == AMapLocationErrorLocateFailed)
@@ -70,6 +72,8 @@
         //修改label显示内容
         NSString *longitude = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
         NSString *latitude = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+        NSLog(@"高德地图-longitude：%@，latitude：%@", longitude, latitude);
+        
         [[GlobalDict shared] setDict:longitude key:@"longitude"];
         [[GlobalDict shared] setDict:latitude key:@"latitude"];
     };
@@ -77,6 +81,7 @@
 
 - (void)configLocationManager
 {
+    NSLog(@"高德地图-配置configLocationManager");
     self.locationManager = [[AMapLocationManager alloc] init];
     
     [self.locationManager setDelegate: self];

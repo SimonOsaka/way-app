@@ -19,9 +19,9 @@ export default {
   tabIconFontStyles: {
     bgColor: '#FFFFFF',
     titleColor: '#666666',
-    activeTitleColor: '#3D3D3D',
+    activeTitleColor: '#333333',
     activeBgColor: '#FFFFFF',
-    isActiveTitleBold: true,
+    isActiveTitleBold: false,
     width: 160,
     height: 120,
     fontSize: 24,

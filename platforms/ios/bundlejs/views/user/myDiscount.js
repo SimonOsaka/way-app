@@ -1378,7 +1378,7 @@ function http() {
         resolve(response.data);
       } else {
         modal.toast({
-          message: "Somthing error, " + response.statusText,
+          message: "\u7F51\u7EDC\u65E0\u8FDE\u63A5",
           duration: 1
         });
         console.log("stream reject", response);
@@ -1395,8 +1395,8 @@ function checkNetworkStatus() {
     if (statusText === "NONE") {
       console.log("checkNetworkStatus", "当前没有网络");
       weex.requireModule("modal").toast({
-        message: "网络无法连接，请检查网络配置",
-        duration: 3
+        message: "网络无连接",
+        duration: 1
       });
       ok = false;
     } else {

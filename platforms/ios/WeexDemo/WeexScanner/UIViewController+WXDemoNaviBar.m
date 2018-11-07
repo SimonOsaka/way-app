@@ -32,7 +32,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                                                                       [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
-    self.navigationItem.title = @"急促";
+//    self.navigationItem.title = @"急促";
     
     if (self.navigationItem.leftBarButtonItem) return;
     

@@ -20371,7 +20371,7 @@ function http() {
         resolve(response.data);
       } else {
         modal.toast({
-          message: "Somthing error, " + response.statusText,
+          message: "\u7F51\u7EDC\u65E0\u8FDE\u63A5",
           duration: 1
         });
         console.log("stream reject", response);
@@ -20388,8 +20388,8 @@ function checkNetworkStatus() {
     if (statusText === "NONE") {
       console.log("checkNetworkStatus", "当前没有网络");
       weex.requireModule("modal").toast({
-        message: "网络无法连接，请检查网络配置",
-        duration: 3
+        message: "网络无连接",
+        duration: 1
       });
       ok = false;
     } else {
@@ -23359,6 +23359,7 @@ var version = weex.requireModule("version");
 var appstore = weex.requireModule("appstore");
 var dictionary = weex.requireModule("dictionary");
 var globalEvent = weex.requireModule("globalEvent");
+var titlebar = weex.requireModule("titlebar");
 
 exports.default = {
   components: { WxcSearchbar: _wxcSearchbar2.default, WxcTabBar: _wxcTabBar2.default, WxcCell: _wxcCell2.default, WxcButton: _wxcButton2.default, WxcDialog: _wxcDialog2.default },
@@ -23414,7 +23415,7 @@ exports.default = {
   beforeCreate: function beforeCreate() {
     var _this2 = this;
 
-    (0, _utils3.setPageTitle)("首页");
+    (0, _utils3.initIconfont)();
     (0, _utils3.getStorageVal)("way:first").then(function (data) {
       console.log("app非第一次启动，不需要引导");
       _this2.checkAppVersion();
@@ -23454,7 +23455,7 @@ exports.default = {
   created: function created() {
     var _this3 = this;
 
-    (0, _utils3.initIconfont)();
+    titlebar.setTitle("首页");
 
     this.initMainTab();
 
@@ -23559,15 +23560,18 @@ exports.default = {
       console.log("switch to index ", index);
       if (index == 1) {
         (0, _utils3.setPageTitle)("优惠信息");
+        titlebar.setTitle("优惠信息");
         if (!this.discountInit) {
           this.loadDiscountTabContent();
         }
       } else if (index == 2) {
         console.log("into my tab");
         (0, _utils3.setPageTitle)("个人信息");
+        titlebar.setTitle("我的主页");
         this.loadMyTabContent();
       } else {
         (0, _utils3.setPageTitle)("首页");
+        titlebar.setTitle("首页");
         console.log("init first tab", this.main.init);
         if (this.main.init == false) {
           this.main.init = true;
@@ -23626,6 +23630,7 @@ exports.default = {
         _this.fetchDiscountHttp();
       }, function (e) {
         _this7.$refs["wxc-tab-bar"].setPage(0);
+        titlebar.setTitle("首页");
         navigator.push({
           url: (0, _utils3.getEntryUrl)("views/city/index"),
           animated: "true"
@@ -24530,9 +24535,9 @@ exports.default = {
   tabIconFontStyles: {
     bgColor: '#FFFFFF',
     titleColor: '#666666',
-    activeTitleColor: '#3D3D3D',
+    activeTitleColor: '#333333',
     activeBgColor: '#FFFFFF',
-    isActiveTitleBold: true,
+    isActiveTitleBold: false,
     width: 160,
     height: 120,
     fontSize: 24,

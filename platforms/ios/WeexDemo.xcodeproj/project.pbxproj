@@ -15,6 +15,8 @@
 		0A996E0A1E249DAF0055CB7E /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A996E091E249DAF0055CB7E /* libstdc++.tbd */; };
 		0AE277DC1DE56A5600C6D86A /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0AE277DB1DE56A5600C6D86A /* config.xml */; };
 		59EA0DA71D2E7D19004F904A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EA0DA61D2E7D19004F904A /* Images.xcassets */; };
+		6E13FC502192B4AA00A393E1 /* WXTitleBarModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E13FC4F2192B4AA00A393E1 /* WXTitleBarModule.m */; };
+		6E13FC532192CE6C00A393E1 /* WXRootViewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E13FC522192CE6C00A393E1 /* WXRootViewModule.m */; };
 		6E1DC29B21870823001807A4 /* WXSafariModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29A21870823001807A4 /* WXSafariModule.m */; };
 		6E1DC29E21886316001807A4 /* WXNetworkModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29D21886316001807A4 /* WXNetworkModule.m */; };
 		6E34C0AD218B28940006CA15 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E34C0AC218B28940006CA15 /* WXApiManager.m */; };
@@ -70,6 +72,10 @@
 		37DB381D5815C06F147D4D51 /* Pods-WeexDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeexDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeexDemo/Pods-WeexDemo.release.xcconfig"; sourceTree = "<group>"; };
 		59EA0DA61D2E7D19004F904A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6E13FC4D219185B400A393E1 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		6E13FC4E2192B48B00A393E1 /* WXTitleBarModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXTitleBarModule.h; sourceTree = "<group>"; };
+		6E13FC4F2192B4AA00A393E1 /* WXTitleBarModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXTitleBarModule.m; sourceTree = "<group>"; };
+		6E13FC512192CE4E00A393E1 /* WXRootViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXRootViewModule.h; sourceTree = "<group>"; };
+		6E13FC522192CE6C00A393E1 /* WXRootViewModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXRootViewModule.m; sourceTree = "<group>"; };
 		6E1DC29921870806001807A4 /* WXSafariModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXSafariModule.h; sourceTree = "<group>"; };
 		6E1DC29A21870823001807A4 /* WXSafariModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXSafariModule.m; sourceTree = "<group>"; };
 		6E1DC29C218862FA001807A4 /* WXNetworkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXNetworkModule.h; sourceTree = "<group>"; };
@@ -198,6 +204,10 @@
 				6E34C0B3218EC8370006CA15 /* WXDictionaryModule.m */,
 				6E4DB538218AD01700E2968C /* WXWeixinModule.h */,
 				6E4DB539218AD02000E2968C /* WXWeixinModule.m */,
+				6E13FC4E2192B48B00A393E1 /* WXTitleBarModule.h */,
+				6E13FC4F2192B4AA00A393E1 /* WXTitleBarModule.m */,
+				6E13FC512192CE4E00A393E1 /* WXRootViewModule.h */,
+				6E13FC522192CE6C00A393E1 /* WXRootViewModule.m */,
 			);
 			path = WeexModule;
 			sourceTree = "<group>";
@@ -593,9 +603,11 @@
 				6E4DB5342189B27000E2968C /* WXVersionModule.m in Sources */,
 				6E34C0B4218EC8370006CA15 /* WXDictionaryModule.m in Sources */,
 				0A4A05FA1E0405070046E1BE /* WXDemoViewController.m in Sources */,
+				6E13FC502192B4AA00A393E1 /* WXTitleBarModule.m in Sources */,
 				6E4DB537218ABA3D00E2968C /* WXAppStoreModule.m in Sources */,
 				775BEE831C1E8ECC008D1629 /* AppDelegate.m in Sources */,
 				0A4A05F91E0405070046E1BE /* UIViewController+WXDemoNaviBar.m in Sources */,
+				6E13FC532192CE6C00A393E1 /* WXRootViewModule.m in Sources */,
 				775BEE801C1E8ECC008D1629 /* main.m in Sources */,
 				6E1DC29B21870823001807A4 /* WXSafariModule.m in Sources */,
 				0A7758D71EA0D39C00AE9815 /* WXImgLoaderDefaultImpl.m in Sources */,
