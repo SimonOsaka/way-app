@@ -22,8 +22,9 @@ WX_EXPORT_METHOD(@selector(openSafariUrl:))
                                          NSLog(@"Open %d",success);
                                      }];
         } else {
-            BOOL success = [[UIApplication sharedApplication] openURL:url];
-            NSLog(@"Open  %d",success);
+//            BOOL success =
+            [[UIApplication sharedApplication] openURL:url];
+//            NSLog(@"Open  %d",success);
         }
         
     } else{

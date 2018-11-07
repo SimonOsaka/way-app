@@ -17,6 +17,7 @@
 		59EA0DA71D2E7D19004F904A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EA0DA61D2E7D19004F904A /* Images.xcassets */; };
 		6E13FC502192B4AA00A393E1 /* WXTitleBarModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E13FC4F2192B4AA00A393E1 /* WXTitleBarModule.m */; };
 		6E13FC532192CE6C00A393E1 /* WXRootViewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E13FC522192CE6C00A393E1 /* WXRootViewModule.m */; };
+		6E13FC552193058C00A393E1 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E13FC542193058C00A393E1 /* iconfont.ttf */; };
 		6E1DC29B21870823001807A4 /* WXSafariModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29A21870823001807A4 /* WXSafariModule.m */; };
 		6E1DC29E21886316001807A4 /* WXNetworkModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1DC29D21886316001807A4 /* WXNetworkModule.m */; };
 		6E34C0AD218B28940006CA15 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E34C0AC218B28940006CA15 /* WXApiManager.m */; };
@@ -76,6 +77,7 @@
 		6E13FC4F2192B4AA00A393E1 /* WXTitleBarModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXTitleBarModule.m; sourceTree = "<group>"; };
 		6E13FC512192CE4E00A393E1 /* WXRootViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXRootViewModule.h; sourceTree = "<group>"; };
 		6E13FC522192CE6C00A393E1 /* WXRootViewModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXRootViewModule.m; sourceTree = "<group>"; };
+		6E13FC542193058C00A393E1 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = iconfont.ttf; path = WeexDemo/iconfont.ttf; sourceTree = "<group>"; };
 		6E1DC29921870806001807A4 /* WXSafariModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXSafariModule.h; sourceTree = "<group>"; };
 		6E1DC29A21870823001807A4 /* WXSafariModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXSafariModule.m; sourceTree = "<group>"; };
 		6E1DC29C218862FA001807A4 /* WXNetworkModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXNetworkModule.h; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 		DC65C4421CEB006C00B2F84F /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				6E13FC542193058C00A393E1 /* iconfont.ttf */,
 				DCD286DF1CF491AC00C601CA /* weex-icon.png */,
 				DC5E503C1D0D97130059F0EB /* weex.png */,
 				DC5E503D1D0D97130059F0EB /* weex@2x.png */,
@@ -405,7 +408,7 @@
 					775BEE7A1C1E8ECC008D1629 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 2SKZHQ6Q2Y;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -449,6 +452,7 @@
 			files = (
 				DC5E503E1D0D97130059F0EB /* weex.png in Resources */,
 				DC5E503F1D0D97130059F0EB /* weex@2x.png in Resources */,
+				6E13FC552193058C00A393E1 /* iconfont.ttf in Resources */,
 				DCD286E01CF491AC00C601CA /* weex-icon.png in Resources */,
 				59EA0DA71D2E7D19004F904A /* Images.xcassets in Resources */,
 				0A86901F1E1E7872000A3F81 /* WeexDemo-Info.plist in Resources */,
@@ -737,8 +741,8 @@
 				CODE_SIGN_ENTITLEMENTS = WeexDemo/WeexDemo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 2SKZHQ6Q2Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -769,7 +773,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xzl.jicu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "jicu development provision";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -781,10 +785,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WeexDemo/WeexDemo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: zhongliang xu (2SKZHQ6Q2Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: zhongliang xu (2SKZHQ6Q2Y)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 2SKZHQ6Q2Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -815,7 +819,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xzl.jicu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "jicu distribution provision";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

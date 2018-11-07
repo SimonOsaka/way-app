@@ -1,3 +1,4 @@
+const referer = "ios.jicu.vip";
 export function http(OPTIONS = {}) {
   if (!checkNetworkStatus()) {
     console.log("终止网络请求");
@@ -20,6 +21,7 @@ export function http(OPTIONS = {}) {
 
   let options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
+  options.headers['referer'] = referer;
   if (options.method === "GET") {
     if (options.params) {
       let paramStr = Object.keys(options.params).reduce(

@@ -450,7 +450,7 @@ function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('https://at.alicdn.com/t/font_707137_i0keyt6zb4q.ttf')"
+    src: "url('../iconfont.ttf')"
   });
 }
 
@@ -1249,6 +1249,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.http = http;
+var referer = "ios.jicu.vip";
 function http() {
   var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -1273,6 +1274,7 @@ function http() {
 
   var options = Object.assign(DEFAULT_OPTION, OPTIONS);
   options.url = apiRoot + options.url;
+  options.headers['referer'] = referer;
   if (options.method === "GET") {
     if (options.params) {
       var paramStr = Object.keys(options.params).reduce(function (acc, key) {
