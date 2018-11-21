@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>weixin</string>
-		<string>wechat</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
@@ -39,7 +34,12 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>1.0.2</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>weixin</string>
+		<string>wechat</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -50,7 +50,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>获取定位信息用于为用户提供附近的商家位置信息、距离信息和优惠信息。</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

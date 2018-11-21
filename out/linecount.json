@@ -1,0 +1,195 @@
+{
+    "extension": "linecount",
+    "version": "0.1.7",
+    "workspace": "/Volumes/code/way/way-app-ios",
+    "linecount": [
+        {
+            "version": "0.1.7",
+            "counttime": "2018-11-21 14:51:55",
+            "filesum": 4,
+            "codesum": 980,
+            "commentsum": 38,
+            "blanksum": 33,
+            "filelist": [
+                {
+                    "blank": 3,
+                    "code": 49,
+                    "comment": 4,
+                    "filename": "src/404.vue"
+                },
+                {
+                    "blank": 1,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src/entry.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 80,
+                    "comment": 0,
+                    "filename": "src/guide.vue"
+                },
+                {
+                    "blank": 26,
+                    "code": 848,
+                    "comment": 34,
+                    "filename": "src/index.vue"
+                }
+            ]
+        },
+        {
+            "version": "0.1.7",
+            "counttime": "2018-11-21 14:52:28",
+            "filesum": 24,
+            "codesum": 3352,
+            "commentsum": 64,
+            "blanksum": 158,
+            "filelist": [
+                {
+                    "blank": 3,
+                    "code": 49,
+                    "comment": 4,
+                    "filename": "src/404.vue"
+                },
+                {
+                    "blank": 0,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/api/commodity.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/api/discount.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/api/user.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src/components/category.vue"
+                },
+                {
+                    "blank": 1,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src/entry.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 34,
+                    "comment": 1,
+                    "filename": "src/entry/tabbar/config.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 80,
+                    "comment": 0,
+                    "filename": "src/guide.vue"
+                },
+                {
+                    "blank": 2,
+                    "code": 109,
+                    "comment": 10,
+                    "filename": "src/include/navbar.vue"
+                },
+                {
+                    "blank": 26,
+                    "code": 848,
+                    "comment": 34,
+                    "filename": "src/index.vue"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "src/tools/filters.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src/tools/guide.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 77,
+                    "comment": 3,
+                    "filename": "src/tools/http.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 64,
+                    "comment": 5,
+                    "filename": "src/tools/image.js"
+                },
+                {
+                    "blank": 16,
+                    "code": 177,
+                    "comment": 4,
+                    "filename": "src/tools/utils.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 152,
+                    "comment": 0,
+                    "filename": "src/views/city/index.vue"
+                },
+                {
+                    "blank": 11,
+                    "code": 224,
+                    "comment": 2,
+                    "filename": "src/views/commodity/detail.vue"
+                },
+                {
+                    "blank": 20,
+                    "code": 339,
+                    "comment": 0,
+                    "filename": "src/views/discount/create.vue"
+                },
+                {
+                    "blank": 19,
+                    "code": 455,
+                    "comment": 1,
+                    "filename": "src/views/discount/detail.vue"
+                },
+                {
+                    "blank": 3,
+                    "code": 46,
+                    "comment": 0,
+                    "filename": "src/views/discount/posMap.vue"
+                },
+                {
+                    "blank": 4,
+                    "code": 115,
+                    "comment": 0,
+                    "filename": "src/views/shop/detail.vue"
+                },
+                {
+                    "blank": 4,
+                    "code": 56,
+                    "comment": 0,
+                    "filename": "src/views/user/agreements.vue"
+                },
+                {
+                    "blank": 18,
+                    "code": 324,
+                    "comment": 0,
+                    "filename": "src/views/user/login.vue"
+                },
+                {
+                    "blank": 4,
+                    "code": 143,
+                    "comment": 0,
+                    "filename": "src/views/user/myDiscount.vue"
+                }
+            ]
+        }
+    ]
+}

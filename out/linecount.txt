@@ -1,0 +1,52 @@
+===============================================================================
+EXTENSION NAME : linecount
+EXTENSION VERSION : 0.1.7
+-------------------------------------------------------------------------------
+count time : 2018-11-21 14:51:55
+count workspace : /Volumes/code/way/way-app-ios
+total files : 4
+total code lines : 980
+total comment lines : 38
+total blank lines : 33
+
+src/404.vue, code is 49, comment is 4, blank is 3.
+src/entry.js, code is 3, comment is 0, blank is 1.
+src/guide.vue, code is 80, comment is 0, blank is 3.
+src/index.vue, code is 848, comment is 34, blank is 26.
+===============================================================================
+===============================================================================
+EXTENSION NAME : linecount
+EXTENSION VERSION : 0.1.7
+-------------------------------------------------------------------------------
+count time : 2018-11-21 14:52:28
+count workspace : /Volumes/code/way/way-app-ios
+total files : 24
+total code lines : 3352
+total comment lines : 64
+total blank lines : 158
+
+src/404.vue, code is 49, comment is 4, blank is 3.
+src/api/commodity.js, code is 9, comment is 0, blank is 0.
+src/api/discount.js, code is 9, comment is 0, blank is 0.
+src/api/user.js, code is 9, comment is 0, blank is 0.
+src/components/category.vue, code is 27, comment is 0, blank is 2.
+src/entry.js, code is 3, comment is 0, blank is 1.
+src/entry/tabbar/config.js, code is 34, comment is 1, blank is 1.
+src/guide.vue, code is 80, comment is 0, blank is 3.
+src/include/navbar.vue, code is 109, comment is 10, blank is 2.
+src/index.vue, code is 848, comment is 34, blank is 26.
+src/tools/filters.js, code is 0, comment is 0, blank is 0.
+src/tools/guide.js, code is 3, comment is 0, blank is 2.
+src/tools/http.js, code is 77, comment is 3, blank is 5.
+src/tools/image.js, code is 64, comment is 5, blank is 7.
+src/tools/utils.js, code is 177, comment is 4, blank is 16.
+src/views/city/index.vue, code is 152, comment is 0, blank is 7.
+src/views/commodity/detail.vue, code is 224, comment is 2, blank is 11.
+src/views/discount/create.vue, code is 339, comment is 0, blank is 20.
+src/views/discount/detail.vue, code is 455, comment is 1, blank is 19.
+src/views/discount/posMap.vue, code is 46, comment is 0, blank is 3.
+src/views/shop/detail.vue, code is 115, comment is 0, blank is 4.
+src/views/user/agreements.vue, code is 56, comment is 0, blank is 4.
+src/views/user/login.vue, code is 324, comment is 0, blank is 18.
+src/views/user/myDiscount.vue, code is 143, comment is 0, blank is 4.
+===============================================================================
