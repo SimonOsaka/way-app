@@ -140,12 +140,12 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2018 tencent.com. All rights reserved.
+			<string>Copyright 2017 tencent.com. All rights reserved.
 </string>
 			<key>License</key>
 			<string>Copyright</string>
 			<key>Title</key>
-			<string>WechatOpenSDK</string>
+			<string>WechatOpenSDK_NoPay</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

@@ -85,9 +85,9 @@ THE SOFTWARE.
 
 
 
-## WechatOpenSDK
+## WechatOpenSDK_NoPay
 
-Copyright 2018 tencent.com. All rights reserved.
+Copyright 2017 tencent.com. All rights reserved.
 
 
 ## WeexPluginLoader

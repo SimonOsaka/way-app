@@ -24,7 +24,7 @@ PODS:
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
   - SocketRocket (0.4.2)
-  - WechatOpenSDK (1.8.3)
+  - WechatOpenSDK_NoPay (1.8.0)
   - WeexPluginLoader (0.0.1.9.1):
     - WeexSDK
   - WeexSDK (0.18.0.3)
@@ -35,7 +35,7 @@ DEPENDENCIES:
   - JPush (= 3.1.1)
   - SDWebImage (= 3.7.5)
   - SocketRocket (= 0.4.2)
-  - WechatOpenSDK
+  - WechatOpenSDK_NoPay
   - WeexPluginLoader
   - WeexSDK (= 0.18.0.3)
 
@@ -48,7 +48,7 @@ SPEC REPOS:
     - JPush
     - SDWebImage
     - SocketRocket
-    - WechatOpenSDK
+    - WechatOpenSDK_NoPay
     - WeexPluginLoader
     - WeexSDK
 
@@ -60,10 +60,10 @@ SPEC CHECKSUMS:
   JPush: fe916067d4b87553a2fb9edd6dd72c026a0e0686
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
-  WechatOpenSDK: 3117412f8aafde4758cac1e8d20b93c67cafcfef
+  WechatOpenSDK_NoPay: 27366a152202a6a7c8a15fad4d07261e87fb2389
   WeexPluginLoader: 85c1304f8ba29864e58531614a0acfeceef1b85c
   WeexSDK: 173541f2d0042664168b305952398145c0c6039c
 
-PODFILE CHECKSUM: 3882030620d9fdddbba13b16658e0b7da1517e89
+PODFILE CHECKSUM: a4464c4ffa65ce4cb02d2e4fb8321e4d4acca5b2
 
 COCOAPODS: 1.5.3
