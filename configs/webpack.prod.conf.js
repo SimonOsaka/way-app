@@ -52,7 +52,7 @@ const webConfig = webpackMerge(commonConfig[0], {
    * See: http://webpack.github.io/docs/configuration.html#devtool
    * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
    */
-  devtool: config.prod.devtool,
+  // devtool: config.prod.devtool,
   /**
    * Options affecting the output of the compilation.
    *

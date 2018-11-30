@@ -87,8 +87,6 @@
       </div>
     </wxc-popup>
 
-    <wxc-dialog title="功能开发中" content="敬请期待" :show="show" :single="true" @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked"></wxc-dialog>
-
     <wxc-mask height="80" width="240" border-radius="5" duration="200" mask-bg-color="#FFFFFF" :has-animation="false" :has-overlay="true" :show-close="false" :show="expiredShow">
       <div style="flex-direction: row; justify-content: center; align-items: center; padding-top: 5px;">
         <text class="iconfont" style="font-size: 64px;">&#xe65f;</text>
@@ -164,7 +162,6 @@ export default {
       highlight: ""
     },
     isAutoShow: false,
-    show: false,
     realUserLoginId: 0,
     realUserToken: "",
     expiredShow: false,
@@ -240,9 +237,6 @@ export default {
         console.log("微信分享优惠详情，请求参数", weixinParams);
         weixin.shareWebpage(weixinParams);
       });
-    },
-    wxcDialogConfirmBtnClicked() {
-      this.show = false;
     },
     discountDetailHttp() {
       let _this = this;

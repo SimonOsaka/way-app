@@ -54,9 +54,6 @@
         </div>
       </div>
     </wxc-popup>
-
-    <wxc-dialog title="功能开发中" content="敬请期待" :show="show" :single="true" @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked"></wxc-dialog>
-
   </div>
 </template>
 
@@ -101,8 +98,7 @@ export default {
       shopName: "",
       shopLogoUrl: ""
     },
-    isAutoShow: false,
-    show: false
+    isAutoShow: false
   }),
   created() {
     initIconfont();
@@ -194,9 +190,6 @@ export default {
         console.log("微信分享商品详情，请求参数", weixinParams);
         weixin.shareWebpage(weixinParams);
       });
-    },
-    wxcDialogConfirmBtnClicked() {
-      this.show = false;
     },
     shopCellClicked() {
       setStorageVal("way:shop:id", this.commodityObj.shopId);
