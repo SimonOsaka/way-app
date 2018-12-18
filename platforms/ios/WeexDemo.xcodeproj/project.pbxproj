@@ -819,7 +819,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xzl.jicu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = jicu_adhoc_distribution;
+				PROVISIONING_PROFILE_SPECIFIER = "jicu appstore provision";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
