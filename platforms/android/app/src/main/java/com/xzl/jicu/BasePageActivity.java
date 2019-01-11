@@ -9,7 +9,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
-import com.taobao.weex.WXSDKInstance;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
@@ -18,6 +17,7 @@ import com.xzl.jicu.util.APKVersionCodeUtils;
 import com.xzl.jicu.util.GlobalMap;
 import com.xzl.jicu.util.NetUtil;
 import com.xzl.jicu.util.WXApi;
+import com.xzl.jicu.util.WXSdkUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +42,7 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
         APKVersionCodeUtils.APP_VERSION = appVersion;
 
         super.onCreate(arg0);
+        WXSdkUtils.setRootInstance(mInstance);
         evevt = this;
         inspectNet();
         Log.d(TAG, "app版本：" + appVersion);

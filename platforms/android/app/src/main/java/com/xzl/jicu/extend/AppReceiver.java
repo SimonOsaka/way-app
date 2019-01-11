@@ -9,6 +9,8 @@ import android.util.Log;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.WXSDKManager;
+import com.xzl.jicu.BasePageActivity;
+import com.xzl.jicu.util.WXSdkUtils;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -60,7 +62,7 @@ public class AppReceiver extends BroadcastReceiver {
                     }
 
                     Log.d(TAG, "用户点击打开了通知extraMap：" + extraMap);
-                    WXSDKInstance wxsdkInstance = new WXSDKInstance(context);
+                    WXSDKInstance wxsdkInstance = WXSdkUtils.getRootInstance();
                     wxsdkInstance.fireGlobalEventCallback("receiveNotify", extraMap);
                 }
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
@@ -74,7 +76,7 @@ public class AppReceiver extends BroadcastReceiver {
                 Log.d(TAG, "Unhandled intent - " + intent.getAction());
             }
         } catch (Exception e) {
-
+            Log.e(TAG, "接收通知发生异常", e);
         }
     }
 
