@@ -444,11 +444,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -631,6 +632,13 @@ function modalDebug() {
 
 function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
 }
 
 /***/ }),
@@ -1360,6 +1368,7 @@ module.exports = {
 //
 //
 //
+//
 
 module.exports = {
   props: {
@@ -1368,7 +1377,7 @@ module.exports = {
     backgroundColor: { default: 'black' },
     //导航条高度
     height: { default: 88 },
-    //导航条标题 
+    //导航条标题
     title: { default: '' },
     //导航条标题颜色
     titleColor: { default: 'black' },
@@ -1392,6 +1401,9 @@ module.exports = {
     onclickleftitem: function onclickleftitem(e) {
       this.$emit('naviBarLeftItemClick');
     }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
 
@@ -1400,7 +1412,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.show) ? _c('div', {
     staticClass: ["container"],
     style: {
       height: _vm.height,
@@ -1458,7 +1470,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "naviItemPosition": "center",
       "value": _vm.title
     }
-  })])
+  })]) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -1589,7 +1601,7 @@ var _navbar2 = _interopRequireDefault(_navbar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var modal = weex.requireModule("modal"); //
+var modal = weex.requireModule('modal'); //
 //
 //
 //
@@ -1608,26 +1620,26 @@ var modal = weex.requireModule("modal"); //
 //
 //
 
-var navigator = weex.requireModule("navigator");
+var navigator = weex.requireModule('navigator');
 
 exports.default = {
   components: { WxcResult: _wxcResult2.default, navbar: _navbar2.default },
   data: function data() {
     return {
       show: true,
-      type: "errorPage",
+      type: 'errorPage',
       customSet: {
         errorPage: {
-          button: "走错了",
-          content: "亲，出错了",
-          pic: "https://gw.alicdn.com/tfs/TB1lgzNfBHH8KJjy0FbXXcqlpXa-320-320.png"
+          button: '走错了',
+          content: '亲，出错了',
+          pic: 'https://gw.alicdn.com/tfs/TB1lgzNfBHH8KJjy0FbXXcqlpXa-320-320.png'
         }
       }
     };
   },
   computed: {},
   beforeCreate: function beforeCreate() {
-    (0, _utils.setPageTitle)("404未找到");
+    (0, _utils.titlebar)('404未找到');
     var pageHeight = Utils.env.getPageHeight();
     var screenHeight = Utils.env.getScreenHeight();
     this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' };

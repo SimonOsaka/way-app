@@ -446,11 +446,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -633,6 +634,13 @@ function modalDebug() {
 
 function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
 }
 
 /***/ }),
@@ -1040,7 +1048,7 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _utils = __webpack_require__(0);
@@ -1095,83 +1103,80 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var navigator = weex.requireModule('navigator');
 
 exports.default = {
-    components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
-    data: function data() {
-        return {
-            discount: {
-                list: [],
-                pageNum: 1,
-                pageSize: 10
-            },
-            my: {
-                userLoginId: 0,
-                userToken: ''
-            },
-            noData: false,
-            scrollerStyle: {
-                width: '750px'
-            }
-        };
-    },
-    beforeCreate: function beforeCreate() {
-        (0, _utils3.setPageTitle)('我发布的优惠信息');
-    },
-    created: function created() {
-        var _this2 = this;
+  components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
+  data: function data() {
+    return {
+      discount: {
+        list: [],
+        pageNum: 1,
+        pageSize: 10
+      },
+      my: {
+        userLoginId: 0,
+        userToken: ''
+      },
+      noData: false,
+      scrollerStyle: {
+        width: '750px'
+      }
+    };
+  },
+  created: function created() {
+    var _this2 = this;
 
-        (0, _utils3.initIconfont)();
-        var pageHeight = _utils2.default.env.getPageHeight();
-        var screenHeight = _utils2.default.env.getScreenHeight();
-        this.scrollerStyle = {
-            height: pageHeight + 'px',
-            marginTop: screenHeight - pageHeight + 'px'
-        };
-        (0, _utils3.getStorageVal)('way:user').then(function (data) {
-            var user = JSON.parse(data);
-            _this2.my.userLoginId = user.userLoginId;
-            _this2.my.userToken = user.userToken;
-            _this2.getDiscountList();
-        }, function (error) {
-            _this2.my.userLoginId = 0;
-            navigator.pop();
-        });
-    },
+    (0, _utils3.initIconfont)();
+    (0, _utils3.titlebar)('已发布优惠');
+    var pageHeight = _utils2.default.env.getPageHeight();
+    var screenHeight = _utils2.default.env.getScreenHeight();
+    this.scrollerStyle = {
+      height: pageHeight + 'px'
+    };
+    (0, _utils3.getStorageVal)('way:user').then(function (data) {
+      var user = JSON.parse(data);
+      _this2.my.userLoginId = user.userLoginId;
+      _this2.my.userToken = user.userToken;
+      _this2.getDiscountList();
+    }, function (error) {
+      _this2.my.userLoginId = 0;
+      navigator.pop();
+    });
+  },
 
-    methods: {
-        loadMore: function loadMore(event) {
-            this.getDiscountList();
+  methods: {
+    loadMore: function loadMore(event) {
+      this.getDiscountList();
+    },
+    discountScrollHandler: function discountScrollHandler(e) {
+      console.log(e.contentOffset.y);
+    },
+    getDiscountList: function getDiscountList() {
+      console.log('加载优惠信息列表');
+      var _this = this;
+      (0, _http.http)({
+        method: 'POST',
+        url: '/discount/user',
+        headers: {
+          token: this.my.userToken
         },
-        discountScrollHandler: function discountScrollHandler(e) {
-            console.log(e.contentOffset.y);
-        },
-        getDiscountList: function getDiscountList() {
-            console.log('加载优惠信息列表');
-            var _this = this;
-            (0, _http.http)({
-                method: 'POST',
-                url: '/discount/user',
-                headers: {
-                    token: this.my.userToken
-                },
-                body: {
-                    realUserLoginId: this.my.userLoginId,
-                    pageNum: this.discount.pageNum++,
-                    pageSize: this.discount.pageSize
-                }
-            }).then(function (data) {
-                if (data.code != 200) {
-                    return;
-                }
-
-                if (data.data.length !== 0) {
-                    data.data.forEach(function (discount) {
-                        _this.discount.list.push(discount);
-                    });
-                }
-                _this.noData = _this.discount.list.length === 0;
-            });
+        body: {
+          realUserLoginId: this.my.userLoginId,
+          pageNum: this.discount.pageNum++,
+          pageSize: this.discount.pageSize
         }
+      }).then(function (data) {
+        if (data.code != 200) {
+          return;
+        }
+
+        if (data.data.length !== 0) {
+          data.data.forEach(function (discount) {
+            _this.discount.list.push(discount);
+          });
+        }
+        _this.noData = _this.discount.list.length === 0;
+      });
     }
+  }
 };
 
 /***/ }),
@@ -2159,6 +2164,7 @@ module.exports = {
 //
 //
 //
+//
 
 module.exports = {
   props: {
@@ -2167,7 +2173,7 @@ module.exports = {
     backgroundColor: { default: 'black' },
     //导航条高度
     height: { default: 88 },
-    //导航条标题 
+    //导航条标题
     title: { default: '' },
     //导航条标题颜色
     titleColor: { default: 'black' },
@@ -2191,6 +2197,9 @@ module.exports = {
     onclickleftitem: function onclickleftitem(e) {
       this.$emit('naviBarLeftItemClick');
     }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
 
@@ -2200,7 +2209,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.show) ? _c('div', {
     staticClass: ["container"],
     style: {
       height: _vm.height,
@@ -2258,7 +2267,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "naviItemPosition": "center",
       "value": _vm.title
     }
-  })])
+  })]) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 

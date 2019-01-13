@@ -20126,11 +20126,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -20313,6 +20314,13 @@ function modalDebug() {
 
 function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
 }
 
 /***/ }),

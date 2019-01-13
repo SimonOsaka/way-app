@@ -444,11 +444,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -631,6 +632,13 @@ function modalDebug() {
 
 function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
 }
 
 /***/ }),
@@ -1464,6 +1472,7 @@ module.exports = {
 //
 //
 //
+//
 
 module.exports = {
   props: {
@@ -1472,7 +1481,7 @@ module.exports = {
     backgroundColor: { default: 'black' },
     //导航条高度
     height: { default: 88 },
-    //导航条标题 
+    //导航条标题
     title: { default: '' },
     //导航条标题颜色
     titleColor: { default: 'black' },
@@ -1496,6 +1505,9 @@ module.exports = {
     onclickleftitem: function onclickleftitem(e) {
       this.$emit('naviBarLeftItemClick');
     }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
 
@@ -1504,7 +1516,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.show) ? _c('div', {
     staticClass: ["container"],
     style: {
       height: _vm.height,
@@ -1562,7 +1574,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "naviItemPosition": "center",
       "value": _vm.title
     }
-  })])
+  })]) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -3635,10 +3647,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-var navigator = weex.requireModule("navigator");
-var modal = weex.requireModule("modal");
-var weixin = weex.requireModule("weixin");
-var globalEvent = weex.requireModule("globalEvent");
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+var weixin = weex.requireModule('weixin');
+var globalEvent = weex.requireModule('globalEvent');
 
 exports.default = {
   components: { WxcCell: _wxcCell2.default, WxcPopup: _wxcPopup2.default, WxcDialog: _wxcDialog2.default, WxcMask: _wxcMask2.default, navbar: _navbar2.default },
@@ -3646,17 +3658,17 @@ exports.default = {
     return {
       cellStyle: {},
       weixinStyle: {
-        fontSize: "64px"
+        fontSize: '64px'
       },
       commodityObj: {
         id: 0,
-        cPicUrl: "",
-        cName: "",
-        cPrice: "",
-        cPosition: "",
+        cPicUrl: '',
+        cName: '',
+        cPrice: '',
+        cPosition: '',
         shopId: 0,
-        shopName: "",
-        shopLogoUrl: ""
+        shopName: '',
+        shopLogoUrl: ''
       },
       isAutoShow: false
     };
@@ -3665,17 +3677,19 @@ exports.default = {
     var _this2 = this;
 
     (0, _utils3.initIconfont)();
+    (0, _utils3.titlebar)('商品详情');
     var pageHeight = _utils2.default.env.getPageHeight();
     var screenHeight = _utils2.default.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + "px" };
+    // this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
+    this.scrollerStyle = { height: pageHeight + 'px' };
 
     var _this = this;
     // _this.commodityObj.id = getUrlKey('cid')
-    (0, _utils3.getStorageVal)("way:commodity:id").then(function (data) {
-      console.log("商品详情id接收", data);
+    (0, _utils3.getStorageVal)('way:commodity:id').then(function (data) {
+      console.log('商品详情id接收', data);
       _this.commodityObj.id = data;
       if (!_this.commodityObj.id) {
-        console.log("商品详情id没有", data);
+        console.log('商品详情id没有', data);
         navigator.pop();
         return;
       }
@@ -3683,12 +3697,12 @@ exports.default = {
       _this2.getCommodityData();
     });
 
-    globalEvent.addEventListener("weixinCallback", function (data) {
-      console.log("微信分享商品详情callback的结果", data);
+    globalEvent.addEventListener('weixinCallback', function (data) {
+      console.log('微信分享商品详情callback的结果', data);
       if (data) {
-        if (data.errCode == "0") {
+        if (data.errCode == '0') {
           modal.toast({
-            message: "分享成功",
+            message: '分享成功',
             duration: 1
           });
         }
@@ -3696,21 +3710,21 @@ exports.default = {
       _this.isAutoShow = false;
     });
 
-    console.log("商品详情id", _this.commodityObj.id);
+    console.log('商品详情id', _this.commodityObj.id);
   },
 
   methods: {
     getCommodityData: function getCommodityData() {
       var _this = this;
       (0, _http.http)({
-        method: "POST",
-        url: "/commodity/detail",
+        method: 'POST',
+        url: '/commodity/detail',
         headers: {},
         body: {
           commodityId: this.commodityObj.id
         }
       }).then(function (data) {
-        console.log("success", data);
+        console.log('success', data);
         if (data.code != 200) {
           _this.dialogContent = data.msg;
           _this.dialogShow = true;
@@ -3728,7 +3742,7 @@ exports.default = {
         (0, _utils3.setPageTitle)(commodityDetail.name);
         (0, _utils3.setOgImage)(_this.commodityObj.cPicUrl);
       }, function (error) {
-        console.error("failure", error);
+        console.error('failure', error);
       });
     },
     popupOverlayAutoClick: function popupOverlayAutoClick() {
@@ -3738,7 +3752,7 @@ exports.default = {
       this.isAutoShow = true;
     },
     weixinClicked: function weixinClicked(shareType) {
-      console.log("weixin clicked...");
+      console.log('weixin clicked...');
       (0, _commodity.getWeixinShareWebpage)({
         commodityId: this.commodityObj.id,
         shareType: shareType
@@ -3748,20 +3762,20 @@ exports.default = {
           return;
         }
         var weixinParams = resp.data;
-        console.log("微信分享商品详情，请求参数", weixinParams);
+        console.log('微信分享商品详情，请求参数', weixinParams);
         weixin.shareWebpage(weixinParams);
       });
     },
     shopCellClicked: function shopCellClicked() {
-      (0, _utils3.setStorageVal)("way:shop:id", this.commodityObj.shopId);
+      (0, _utils3.setStorageVal)('way:shop:id', this.commodityObj.shopId);
       navigator.push({
-        url: (0, _utils3.getEntryUrl)("views/shop/detail"),
-        animated: "true"
+        url: (0, _utils3.getEntryUrl)('views/shop/detail'),
+        animated: 'true'
       });
     }
   },
   destroyed: function destroyed() {
-    globalEvent.removeEventListener("weixinCallback");
+    globalEvent.removeEventListener('weixinCallback');
   }
 };
 

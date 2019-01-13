@@ -3,6 +3,7 @@ package com.xzl.jicu;
 import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.alibaba.weex.plugin.loader.WeexPluginContainer;
 import com.taobao.weex.InitConfig;
@@ -20,10 +21,13 @@ import com.xzl.jicu.extend.WXWebBrowserModule;
 import com.xzl.jicu.extend.WXWeixinModule;
 import com.xzl.jicu.util.AppConfig;
 import com.xzl.jicu.util.Constants;
+import com.xzl.jicu.util.GlobalMap;
 
 import cn.jpush.android.api.JPushInterface;
 
 public class WXApplication extends Application {
+
+    private static final String TAG = "WXApplication";
 
     // IWXAPI 是第三方app和微信通信的openapi接口
     private IWXAPI api;
@@ -31,8 +35,8 @@ public class WXApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        WXSDKEngine.addCustomOptions("appName", "WXSample");
-        WXSDKEngine.addCustomOptions("appGroup", "WXApp");
+        WXSDKEngine.addCustomOptions("appName", "急促");
+        WXSDKEngine.addCustomOptions("appGroup", "jicu");
         WXSDKEngine.initialize(this,
                 new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build()
         );
@@ -61,7 +65,10 @@ public class WXApplication extends Application {
         // 将该app注册到微信
         api.registerApp(Constants.WEIXIN_APP_ID);
 
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);  // 初始化 JPush
+        String registrationId = JPushInterface.getRegistrationID(this);
+        GlobalMap.addValue("jpushRegId", registrationId);
+        Log.d(TAG, "JPush's registrationId：" + registrationId);
     }
 }

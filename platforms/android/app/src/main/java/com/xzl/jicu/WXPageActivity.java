@@ -117,8 +117,7 @@ public class WXPageActivity extends BasePageActivity implements
 
         String url = getUrl(mUri);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(url);
-            getSupportActionBar().hide();
+            getSupportActionBar().show();
         }
         loadUrl(url);
     }
@@ -171,7 +170,7 @@ public class WXPageActivity extends BasePageActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(mFromSplash ? R.menu.main_scan : R.menu.main, menu);
+//        getMenuInflater().inflate(mFromSplash ? R.menu.main_scan : R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

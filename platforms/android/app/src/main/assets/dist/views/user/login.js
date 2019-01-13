@@ -446,11 +446,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -635,6 +636,13 @@ function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
 }
 
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
+}
+
 /***/ }),
 
 /***/ 10:
@@ -802,7 +810,7 @@ var _navbar2 = _interopRequireDefault(_navbar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var navigator = weex.requireModule("navigator"); //
+var navigator = weex.requireModule('navigator'); //
 //
 //
 //
@@ -843,63 +851,63 @@ var navigator = weex.requireModule("navigator"); //
 //
 //
 
-var storage = weex.requireModule("storage");
-var modal = weex.requireModule("modal");
+var storage = weex.requireModule('storage');
+var modal = weex.requireModule('modal');
 
 exports.default = {
   components: { WxcButton: _wxcButton2.default, WxcDialog: _wxcDialog2.default, navbar: _navbar2.default },
   data: function data() {
     return {
-      userTel: "",
-      userValidCode: "",
-      userName: "",
-      userPasword: "",
-      btnGetValidCodeText: "获取验证码",
+      userTel: '',
+      userValidCode: '',
+      userName: '',
+      userPasword: '',
+      btnGetValidCodeText: '获取验证码',
       btnGetValidCodeDisabled: false,
       btnGetValidCodeDisabledTime: 120,
 
-      dialogContent: "",
+      dialogContent: '',
       dialogShow: false,
       loginTab: 1
     };
   },
   created: function created() {
     (0, _utils3.initIconfont)();
-    (0, _utils3.setPageTitle)("登录");
+    (0, _utils3.titlebar)('登录');
     var pageHeight = _utils2.default.env.getPageHeight();
     var screenHeight = _utils2.default.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' };
+    this.scrollerStyle = { height: pageHeight + 'px' };
   },
 
   methods: {
     userTelOninput: function userTelOninput(event) {
       this.userTel = event.value;
-      console.log("oninput", event.value);
+      console.log('oninput', event.value);
     },
     userNameOninput: function userNameOninput(event) {
       this.userName = event.value;
-      console.log("userName", this.userName);
+      console.log('userName', this.userName);
     },
     userPasswordOninput: function userPasswordOninput(event) {
       this.userPasword = event.value;
-      console.log("userPasword", this.userPasword);
+      console.log('userPasword', this.userPasword);
     },
 
     userValidCodeOninput: function userValidCodeOninput(event) {
       this.userValidCode = event.value;
-      console.log("oninput", event.value);
+      console.log('oninput', event.value);
     },
     userValidCodeClicked: function userValidCodeClicked(e) {
       var _this2 = this;
 
       if ((0, _utils3.isEmpty)(this.userTel)) {
-        this.dialogContent = "请输入手机号";
+        this.dialogContent = '请输入手机号';
         this.dialogShow = true;
         return;
       } else {
         var mobile_mode = /^1[34578]\d{9}$/;
         if (!mobile_mode.test(this.userTel)) {
-          this.dialogContent = "手机号格式不正确";
+          this.dialogContent = '手机号格式不正确';
           this.dialogShow = true;
           return;
         }
@@ -907,29 +915,29 @@ exports.default = {
 
       var _this = this;
       (0, _http.http)({
-        method: "POST",
-        url: "/user/validCode",
+        method: 'POST',
+        url: '/user/validCode',
         headers: {},
         body: {
           userTel: this.userTel
         }
       }).then(function (data) {
-        console.log("success", data);
+        console.log('success', data);
         if (data.code != 200) {
           _this.dialogContent = data.msg;
           _this.dialogShow = true;
         }
       }, function (error) {
-        console.error("failure", error);
+        console.error('failure', error);
       });
 
       this.btnGetValidCodeDisabled = true;
       var interval = setInterval(function () {
-        _this2.btnGetValidCodeText = "已发送（" + --_this2.btnGetValidCodeDisabledTime + "）";
+        _this2.btnGetValidCodeText = '已发送（' + --_this2.btnGetValidCodeDisabledTime + '）';
         console.debug(_this2.btnGetValidCodeDisabled, _this2.btnGetValidCodeText, _this2.btnGetValidCodeDisabledTime);
         if (_this2.btnGetValidCodeDisabledTime === 0) {
           _this2.btnGetValidCodeDisabled = false;
-          _this2.btnGetValidCodeText = "获取验证码";
+          _this2.btnGetValidCodeText = '获取验证码';
           _this2.btnGetValidCodeDisabledTime = 120;
           clearInterval(interval);
         }
@@ -941,7 +949,7 @@ exports.default = {
       } else {
         var code_mode = /\d{6}$/;
         if (!code_mode.test(this.userValidCode)) {
-          this.dialogContent = "验证码格式不正确";
+          this.dialogContent = '验证码格式不正确';
           this.dialogShow = true;
           return;
         }
@@ -949,15 +957,15 @@ exports.default = {
 
       var _this = this;
       (0, _http.http)({
-        method: "POST",
-        url: "/user/login",
+        method: 'POST',
+        url: '/user/login',
         headers: {},
         body: {
           userTel: this.userTel,
           validCode: this.userValidCode
         }
       }).then(function (data) {
-        console.log("success", data);
+        console.log('success', data);
         if (data.code != 200) {
           _this.dialogContent = data.msg;
           _this.dialogShow = true;
@@ -967,44 +975,44 @@ exports.default = {
         (0, _utils3.modalDebug)(JSON.stringify(data));
 
         var userProfile = data.data;
-        (0, _utils3.setStorageVal)("way:user", JSON.stringify({
+        (0, _utils3.setStorageVal)('way:user', JSON.stringify({
           userLoginId: userProfile.userLoginId,
           userNickName: userProfile.userNickName,
           userToken: userProfile.token
         })).then(function (data) {
-          (0, _utils3.modalDebug)("setStorageVal");
-          var tabIndex = (0, _utils3.getUrlKey)("tabIndex");
-          (0, _utils3.postMessage)("way:tab:selectedIndex", tabIndex ? tabIndex : 0);
+          (0, _utils3.modalDebug)('setStorageVal');
+          var tabIndex = (0, _utils3.getUrlKey)('tabIndex');
+          (0, _utils3.postMessage)('way:tab:selectedIndex', tabIndex ? tabIndex : 0);
           navigator.pop({
-            animated: "true"
+            animated: 'true'
           });
         }, function (error) {
-          var modal = weex.requireModule("modal");
+          var modal = weex.requireModule('modal');
           modal.toast({
             message: error,
             duration: 3
           });
         });
       }, function (error) {
-        console.error("failure", error);
+        console.error('failure', error);
       });
 
       console.log(this.userTel, this.userValidCode);
     },
     dialogConfirmBtnClicked: function dialogConfirmBtnClicked(e) {
-      this.dialogContent = "";
+      this.dialogContent = '';
       this.dialogShow = false;
     },
     clickUserAgreement: function clickUserAgreement() {
       navigator.push({
-        url: (0, _utils3.getEntryUrl)("views/user/agreements"),
+        url: (0, _utils3.getEntryUrl)('views/user/agreements'),
         animated: 'true'
       });
     },
     userNameLoginClicked: function userNameLoginClicked() {
       if ((0, _utils3.isEmpty)(this.userName) || (0, _utils3.isEmpty)(this.userPasword)) {
         modal.toast({
-          message: "用户名和密码必须填写",
+          message: '用户名和密码必须填写',
           duration: 1.5
         });
         return;
@@ -1012,15 +1020,15 @@ exports.default = {
 
       var _this = this;
       (0, _http.http)({
-        method: "POST",
-        url: "/user/signin",
+        method: 'POST',
+        url: '/user/signin',
         headers: {},
         body: {
           userLoginName: this.userName,
           userLoginPassword: this.userPasword
         }
       }).then(function (data) {
-        console.log("success", data);
+        console.log('success', data);
         if (data.code != 200) {
           _this.dialogContent = data.msg;
           _this.dialogShow = true;
@@ -1030,15 +1038,15 @@ exports.default = {
         (0, _utils3.modalDebug)(JSON.stringify(data));
 
         var userProfile = data.data;
-        (0, _utils3.setStorageVal)("way:user", JSON.stringify({
+        (0, _utils3.setStorageVal)('way:user', JSON.stringify({
           userLoginId: userProfile.userLoginId,
           userNickName: userProfile.userNickName,
           userToken: userProfile.token
         })).then(function (data) {
-          (0, _utils3.modalDebug)("setStorageVal");
-          (0, _utils3.postMessage)("m:way:login", 'success');
+          (0, _utils3.modalDebug)('setStorageVal');
+          (0, _utils3.postMessage)('m:way:login', 'success');
           navigator.pop({
-            animated: "true"
+            animated: 'true'
           });
         }, function (error) {
           modal.toast({
@@ -1047,7 +1055,7 @@ exports.default = {
           });
         });
       }, function (error) {
-        console.error("failure", error);
+        console.error('failure', error);
       });
 
       console.log(this.userTel, this.userValidCode);
@@ -3101,6 +3109,7 @@ module.exports = {
 //
 //
 //
+//
 
 module.exports = {
   props: {
@@ -3109,7 +3118,7 @@ module.exports = {
     backgroundColor: { default: 'black' },
     //导航条高度
     height: { default: 88 },
-    //导航条标题 
+    //导航条标题
     title: { default: '' },
     //导航条标题颜色
     titleColor: { default: 'black' },
@@ -3133,6 +3142,9 @@ module.exports = {
     onclickleftitem: function onclickleftitem(e) {
       this.$emit('naviBarLeftItemClick');
     }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
 
@@ -3142,7 +3154,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.show) ? _c('div', {
     staticClass: ["container"],
     style: {
       height: _vm.height,
@@ -3200,7 +3212,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "naviItemPosition": "center",
       "value": _vm.title
     }
-  })])
+  })]) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 

@@ -444,11 +444,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -631,6 +632,13 @@ function modalDebug() {
 
 function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
 }
 
 /***/ }),
@@ -3551,7 +3559,6 @@ var dom = weex.requireModule('dom');
 var version = weex.requireModule('version');
 var dictionary = weex.requireModule('dictionary');
 var globalEvent = weex.requireModule('globalEvent');
-var titlebar = weex.requireModule('titlebar');
 
 exports.default = {
   components: { WxcSearchbar: _wxcSearchbar2.default, WxcTabBar: _wxcTabBar2.default, WxcCell: _wxcCell2.default, WxcButton: _wxcButton2.default, WxcDialog: _wxcDialog2.default },
@@ -3647,7 +3654,7 @@ exports.default = {
   created: function created() {
     var _this3 = this;
 
-    titlebar.setTitle('首页');
+    (0, _utils3.titlebar)('首页');
 
     this.initMainTab();
 
@@ -3752,18 +3759,18 @@ exports.default = {
       console.log('switch to index ', index);
       if (index == 1) {
         (0, _utils3.setPageTitle)('优惠信息');
-        titlebar.setTitle('优惠信息');
+        (0, _utils3.titlebar)('优惠信息');
         if (!this.discountInit) {
           this.loadDiscountTabContent();
         }
       } else if (index == 2) {
         console.log('into my tab');
         (0, _utils3.setPageTitle)('个人信息');
-        titlebar.setTitle('我的主页');
+        (0, _utils3.titlebar)('我的主页');
         this.loadMyTabContent();
       } else {
         (0, _utils3.setPageTitle)('首页');
-        titlebar.setTitle('首页');
+        (0, _utils3.titlebar)('首页');
         console.log('init first tab', this.main.init);
         if (this.main.init == false) {
           this.main.init = true;
@@ -3822,7 +3829,7 @@ exports.default = {
         _this.fetchDiscountHttp();
       }, function (e) {
         _this7.$refs['wxc-tab-bar'].setPage(0);
-        titlebar.setTitle('首页');
+        (0, _utils3.titlebar)('首页');
         navigator.push({
           url: (0, _utils3.getEntryUrl)('views/city/index'),
           animated: 'true'
@@ -4179,7 +4186,7 @@ exports.default = {
         });
         var jpushRegId = '';
         dictionary.getDict('jpushRegId', function (resp) {
-          console.log('首页-获取iOS jpushRegId', resp);
+          console.log('首页-获取jpushRegId', resp);
           jpushRegId = resp;
         });
         var user = JSON.parse(data);
@@ -4703,7 +4710,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-
   // 使用 iconFont 模式的tab title配置
   tabIconFontTitles: [{
     title: '首页',
@@ -4732,7 +4738,7 @@ exports.default = {
     iconFontMarginBottom: 8,
     iconFontColor: '#333333',
     activeIconFontColor: 'red',
-    iconFontUrl: '../iconfont.ttf'
+    iconFontUrl: 'local:///font/iconfont.ttf'
   }
 };
 

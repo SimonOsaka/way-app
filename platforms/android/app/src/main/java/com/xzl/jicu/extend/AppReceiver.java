@@ -8,11 +8,8 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.WXSDKInstance;
-import com.taobao.weex.WXSDKManager;
-import com.xzl.jicu.BasePageActivity;
 import com.xzl.jicu.util.WXSdkUtils;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +59,7 @@ public class AppReceiver extends BroadcastReceiver {
                     }
 
                     Log.d(TAG, "用户点击打开了通知extraMap：" + extraMap);
-                    WXSDKInstance wxsdkInstance = WXSdkUtils.getRootInstance();
+                    WXSDKInstance wxsdkInstance = WXSdkUtils.getInstance();
                     wxsdkInstance.fireGlobalEventCallback("receiveNotify", extraMap);
                 }
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {

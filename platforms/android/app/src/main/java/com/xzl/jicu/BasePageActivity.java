@@ -2,6 +2,7 @@ package com.xzl.jicu;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -40,9 +41,10 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
         Context context = getApplicationContext();
         String appVersion = APKVersionCodeUtils.getVerName(context);
         APKVersionCodeUtils.APP_VERSION = appVersion;
-
         super.onCreate(arg0);
-        WXSdkUtils.setRootInstance(mInstance);
+        setCustomActionBar();
+        WXSdkUtils.setInstance(mInstance);
+        WXSdkUtils.setActionBar(getSupportActionBar());
         evevt = this;
         inspectNet();
         Log.d(TAG, "app版本：" + appVersion);
@@ -62,6 +64,9 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
         destroyLocation();
 
         WXApi.unRegApi();
+        WXSdkUtils.popActionBar();
+        WXSdkUtils.popInstance();
+        Log.d(TAG, "activity 被销毁");
     }
 
 
@@ -287,5 +292,12 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
         }
 
         mInstance.fireGlobalEventCallback("weixinCallback", resultMap);
+    }
+
+
+    private void setCustomActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_layout);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
     }
 }

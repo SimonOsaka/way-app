@@ -236,11 +236,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -423,6 +424,13 @@ function modalDebug() {
 
 function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
 }
 
 /***/ }),
@@ -1270,7 +1278,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.container[data-v-66f7c332] {\n  flex-direction: row; \n  position: fixed; \n  top: 0; \n  left: 0; \n  right: 0; \n  width: 750;\n}\n.right-text[data-v-66f7c332] {\n  position: absolute; \n  bottom: 28; \n  right: 32; \n  text-align: right;\n  font-size: 32; \n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-66f7c332] {\n  position: absolute; \n  bottom: 28; \n  left :32; \n  text-align :left;  \n  font-size: 32; \n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-66f7c332] {\n  position: absolute; \n  bottom: 25; \n  left: 172; \n  right: 172;\n  text-align: center; \n  font-size: 36; \n  font-weight: bold;\n}\n.left-image[data-v-66f7c332] {\n  position: absolute; \n  bottom: 20; \n  left: 28; \n  width: 50; \n  height: 50;\n}\n.right-image[data-v-66f7c332] {\n  position: absolute; \n  bottom: 20; \n  right: 28; \n  width: 50; \n  height: 50;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-66f7c332] {\r\n  flex-direction: row;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  width: 750;\n}\n.right-text[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 28;\r\n  right: 32;\r\n  text-align: right;\r\n  font-size: 32;\r\n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 28;\r\n  left: 32;\r\n  text-align: left;\r\n  font-size: 32;\r\n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 25;\r\n  left: 172;\r\n  right: 172;\r\n  text-align: center;\r\n  font-size: 36;\r\n  font-weight: bold;\n}\n.left-image[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 20;\r\n  left: 28;\r\n  width: 50;\r\n  height: 50;\n}\n.right-image[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 20;\r\n  right: 28;\r\n  width: 50;\r\n  height: 50;\n}\r\n", ""]);
 
 // exports
 
@@ -1305,23 +1313,23 @@ exports.default = {
   components: { navbar: _navbar2.default },
   data: function data() {
     return {
-      userAgreementsUrl: ""
+      userAgreementsUrl: ''
     };
   },
   beforeCreate: function beforeCreate() {
-    (0, _utils3.setPageTitle)("用户服务协议");
+    (0, _utils3.setPageTitle)('用户服务协议');
   },
 
   methods: {
     queryUserAgreementsUrl: function queryUserAgreementsUrl() {
       var _this = this;
       (0, _http.http)({
-        method: "POST",
-        url: "/user/agreements",
+        method: 'POST',
+        url: '/user/agreements',
         headers: {},
         body: {}
       }).then(function (data) {
-        console.log("success", data);
+        console.log('success', data);
         if (data.code != 200) {
           return;
         }
@@ -1329,14 +1337,15 @@ exports.default = {
         var result = data.data;
         _this.userAgreementsUrl = result.userAgreementsUrl;
       }, function (error) {
-        console.error("failure", error);
+        console.error('failure', error);
       });
     }
   },
   created: function created() {
+    (0, _utils3.titlebar)('用户协议');
     var pageHeight = _utils2.default.env.getPageHeight();
     var screenHeight = _utils2.default.env.getScreenHeight();
-    this.agreementsStyle = { width: "750px", height: pageHeight + "px", marginTop: screenHeight - pageHeight + 'px' };
+    this.agreementsStyle = { width: '750px', height: pageHeight + 'px' };
     this.queryUserAgreementsUrl();
   }
 }; //
@@ -1480,6 +1489,7 @@ if (false) {
 //
 //
 //
+//
 
 module.exports = {
   props: {
@@ -1488,7 +1498,7 @@ module.exports = {
     backgroundColor: { default: 'black' },
     //导航条高度
     height: { default: 88 },
-    //导航条标题 
+    //导航条标题
     title: { default: '' },
     //导航条标题颜色
     titleColor: { default: 'black' },
@@ -1512,6 +1522,9 @@ module.exports = {
     onclickleftitem: function onclickleftitem(e) {
       this.$emit('naviBarLeftItemClick');
     }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
 
@@ -1750,7 +1763,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.show) ? _c('div', {
     staticClass: "container weex-ct weex-div",
     style: ({
       height: _vm._px2rem(_vm.height, 75),
@@ -1836,7 +1849,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": _vm.title,
       "weex-type": "text"
     }
-  })])
+  })]) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

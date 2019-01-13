@@ -446,11 +446,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -635,6 +636,13 @@ function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
 }
 
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
+}
+
 /***/ }),
 
 /***/ 132:
@@ -727,23 +735,23 @@ exports.default = {
   components: { navbar: _navbar2.default },
   data: function data() {
     return {
-      userAgreementsUrl: ""
+      userAgreementsUrl: ''
     };
   },
   beforeCreate: function beforeCreate() {
-    (0, _utils3.setPageTitle)("用户服务协议");
+    (0, _utils3.setPageTitle)('用户服务协议');
   },
 
   methods: {
     queryUserAgreementsUrl: function queryUserAgreementsUrl() {
       var _this = this;
       (0, _http.http)({
-        method: "POST",
-        url: "/user/agreements",
+        method: 'POST',
+        url: '/user/agreements',
         headers: {},
         body: {}
       }).then(function (data) {
-        console.log("success", data);
+        console.log('success', data);
         if (data.code != 200) {
           return;
         }
@@ -751,14 +759,15 @@ exports.default = {
         var result = data.data;
         _this.userAgreementsUrl = result.userAgreementsUrl;
       }, function (error) {
-        console.error("failure", error);
+        console.error('failure', error);
       });
     }
   },
   created: function created() {
+    (0, _utils3.titlebar)('用户协议');
     var pageHeight = _utils2.default.env.getPageHeight();
     var screenHeight = _utils2.default.env.getScreenHeight();
-    this.agreementsStyle = { width: "750px", height: pageHeight + "px", marginTop: screenHeight - pageHeight + 'px' };
+    this.agreementsStyle = { width: '750px', height: pageHeight + 'px' };
     this.queryUserAgreementsUrl();
   }
 }; //
@@ -1637,6 +1646,7 @@ module.exports = {
 //
 //
 //
+//
 
 module.exports = {
   props: {
@@ -1645,7 +1655,7 @@ module.exports = {
     backgroundColor: { default: 'black' },
     //导航条高度
     height: { default: 88 },
-    //导航条标题 
+    //导航条标题
     title: { default: '' },
     //导航条标题颜色
     titleColor: { default: 'black' },
@@ -1669,6 +1679,9 @@ module.exports = {
     onclickleftitem: function onclickleftitem(e) {
       this.$emit('naviBarLeftItemClick');
     }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
 
@@ -1678,7 +1691,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.show) ? _c('div', {
     staticClass: ["container"],
     style: {
       height: _vm.height,
@@ -1736,7 +1749,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "naviItemPosition": "center",
       "value": _vm.title
     }
-  })])
+  })]) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 

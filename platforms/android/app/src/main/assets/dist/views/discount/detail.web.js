@@ -20126,11 +20126,12 @@ exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
 exports.modalDebug = modalDebug;
 exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
 function initIconfont() {
   var domModule = weex.requireModule('dom');
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   });
 }
 
@@ -20313,6 +20314,13 @@ function modalDebug() {
 
 function getUrlKey(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
 }
 
 /***/ }),
@@ -21043,7 +21051,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.container[data-v-66f7c332] {\n  flex-direction: row; \n  position: fixed; \n  top: 0; \n  left: 0; \n  right: 0; \n  width: 750;\n}\n.right-text[data-v-66f7c332] {\n  position: absolute; \n  bottom: 28; \n  right: 32; \n  text-align: right;\n  font-size: 32; \n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-66f7c332] {\n  position: absolute; \n  bottom: 28; \n  left :32; \n  text-align :left;  \n  font-size: 32; \n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-66f7c332] {\n  position: absolute; \n  bottom: 25; \n  left: 172; \n  right: 172;\n  text-align: center; \n  font-size: 36; \n  font-weight: bold;\n}\n.left-image[data-v-66f7c332] {\n  position: absolute; \n  bottom: 20; \n  left: 28; \n  width: 50; \n  height: 50;\n}\n.right-image[data-v-66f7c332] {\n  position: absolute; \n  bottom: 20; \n  right: 28; \n  width: 50; \n  height: 50;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-66f7c332] {\r\n  flex-direction: row;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  width: 750;\n}\n.right-text[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 28;\r\n  right: 32;\r\n  text-align: right;\r\n  font-size: 32;\r\n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 28;\r\n  left: 32;\r\n  text-align: left;\r\n  font-size: 32;\r\n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 25;\r\n  left: 172;\r\n  right: 172;\r\n  text-align: center;\r\n  font-size: 36;\r\n  font-weight: bold;\n}\n.left-image[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 20;\r\n  left: 28;\r\n  width: 50;\r\n  height: 50;\n}\n.right-image[data-v-66f7c332] {\r\n  position: absolute;\r\n  bottom: 20;\r\n  right: 28;\r\n  width: 50;\r\n  height: 50;\n}\r\n", ""]);
 
 // exports
 
@@ -21141,6 +21149,7 @@ exports.push([module.i, "\n.container[data-v-66f7c332] {\n  flex-direction: row;
 //
 //
 //
+//
 
 module.exports = {
   props: {
@@ -21149,7 +21158,7 @@ module.exports = {
     backgroundColor: { default: 'black' },
     //导航条高度
     height: { default: 88 },
-    //导航条标题 
+    //导航条标题
     title: { default: '' },
     //导航条标题颜色
     titleColor: { default: 'black' },
@@ -21173,6 +21182,9 @@ module.exports = {
     onclickleftitem: function onclickleftitem(e) {
       this.$emit('naviBarLeftItemClick');
     }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
 
@@ -21181,7 +21193,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.show) ? _c('div', {
     staticClass: "container weex-ct weex-div",
     style: ({
       height: _vm._px2rem(_vm.height, 75),
@@ -21267,7 +21279,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": _vm.title,
       "weex-type": "text"
     }
-  })])
+  })]) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -23625,11 +23637,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-var navigator = weex.requireModule("navigator");
-var modal = weex.requireModule("modal");
-var safari = weex.requireModule("safari");
-var weixin = weex.requireModule("weixin");
-var globalEvent = weex.requireModule("globalEvent");
+var navigator = weex.requireModule('navigator');
+var modal = weex.requireModule('modal');
+var weixin = weex.requireModule('weixin');
+var globalEvent = weex.requireModule('globalEvent');
 
 exports.default = {
   components: {
@@ -23644,33 +23655,33 @@ exports.default = {
   data: function data() {
     return {
       priceCellStyle: {
-        height: "106px",
-        backgroundColor: "#E61414",
-        paddingTop: "10px",
-        paddingBottom: "10px",
+        height: '106px',
+        backgroundColor: '#E61414',
+        paddingTop: '10px',
+        paddingBottom: '10px',
         paddingRight: 0
       },
       cellStyle: {},
-      secondCellStyle: { paddingTop: "0" },
+      secondCellStyle: { paddingTop: '0' },
       discountObj: {
         id: 0,
-        cPicUrl: "",
-        cName: "",
-        cPrice: "",
-        position: "",
-        staticMapUrl: ""
+        cPicUrl: '',
+        cName: '',
+        cPrice: '',
+        position: '',
+        staticMapUrl: ''
       },
       discountReal: {
-        real: "",
-        unreal: "",
-        highlight: ""
+        real: '',
+        unreal: '',
+        highlight: ''
       },
       isAutoShow: false,
       realUserLoginId: 0,
-      realUserToken: "",
+      realUserToken: '',
       expiredShow: false,
       weixinStyle: {
-        fontSize: "64px"
+        fontSize: '64px'
       }
     };
   },
@@ -23678,38 +23689,39 @@ exports.default = {
     (0, _utils3.initIconfont)();
     var pageHeight = _utils2.default.env.getPageHeight();
     var screenHeight = _utils2.default.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + "px" };
+    this.scrollerStyle = { height: pageHeight + 'px' };
   },
   created: function created() {
     var _this2 = this;
 
-    console.log("created in...");
+    console.log('created in...');
+    (0, _utils3.titlebar)('优惠详情');
     // this.discountObj.id = getUrlKey('discountId')
-    (0, _utils3.getStorageVal)("way:discount:id").then(function (data) {
+    (0, _utils3.getStorageVal)('way:discount:id').then(function (data) {
       _this2.discountObj.id = data;
-      console.log("获取地址栏参数", _this2.discountObj.id);
+      console.log('获取地址栏参数', _this2.discountObj.id);
       if (!_this2.discountObj.id) {
         navigator.pop();
         return;
       }
 
-      (0, _utils3.getStorageVal)("way:user").then(function (data) {
+      (0, _utils3.getStorageVal)('way:user').then(function (data) {
         var user = JSON.parse(data);
         _this2.realUserLoginId = user.userLoginId;
         _this2.realUserToken = user.userToken;
-        console.log("realUserLoginId=", _this2.realUserLoginId);
+        console.log('realUserLoginId=', _this2.realUserLoginId);
         _this2.discountDetailHttp();
       }, function (error) {
         _this2.discountDetailHttp();
       });
 
       var _this = _this2;
-      globalEvent.addEventListener("weixinCallback", function (data) {
-        console.log("微信分享优惠详情callback的结果", data);
+      globalEvent.addEventListener('weixinCallback', function (data) {
+        console.log('微信分享优惠详情callback的结果', data);
         if (data) {
-          if (data.errCode == "0") {
+          if (data.errCode == '0') {
             modal.toast({
-              message: "分享成功",
+              message: '分享成功',
               duration: 1
             });
           }
@@ -23718,7 +23730,7 @@ exports.default = {
       });
     });
 
-    console.log("created out...");
+    console.log('created out...');
   },
 
   methods: {
@@ -23729,7 +23741,7 @@ exports.default = {
       this.isAutoShow = true;
     },
     weixinClicked: function weixinClicked(shareType) {
-      console.log("weixin clicked...");
+      console.log('weixin clicked...');
       (0, _discount.getWeixinShareWebpage)({
         discountId: this.discountObj.id,
         shareType: shareType
@@ -23739,29 +23751,29 @@ exports.default = {
           return;
         }
         var weixinParams = resp.data;
-        console.log("微信分享优惠详情，请求参数", weixinParams);
+        console.log('微信分享优惠详情，请求参数', weixinParams);
         weixin.shareWebpage(weixinParams);
       });
     },
     discountDetailHttp: function discountDetailHttp() {
       var _this = this;
-      console.log("realUserLoginId", this.realUserLoginId);
+      console.log('realUserLoginId', this.realUserLoginId);
       (0, _http.http)({
-        method: "GET",
-        url: "/discount/getDetail",
+        method: 'GET',
+        url: '/discount/getDetail',
         headers: {
-          token: this.realUserToken || ""
+          token: this.realUserToken || ''
         },
         params: {
           discountId: this.discountObj.id,
           realUserLoginId: this.realUserLoginId
         }
       }).then(function (data) {
-        console.log("success", data);
+        console.log('success', data);
         if (data.code != 200) {
           navigator.push({
-            url: (0, _utils3.getEntryUrl)("404"),
-            animated: "true"
+            url: (0, _utils3.getEntryUrl)('404'),
+            animated: 'true'
           });
           return;
         }
@@ -23771,13 +23783,13 @@ exports.default = {
 
         if (discountDetail.commodityPrice >= 0) {
           var strPrice = discountDetail.commodityPrice.toString();
-          var dotPos = strPrice.indexOf(".");
+          var dotPos = strPrice.indexOf('.');
           if (dotPos != -1) {
             _this.discountObj.lPrice = strPrice.slice(0, dotPos);
             _this.discountObj.rPrice = strPrice.slice(dotPos);
           } else {
             _this.discountObj.lPrice = strPrice;
-            console.log("商品价格", _this.discountObj.lPrice);
+            console.log('商品价格', _this.discountObj.lPrice);
           }
           _this.discountObj.cPrice = discountDetail.commodityPrice;
         }
@@ -23792,34 +23804,34 @@ exports.default = {
         _this.discountObj.commodityUnreal = discountDetail.commodityUnreal;
         _this.discountObj.realType = discountDetail.realType;
         _this.discountReal = {
-          real: discountDetail.commodityReal > 0 ? discountDetail.commodityReal : "好评",
-          unreal: discountDetail.commodityUnreal > 0 ? discountDetail.commodityUnreal : "差评",
-          highlight: discountDetail.realType == 0 ? "real" : discountDetail.realType == 1 ? "unreal" : ""
+          real: discountDetail.commodityReal > 0 ? discountDetail.commodityReal : '好评',
+          unreal: discountDetail.commodityUnreal > 0 ? discountDetail.commodityUnreal : '差评',
+          highlight: discountDetail.realType == 0 ? 'real' : discountDetail.realType == 1 ? 'unreal' : ''
         };
 
         (0, _utils3.setPageTitle)(_this.discountObj.cName);
         (0, _utils3.setOgImage)(_this.discountObj.commodityImageUrl);
       }, function (error) {
-        console.error("failure", error);
+        console.error('failure', error);
       });
     },
     increaseReal: function increaseReal(operate, realType) {
       var _this = this;
-      (0, _utils3.getStorageVal)("way:user").then(function (data) {
+      (0, _utils3.getStorageVal)('way:user').then(function (data) {
         var user = JSON.parse(data);
         var realUserLoginId = user.userLoginId;
         var userToken = user.userToken;
         var discountId = _this.discountObj.id;
         var url = void 0;
-        if (operate == "increase") {
-          url = "/discount/real/increase";
-        } else if (operate == "decrease") {
-          url = "/discount/real/decrease";
+        if (operate == 'increase') {
+          url = '/discount/real/increase';
+        } else if (operate == 'decrease') {
+          url = '/discount/real/decrease';
         } else {
           return;
         }
         (0, _http.http)({
-          method: "POST",
+          method: 'POST',
           url: url,
           headers: {
             token: userToken
@@ -23839,73 +23851,73 @@ exports.default = {
           }
 
           var discountRealItem = data.data;
-          var realCount = discountRealItem.discountReal == 0 ? "好评" : discountRealItem.discountReal;
+          var realCount = discountRealItem.discountReal == 0 ? '好评' : discountRealItem.discountReal;
 
-          var unrealCount = discountRealItem.discountUnReal == 0 ? "差评" : discountRealItem.discountUnReal;
+          var unrealCount = discountRealItem.discountUnReal == 0 ? '差评' : discountRealItem.discountUnReal;
 
           _this.discountReal = {
             real: realCount,
             unreal: unrealCount,
-            highlight: operate == "increase" ? realType : ""
+            highlight: operate == 'increase' ? realType : ''
           };
         });
       }, function (error) {
         navigator.push({
-          url: (0, _utils3.getEntryUrl)("views/user/login"),
-          animated: "true"
+          url: (0, _utils3.getEntryUrl)('views/user/login'),
+          animated: 'true'
         });
       });
     },
     clickIncreaseReal: function clickIncreaseReal() {
-      this.increaseReal("increase", "real");
+      this.increaseReal('increase', 'real');
     },
     clickDecreaseReal: function clickDecreaseReal() {
-      this.increaseReal("decrease", "real");
+      this.increaseReal('decrease', 'real');
     },
     clickIncreaseUnreal: function clickIncreaseUnreal() {
-      this.increaseReal("increase", "unreal");
+      this.increaseReal('increase', 'unreal');
     },
     clickDecreaseUnreal: function clickDecreaseUnreal() {
-      this.increaseReal("decrease", "unreal");
+      this.increaseReal('decrease', 'unreal');
     },
     clickStaticMap: function clickStaticMap() {
-      console.log("click static map");
-      var dest = this.discountObj.shopLng + "," + this.discountObj.shopLat;
-      console.log("dest", dest);
+      console.log('click static map');
+      var dest = this.discountObj.shopLng + ',' + this.discountObj.shopLat;
+      console.log('dest', dest);
       var destName = encodeURIComponent(this.discountObj.position);
-      console.log("destName", destName);
-      (0, _utils3.getStorageVal)("way:city").then(function (data) {
+      console.log('destName', destName);
+      (0, _utils3.getStorageVal)('way:city').then(function (data) {
         var city = JSON.parse(data);
-        var start = city.lng + "," + city.lat;
+        var start = city.lng + ',' + city.lat;
 
-        console.log("city", city, "start", start);
-        var discountMapUrl = "https://m.amap.com/navi/?start=" + start + "&dest=" + dest + "&destName=" + destName + "&naviBy=walk&key=e318d250a2b4d53d864f7d712cc069da";
+        console.log('city', city, 'start', start);
+        var discountMapUrl = 'https://m.amap.com/navi/?start=' + start + '&dest=' + dest + '&destName=' + destName + '&naviBy=walk&key=e318d250a2b4d53d864f7d712cc069da';
 
-        console.log("discount map url", discountMapUrl);
-        (0, _utils3.setStorageVal)("way:discount:mapUrl", discountMapUrl);
+        console.log('discount map url', discountMapUrl);
+        (0, _utils3.setStorageVal)('way:discount:mapUrl', discountMapUrl);
 
         navigator.push({
-          url: (0, _utils3.getEntryUrl)("views/discount/posMap"),
-          animated: "true"
+          url: (0, _utils3.getEntryUrl)('views/discount/posMap'),
+          animated: 'true'
         });
       }, function (err) {
-        var discountMapUrl = "https://m.amap.com/navi/?dest=" + dest + "&destName=" + destName + "&key=e318d250a2b4d53d864f7d712cc069da";
+        var discountMapUrl = 'https://m.amap.com/navi/?dest=' + dest + '&destName=' + destName + '&key=e318d250a2b4d53d864f7d712cc069da';
 
-        (0, _utils3.setStorageVal)("way:discount:mapUrl", discountMapUrl);
+        (0, _utils3.setStorageVal)('way:discount:mapUrl', discountMapUrl);
 
         navigator.push({
-          url: (0, _utils3.getEntryUrl)("views/discount/posMap"),
-          animated: "true"
+          url: (0, _utils3.getEntryUrl)('views/discount/posMap'),
+          animated: 'true'
         });
       });
     },
     expiredOnCompleted: function expiredOnCompleted() {
-      console.log("优惠已结束");
+      console.log('优惠已结束');
       this.expiredShow = true;
     }
   },
   destroyed: function destroyed() {
-    globalEvent.removeEventListener("weixinCallback");
+    globalEvent.removeEventListener('weixinCallback');
   }
 };
 
