@@ -13,10 +13,10 @@
 </style>
 
 <script>
-import { setPageTitle, getStorageVal } from "../../tools/utils.js";
-import { Utils } from "weex-ui";
-import navbar from "../../include/navbar.vue"
-import { http } from "../../tools/http.js";
+import { setPageTitle, getStorageVal, titlebar } from '../../tools/utils.js'
+import { Utils } from 'weex-ui'
+import navbar from '../../include/navbar.vue'
+import { http } from '../../tools/http.js'
 const navigator = weex.requireModule('navigator')
 
 export default {
@@ -25,25 +25,29 @@ export default {
     discountMapUrl: ''
   }),
   beforeCreate() {
-    setPageTitle("用户服务协议");
+    setPageTitle('用户服务协议')
   },
   methods: {
     getDiscountMapUrl() {
-      getStorageVal('way:discount:mapUrl').then(data => {
-        this.discountMapUrl = data
-      }, err => {
-        navigator.pop({
-          animated: true
-        })
-      })
+      getStorageVal('way:discount:mapUrl').then(
+        data => {
+          this.discountMapUrl = data
+        },
+        err => {
+          navigator.pop({
+            animated: true
+          })
+        }
+      )
     }
   },
   created() {
     console.log('pos map created')
+    titlebar('路线图')
     const pageHeight = Utils.env.getPageHeight()
-    const screenHeight = Utils.env.getScreenHeight();
-    this.discountMapStyle = { width: "750px", height: pageHeight + "px", marginTop: screenHeight - pageHeight + 'px' };
-    this.getDiscountMapUrl();
+    const screenHeight = Utils.env.getScreenHeight()
+    this.discountMapStyle = { width: '750px', height: pageHeight + 'px' }
+    this.getDiscountMapUrl()
   }
-};
+}
 </script>

@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { Utils, WxcCell, WxcPopup, WxcDialog, WxcMask } from "weex-ui";
+import { Utils, WxcCell, WxcPopup, WxcDialog, WxcMask } from 'weex-ui'
 import {
   getEntryUrl,
   receiveMessage,
@@ -70,139 +70,142 @@ import {
   setPageTitle,
   setOgImage,
   getUrlKey,
-  setStorageVal
-} from "../../tools/utils.js";
-import { loadCateImageUrl } from "../../tools/image.js";
-import { http } from "../../tools/http.js";
-import navbar from "../../include/navbar.vue";
-import { getWeixinShareWebpage } from "../../api/commodity.js";
-const navigator = weex.requireModule("navigator");
-const modal = weex.requireModule("modal");
-const weixin = weex.requireModule("weixin");
-const globalEvent = weex.requireModule("globalEvent");
+  setStorageVal,
+  titlebar
+} from '../../tools/utils.js'
+import { loadCateImageUrl } from '../../tools/image.js'
+import { http } from '../../tools/http.js'
+import navbar from '../../include/navbar.vue'
+import { getWeixinShareWebpage } from '../../api/commodity.js'
+const navigator = weex.requireModule('navigator')
+const modal = weex.requireModule('modal')
+const weixin = weex.requireModule('weixin')
+const globalEvent = weex.requireModule('globalEvent')
 
 export default {
   components: { WxcCell, WxcPopup, WxcDialog, WxcMask, navbar },
   data: () => ({
     cellStyle: {},
     weixinStyle: {
-      fontSize: "64px"
+      fontSize: '64px'
     },
     commodityObj: {
       id: 0,
-      cPicUrl: "",
-      cName: "",
-      cPrice: "",
-      cPosition: "",
+      cPicUrl: '',
+      cName: '',
+      cPrice: '',
+      cPosition: '',
       shopId: 0,
-      shopName: "",
-      shopLogoUrl: ""
+      shopName: '',
+      shopLogoUrl: ''
     },
     isAutoShow: false
   }),
   created() {
-    initIconfont();
-    const pageHeight = Utils.env.getPageHeight();
-    const screenHeight = Utils.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + "px" };
+    initIconfont()
+    titlebar('商品详情')
+    const pageHeight = Utils.env.getPageHeight()
+    const screenHeight = Utils.env.getScreenHeight()
+    // this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
+    this.scrollerStyle = { height: pageHeight + 'px' }
 
-    let _this = this;
+    let _this = this
     // _this.commodityObj.id = getUrlKey('cid')
-    getStorageVal("way:commodity:id").then(data => {
-      console.log("商品详情id接收", data);
-      _this.commodityObj.id = data;
+    getStorageVal('way:commodity:id').then(data => {
+      console.log('商品详情id接收', data)
+      _this.commodityObj.id = data
       if (!_this.commodityObj.id) {
-        console.log("商品详情id没有", data);
-        navigator.pop();
-        return;
+        console.log('商品详情id没有', data)
+        navigator.pop()
+        return
       }
 
-      this.getCommodityData();
-    });
+      this.getCommodityData()
+    })
 
-    globalEvent.addEventListener("weixinCallback", function(data) {
-      console.log("微信分享商品详情callback的结果", data);
+    globalEvent.addEventListener('weixinCallback', function(data) {
+      console.log('微信分享商品详情callback的结果', data)
       if (data) {
-        if (data.errCode == "0") {
+        if (data.errCode == '0') {
           modal.toast({
-            message: "分享成功",
+            message: '分享成功',
             duration: 1
-          });
+          })
         }
       }
-      _this.isAutoShow = false;
-    });
+      _this.isAutoShow = false
+    })
 
-    console.log("商品详情id", _this.commodityObj.id);
+    console.log('商品详情id', _this.commodityObj.id)
   },
   methods: {
     getCommodityData() {
-      let _this = this;
+      let _this = this
       http({
-        method: "POST",
-        url: "/commodity/detail",
+        method: 'POST',
+        url: '/commodity/detail',
         headers: {},
         body: {
           commodityId: this.commodityObj.id
         }
       }).then(
         function(data) {
-          console.log("success", data);
+          console.log('success', data)
           if (data.code != 200) {
-            _this.dialogContent = data.msg;
-            _this.dialogShow = true;
+            _this.dialogContent = data.msg
+            _this.dialogShow = true
           }
-          let commodityDetail = data.data;
-          _this.commodityObj.id = commodityDetail.id;
-          _this.commodityObj.cName = commodityDetail.name;
+          let commodityDetail = data.data
+          _this.commodityObj.id = commodityDetail.id
+          _this.commodityObj.cName = commodityDetail.name
           // _this.commodityObj.cPrice = commodityDetail.price
-          _this.commodityObj.cPosition = commodityDetail.shopAddress;
-          _this.commodityObj.cPicUrl = commodityDetail.imgUrl;
-          _this.commodityObj.shopId = commodityDetail.shopId;
-          _this.commodityObj.shopName = commodityDetail.shopName;
-          _this.commodityObj.shopLogoUrl = commodityDetail.shopLogoUrl;
+          _this.commodityObj.cPosition = commodityDetail.shopAddress
+          _this.commodityObj.cPicUrl = commodityDetail.imgUrl
+          _this.commodityObj.shopId = commodityDetail.shopId
+          _this.commodityObj.shopName = commodityDetail.shopName
+          _this.commodityObj.shopLogoUrl = commodityDetail.shopLogoUrl
 
-          setPageTitle(commodityDetail.name);
-          setOgImage(_this.commodityObj.cPicUrl);
+          setPageTitle(commodityDetail.name)
+          setOgImage(_this.commodityObj.cPicUrl)
         },
         function(error) {
-          console.error("failure", error);
+          console.error('failure', error)
         }
-      );
+      )
     },
     popupOverlayAutoClick() {
-      this.isAutoShow = false;
+      this.isAutoShow = false
     },
     popupOverlayClicked() {
-      this.isAutoShow = true;
+      this.isAutoShow = true
     },
     weixinClicked(shareType) {
-      console.log("weixin clicked...");
+      console.log('weixin clicked...')
       getWeixinShareWebpage({
         commodityId: this.commodityObj.id,
         shareType: shareType
       }).then(resp => {
-        console.log('微信返回', resp);
+        console.log('微信返回', resp)
         if (resp.code !== 200) {
-          return;
+          return
         }
-        const weixinParams = resp.data;
-        console.log("微信分享商品详情，请求参数", weixinParams);
-        weixin.shareWebpage(weixinParams);
-      });
+        const weixinParams = resp.data
+        console.log('微信分享商品详情，请求参数', weixinParams)
+        weixin.shareWebpage(weixinParams)
+      })
     },
     shopCellClicked() {
-      setStorageVal("way:shop:id", this.commodityObj.shopId);
+      setStorageVal('way:shop:id', this.commodityObj.shopId)
       navigator.push({
-        url: getEntryUrl("views/shop/detail"),
-        animated: "true"
-      });
+        url: getEntryUrl('views/shop/detail'),
+        animated: 'true'
+      })
     }
   },
   destroyed() {
-    globalEvent.removeEventListener("weixinCallback");
+    globalEvent.removeEventListener('weixinCallback')
   }
-};
+}
 </script>
 
 <style scoped>

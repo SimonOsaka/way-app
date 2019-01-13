@@ -16,7 +16,6 @@ import { Utils, WxcButton } from "weex-ui";
 import { setPageTitle, setStorageVal } from "./tools/utils.js";
 import { guide1, guide2, guide3 } from "./tools/guide.js";
 const navigator = weex.requireModule("navigator");
-const rootview = weex.requireModule("rootview");
 
 export default {
   components: { WxcButton },
@@ -35,7 +34,9 @@ export default {
     wxcButtonClicked(e) {
       console.log("点击进入应用");
       setStorageVal("way:first", "done");
-      rootview.refresh();
+      if (Utils.env.isIOS()) {
+        weex.requireModule("rootview").refresh();
+      }
       navigator.pop({
         animated: false
       });

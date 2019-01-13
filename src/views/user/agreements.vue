@@ -13,48 +13,49 @@
 </style>
 
 <script>
-import { setPageTitle } from "../../tools/utils.js";
-import { Utils } from "weex-ui";
-import { http } from "../../tools/http.js";
-import navbar from "../../include/navbar.vue"
+import { setPageTitle, titlebar } from '../../tools/utils.js'
+import { Utils } from 'weex-ui'
+import { http } from '../../tools/http.js'
+import navbar from '../../include/navbar.vue'
 
 export default {
   components: { navbar },
   data: () => ({
-    userAgreementsUrl: ""
+    userAgreementsUrl: ''
   }),
   beforeCreate() {
-    setPageTitle("用户服务协议");
+    setPageTitle('用户服务协议')
   },
   methods: {
     queryUserAgreementsUrl() {
-      let _this = this;
+      let _this = this
       http({
-        method: "POST",
-        url: "/user/agreements",
+        method: 'POST',
+        url: '/user/agreements',
         headers: {},
         body: {}
       }).then(
         function(data) {
-          console.log("success", data);
+          console.log('success', data)
           if (data.code != 200) {
-            return;
+            return
           }
 
-          let result = data.data;
-          _this.userAgreementsUrl = result.userAgreementsUrl;
+          let result = data.data
+          _this.userAgreementsUrl = result.userAgreementsUrl
         },
         function(error) {
-          console.error("failure", error);
+          console.error('failure', error)
         }
-      );
+      )
     }
   },
   created() {
-    const pageHeight = Utils.env.getPageHeight();
-    const screenHeight = Utils.env.getScreenHeight();
-    this.agreementsStyle = { width: "750px", height: pageHeight + "px", marginTop: screenHeight - pageHeight + 'px'};
-    this.queryUserAgreementsUrl();
+    titlebar('用户协议')
+    const pageHeight = Utils.env.getPageHeight()
+    const screenHeight = Utils.env.getScreenHeight()
+    this.agreementsStyle = { width: '750px', height: pageHeight + 'px' }
+    this.queryUserAgreementsUrl()
   }
-};
+}
 </script>

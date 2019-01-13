@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { Utils, WxcButton, WxcDialog } from "weex-ui";
+import { Utils, WxcButton, WxcDialog } from 'weex-ui'
 import {
   getEntryUrl,
   postMessage,
@@ -48,122 +48,123 @@ import {
   setStorageVal,
   modalDebug,
   getUrlKey,
-  setPageTitle
-} from "../../tools/utils.js";
-import { http } from "../../tools/http.js";
-import category from "../../components/category.vue";
-import navbar from "../../include/navbar.vue"
-const navigator = weex.requireModule("navigator");
-const storage = weex.requireModule("storage");
-const modal = weex.requireModule("modal");
+  setPageTitle,
+  titlebar
+} from '../../tools/utils.js'
+import { http } from '../../tools/http.js'
+import category from '../../components/category.vue'
+import navbar from '../../include/navbar.vue'
+const navigator = weex.requireModule('navigator')
+const storage = weex.requireModule('storage')
+const modal = weex.requireModule('modal')
 
 export default {
   components: { WxcButton, WxcDialog, navbar },
   data: () => ({
-    userTel: "",
-    userValidCode: "",
-    userName: "",
-    userPasword: "",
-    btnGetValidCodeText: "获取验证码",
+    userTel: '',
+    userValidCode: '',
+    userName: '',
+    userPasword: '',
+    btnGetValidCodeText: '获取验证码',
     btnGetValidCodeDisabled: false,
     btnGetValidCodeDisabledTime: 120,
 
-    dialogContent: "",
+    dialogContent: '',
     dialogShow: false,
     loginTab: 1
   }),
   created() {
-    initIconfont();
-    setPageTitle("登录");
-    const pageHeight = Utils.env.getPageHeight();
-    const screenHeight = Utils.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
+    initIconfont()
+    titlebar('登录')
+    const pageHeight = Utils.env.getPageHeight()
+    const screenHeight = Utils.env.getScreenHeight()
+    this.scrollerStyle = { height: pageHeight + 'px' }
   },
   methods: {
     userTelOninput: function(event) {
-      this.userTel = event.value;
-      console.log("oninput", event.value);
+      this.userTel = event.value
+      console.log('oninput', event.value)
     },
     userNameOninput(event) {
-      this.userName = event.value;
-      console.log("userName", this.userName);
+      this.userName = event.value
+      console.log('userName', this.userName)
     },
     userPasswordOninput(event) {
-      this.userPasword = event.value;
-      console.log("userPasword", this.userPasword);
+      this.userPasword = event.value
+      console.log('userPasword', this.userPasword)
     },
     userValidCodeOninput: function(event) {
-      this.userValidCode = event.value;
-      console.log("oninput", event.value);
+      this.userValidCode = event.value
+      console.log('oninput', event.value)
     },
     userValidCodeClicked(e) {
       if (isEmpty(this.userTel)) {
-        this.dialogContent = "请输入手机号";
-        this.dialogShow = true;
-        return;
+        this.dialogContent = '请输入手机号'
+        this.dialogShow = true
+        return
       } else {
-        let mobile_mode = /^1[34578]\d{9}$/;
+        let mobile_mode = /^1[34578]\d{9}$/
         if (!mobile_mode.test(this.userTel)) {
-          this.dialogContent = "手机号格式不正确";
-          this.dialogShow = true;
-          return;
+          this.dialogContent = '手机号格式不正确'
+          this.dialogShow = true
+          return
         }
       }
 
-      let _this = this;
+      let _this = this
       http({
-        method: "POST",
-        url: "/user/validCode",
+        method: 'POST',
+        url: '/user/validCode',
         headers: {},
         body: {
           userTel: this.userTel
         }
       }).then(
         function(data) {
-          console.log("success", data);
+          console.log('success', data)
           if (data.code != 200) {
-            _this.dialogContent = data.msg;
-            _this.dialogShow = true;
+            _this.dialogContent = data.msg
+            _this.dialogShow = true
           }
         },
         function(error) {
-          console.error("failure", error);
+          console.error('failure', error)
         }
-      );
+      )
 
-      this.btnGetValidCodeDisabled = true;
+      this.btnGetValidCodeDisabled = true
       let interval = setInterval(() => {
         this.btnGetValidCodeText =
-          "已发送（" + --this.btnGetValidCodeDisabledTime + "）";
+          '已发送（' + --this.btnGetValidCodeDisabledTime + '）'
         console.debug(
           this.btnGetValidCodeDisabled,
           this.btnGetValidCodeText,
           this.btnGetValidCodeDisabledTime
-        );
+        )
         if (this.btnGetValidCodeDisabledTime === 0) {
-          this.btnGetValidCodeDisabled = false;
-          this.btnGetValidCodeText = "获取验证码";
-          this.btnGetValidCodeDisabledTime = 120;
-          clearInterval(interval);
+          this.btnGetValidCodeDisabled = false
+          this.btnGetValidCodeText = '获取验证码'
+          this.btnGetValidCodeDisabledTime = 120
+          clearInterval(interval)
         }
-      }, 1000);
+      }, 1000)
     },
     userTelLoginClicked(e) {
       if (isEmpty(this.userTel) || isEmpty(this.userValidCode)) {
-        return;
+        return
       } else {
-        let code_mode = /\d{6}$/;
+        let code_mode = /\d{6}$/
         if (!code_mode.test(this.userValidCode)) {
-          this.dialogContent = "验证码格式不正确";
-          this.dialogShow = true;
-          return;
+          this.dialogContent = '验证码格式不正确'
+          this.dialogShow = true
+          return
         }
       }
 
-      let _this = this;
+      let _this = this
       http({
-        method: "POST",
-        url: "/user/login",
+        method: 'POST',
+        url: '/user/login',
         headers: {},
         body: {
           userTel: this.userTel,
@@ -171,18 +172,18 @@ export default {
         }
       }).then(
         function(data) {
-          console.log("success", data);
+          console.log('success', data)
           if (data.code != 200) {
-            _this.dialogContent = data.msg;
-            _this.dialogShow = true;
-            return;
+            _this.dialogContent = data.msg
+            _this.dialogShow = true
+            return
           }
 
-          modalDebug(JSON.stringify(data));
+          modalDebug(JSON.stringify(data))
 
-          let userProfile = data.data;
+          let userProfile = data.data
           setStorageVal(
-            "way:user",
+            'way:user',
             JSON.stringify({
               userLoginId: userProfile.userLoginId,
               userNickName: userProfile.userNickName,
@@ -190,52 +191,52 @@ export default {
             })
           ).then(
             data => {
-              modalDebug("setStorageVal");
-              let tabIndex = getUrlKey("tabIndex");
-              postMessage("way:tab:selectedIndex", tabIndex ? tabIndex : 0);
+              modalDebug('setStorageVal')
+              let tabIndex = getUrlKey('tabIndex')
+              postMessage('way:tab:selectedIndex', tabIndex ? tabIndex : 0)
               navigator.pop({
-                animated: "true"
-              });
+                animated: 'true'
+              })
             },
             error => {
-              const modal = weex.requireModule("modal");
+              const modal = weex.requireModule('modal')
               modal.toast({
                 message: error,
                 duration: 3
-              });
+              })
             }
-          );
+          )
         },
         function(error) {
-          console.error("failure", error);
+          console.error('failure', error)
         }
-      );
+      )
 
-      console.log(this.userTel, this.userValidCode);
+      console.log(this.userTel, this.userValidCode)
     },
     dialogConfirmBtnClicked(e) {
-      this.dialogContent = "";
-      this.dialogShow = false;
+      this.dialogContent = ''
+      this.dialogShow = false
     },
     clickUserAgreement() {
       navigator.push({
-        url: getEntryUrl("views/user/agreements"),
+        url: getEntryUrl('views/user/agreements'),
         animated: 'true'
-      });
+      })
     },
     userNameLoginClicked() {
       if (isEmpty(this.userName) || isEmpty(this.userPasword)) {
         modal.toast({
-          message: "用户名和密码必须填写",
+          message: '用户名和密码必须填写',
           duration: 1.5
-        });
-        return;
+        })
+        return
       }
 
-      let _this = this;
+      let _this = this
       http({
-        method: "POST",
-        url: "/user/signin",
+        method: 'POST',
+        url: '/user/signin',
         headers: {},
         body: {
           userLoginName: this.userName,
@@ -243,18 +244,18 @@ export default {
         }
       }).then(
         function(data) {
-          console.log("success", data);
+          console.log('success', data)
           if (data.code != 200) {
-            _this.dialogContent = data.msg;
-            _this.dialogShow = true;
-            return;
+            _this.dialogContent = data.msg
+            _this.dialogShow = true
+            return
           }
 
-          modalDebug(JSON.stringify(data));
+          modalDebug(JSON.stringify(data))
 
-          let userProfile = data.data;
+          let userProfile = data.data
           setStorageVal(
-            "way:user",
+            'way:user',
             JSON.stringify({
               userLoginId: userProfile.userLoginId,
               userNickName: userProfile.userNickName,
@@ -262,29 +263,29 @@ export default {
             })
           ).then(
             data => {
-              modalDebug("setStorageVal");
-              postMessage("m:way:login", 'success');
+              modalDebug('setStorageVal')
+              postMessage('m:way:login', 'success')
               navigator.pop({
-                animated: "true"
-              });
+                animated: 'true'
+              })
             },
             error => {
               modal.toast({
                 message: error,
                 duration: 3
-              });
+              })
             }
-          );
+          )
         },
         function(error) {
-          console.error("failure", error);
+          console.error('failure', error)
         }
-      );
+      )
 
-      console.log(this.userTel, this.userValidCode);
+      console.log(this.userTel, this.userValidCode)
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -331,12 +332,12 @@ export default {
   color: #2395ff;
 }
 .center-text {
-  position: absolute; 
-  bottom: 25; 
-  left: 172; 
+  position: absolute;
+  bottom: 25;
+  left: 172;
   right: 172;
-  text-align: center; 
-  font-size: 36; 
+  text-align: center;
+  font-size: 36;
   font-weight: bold;
 }
 </style>

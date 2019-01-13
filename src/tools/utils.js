@@ -2,7 +2,7 @@ export function initIconfont() {
   let domModule = weex.requireModule('dom')
   domModule.addRule('fontFace', {
     fontFamily: 'iconfont',
-    src: "url('../iconfont.ttf')"
+    src: "url('local:///font/iconfont.ttf')"
   })
 }
 
@@ -45,10 +45,10 @@ export function getEntryUrl(filename, parameters) {
       url += ps.join('&')
     }
   } else {
-    if (isiOSAssets || isAndroidAssets) {
+    if (isiOSAssets) {
       url = `${bundleUrl.split('bundlejs')[0]}/bundlejs/${filename}.js`
       console.log('getEntryUrl, ios', url)
-    } else {
+    } else if (isAndroidAssets) {
       url = `${bundleUrl.split('/dist')[0]}/dist/${filename}.js`
     }
   }
@@ -165,7 +165,7 @@ export function receiveMessage(key, success) {
   }
   console.log(key, whichPlatform())
   const b = new BroadcastChannel(key)
-  b.onmessage = function (event) {
+  b.onmessage = function(event) {
     console.log('b.onmessage', key, event)
     if (event.data) {
       data.val = event.data
@@ -194,4 +194,11 @@ export function getUrlKey(name) {
       ) || [, ''])[1].replace(/\+/g, '%20')
     ) || null
   )
+}
+
+export function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title)
+  // }
 }

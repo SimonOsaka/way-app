@@ -1,7 +1,7 @@
 export default {
-
   // 使用 iconFont 模式的tab title配置
-  tabIconFontTitles: [{
+  tabIconFontTitles: [
+    {
       title: '首页',
       codePoint: '\ue6b8'
     },
@@ -31,6 +31,6 @@ export default {
     iconFontMarginBottom: 8,
     iconFontColor: '#333333',
     activeIconFontColor: 'red',
-    iconFontUrl: '../iconfont.ttf'
+    iconFontUrl: 'local:///font/iconfont.ttf'
   }
 }

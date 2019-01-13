@@ -19,49 +19,49 @@
 </template>
 
 <script>
-import { Utils, WxcCell } from "weex-ui";
-import navbar from "../../include/navbar.vue"
+import { Utils, WxcCell } from 'weex-ui'
+import navbar from '../../include/navbar.vue'
 import {
   getEntryUrl,
   receiveMessage,
   initIconfont,
   getStorageVal,
-  setPageTitle
-} from "../../tools/utils.js";
-import { http } from "../../tools/http.js";
-const navigator = weex.requireModule("navigator");
+  setPageTitle,
+  titlebar
+} from '../../tools/utils.js'
+import { http } from '../../tools/http.js'
+const navigator = weex.requireModule('navigator')
 
 export default {
   components: { WxcCell, navbar },
   data: () => ({
-    cellStyle: { height: "150px" },
+    cellStyle: { height: '150px' },
     shop: {
       id: 0,
-      shopAddress: "",
-      shopName: "",
-      shopLogoUrl: "",
-      shopBusinessTimeAll: ""
+      shopAddress: '',
+      shopName: '',
+      shopLogoUrl: '',
+      shopBusinessTimeAll: ''
     }
   }),
   beforeCreate() {
-    initIconfont();
-    setPageTitle("商家详情");
+    initIconfont()
+    titlebar('商家详情')
     const pageHeight = Utils.env.getPageHeight()
-    const screenHeight = Utils.env.getScreenHeight();
+    const screenHeight = Utils.env.getScreenHeight()
     this.scrollerStyle = {
-        height: pageHeight + 'px',
-        marginTop: screenHeight - pageHeight + 'px'
+      height: pageHeight + 'px'
     }
   },
   created() {
-    let _this = this;
-    getStorageVal("way:shop:id").then(
+    let _this = this
+    getStorageVal('way:shop:id').then(
       data => {
-        _this.shop.id = data;
+        _this.shop.id = data
 
         http({
-          method: "POST",
-          url: "/shop/detail",
+          method: 'POST',
+          url: '/shop/detail',
           headers: {},
           body: {
             shopId: this.shop.id
@@ -69,30 +69,30 @@ export default {
         }).then(
           function(data) {
             if (data.code != 200) {
-              return;
+              return
             }
-            let shopDetail = data.data;
-            _this.shop.id = shopDetail.id;
-            _this.shop.shopName = shopDetail.shopName;
-            _this.shop.shopAddress = shopDetail.shopAddress;
-            _this.shop.shopTel = shopDetail.shopTel;
+            let shopDetail = data.data
+            _this.shop.id = shopDetail.id
+            _this.shop.shopName = shopDetail.shopName
+            _this.shop.shopAddress = shopDetail.shopAddress
+            _this.shop.shopTel = shopDetail.shopTel
             _this.shop.shopBusinessTimeAll =
-              shopDetail.shopBusinessTime1 + " " + shopDetail.shopBusinessTime2;
-            _this.shop.shopLogoUrl = shopDetail.shopLogoUrl;
+              shopDetail.shopBusinessTime1 + ' ' + shopDetail.shopBusinessTime2
+            _this.shop.shopLogoUrl = shopDetail.shopLogoUrl
           },
           function(error) {
-            console.error("failure", error);
+            console.error('failure', error)
           }
-        );
+        )
       },
       e => {
-        navigator.pop();
-        return;
+        navigator.pop()
+        return
       }
-    );
+    )
   },
   methods: {}
-};
+}
 </script>
 
 <style scoped>

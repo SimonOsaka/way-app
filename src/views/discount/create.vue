@@ -55,7 +55,7 @@ import {
   WxcLoading,
   WxcMask
 } from 'weex-ui'
-import navbar from "../../include/navbar.vue"
+import navbar from '../../include/navbar.vue'
 import {
   getEntryUrl,
   postMessage,
@@ -67,7 +67,8 @@ import {
   getStorageVal,
   setStorageVal,
   getUrlKey,
-  setPageTitle
+  setPageTitle,
+  titlebar
 } from '../../tools/utils.js'
 import { http } from '../../tools/http.js'
 import category from '../../components/category.vue'
@@ -115,10 +116,10 @@ export default {
   }),
   beforeCreate() {
     initIconfont()
-    setPageTitle('发布优惠')
-    const pageHeight = Utils.env.getPageHeight();
-    const screenHeight = Utils.env.getScreenHeight();
-    this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
+    titlebar('发布优惠')
+    const pageHeight = Utils.env.getPageHeight()
+    const screenHeight = Utils.env.getScreenHeight()
+    this.scrollerStyle = { height: pageHeight + 'px' }
 
     getStorageVal('way:city').then(
       data => {

@@ -17,40 +17,40 @@
 </style>
 
 <script>
-import { WxcResult } from "weex-ui";
-import { setPageTitle } from "./tools/utils.js";
-import navbar from "./include/navbar.vue"
-const modal = weex.requireModule("modal");
-const navigator = weex.requireModule("navigator");
+import { WxcResult } from 'weex-ui'
+import { titlebar } from './tools/utils.js'
+import navbar from './include/navbar.vue'
+const modal = weex.requireModule('modal')
+const navigator = weex.requireModule('navigator')
 
 export default {
   components: { WxcResult, navbar },
   data: () => ({
     show: true,
-    type: "errorPage",
+    type: 'errorPage',
     customSet: {
       errorPage: {
-        button: "走错了",
-        content: "亲，出错了",
-        pic: "https://gw.alicdn.com/tfs/TB1lgzNfBHH8KJjy0FbXXcqlpXa-320-320.png"
+        button: '走错了',
+        content: '亲，出错了',
+        pic: 'https://gw.alicdn.com/tfs/TB1lgzNfBHH8KJjy0FbXXcqlpXa-320-320.png'
       }
     }
   }),
   computed: {},
   beforeCreate() {
-    setPageTitle("404未找到");
-    const pageHeight = Utils.env.getPageHeight();
-    const screenHeight = Utils.env.getScreenHeight();
+    titlebar('404未找到')
+    const pageHeight = Utils.env.getPageHeight()
+    const screenHeight = Utils.env.getScreenHeight()
     this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
   },
   methods: {
     resultButtonClick(e) {
-      navigator.pop({ animated: true });
+      navigator.pop({ animated: true })
       //   modal.toast({
       //     message: `你点击了按钮`,
       //     duration: 1
       //   });
     }
   }
-};
+}
 </script>
