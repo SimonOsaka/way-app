@@ -6,11 +6,16 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.alibaba.weex.plugin.loader.WeexPluginContainer;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.listener.RequestListener;
+import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.xzl.jicu.extend.FrescoImageAdapter;
 import com.xzl.jicu.extend.ImageAdapter;
 import com.xzl.jicu.extend.WXDictionaryModule;
 import com.xzl.jicu.extend.WXEventModule;
@@ -22,6 +27,9 @@ import com.xzl.jicu.extend.WXWeixinModule;
 import com.xzl.jicu.util.AppConfig;
 import com.xzl.jicu.util.Constants;
 import com.xzl.jicu.util.GlobalMap;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -35,10 +43,18 @@ public class WXApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Set<RequestListener> requestListeners = new HashSet<>();
+        requestListeners.add(new RequestLoggingListener());
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+                .setRequestListeners(requestListeners)
+                .build();
+        Fresco.initialize(this, config);
+
         WXSDKEngine.addCustomOptions("appName", "急促");
         WXSDKEngine.addCustomOptions("appGroup", "jicu");
         WXSDKEngine.initialize(this,
-                new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build()
+                new InitConfig.Builder().setImgAdapter(new FrescoImageAdapter()).build()
         );
         try {
             WXSDKEngine.registerModule("event", WXEventModule.class);
@@ -49,7 +65,7 @@ public class WXApplication extends Application {
             WXSDKEngine.registerModule("titlebar", WXTitleBarModule.class);
             WXSDKEngine.registerModule("weixin", WXWeixinModule.class);
         } catch (WXException e) {
-            e.printStackTrace();
+            Log.d(TAG, "Module register exception: ", e);
         }
         AppConfig.init(this);
         WeexPluginContainer.loadAll(this);

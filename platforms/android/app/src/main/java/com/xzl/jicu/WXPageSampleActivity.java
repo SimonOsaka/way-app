@@ -29,6 +29,7 @@ import com.taobao.weex.utils.WXSoInstallMgrSdk;
 import com.xzl.jicu.hotreload.HotReloadManager;
 import com.xzl.jicu.util.AppConfig;
 import com.xzl.jicu.util.Constants;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -123,7 +124,11 @@ public class WXPageSampleActivity extends BasePageActivity implements
 //      getSupportActionBar().setTitle(url);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().show();
+            if (url.contains("guide.js")) {
+                getSupportActionBar().hide();
+            } else {
+                getSupportActionBar().show();
+            }
         }
         loadUrl(url);
 
