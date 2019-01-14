@@ -893,10 +893,8 @@ function checkNetworkStatus() {
 function getAppVersion() {
   var appVertionText = '';
   console.log('http.js', '获取appVersion', '开始', appVertionText);
-  var bundleUrl = weex.config.bundleUrl;
-  bundleUrl = new String(bundleUrl);
-  var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
-  if (isAndroidAssets) {
+  var isIOS = weex.config.env.platform.toLowerCase() === 'ios';
+  if (!isIOS) {
     appVertionText = weex.requireModule('version').getAppVersion();
     console.log('http.js', 'app版本，appVertionText=', appVertionText);
   } else {

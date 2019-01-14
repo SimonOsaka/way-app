@@ -16,7 +16,6 @@ import com.taobao.weex.common.WXException;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xzl.jicu.extend.FrescoImageAdapter;
-import com.xzl.jicu.extend.ImageAdapter;
 import com.xzl.jicu.extend.WXDictionaryModule;
 import com.xzl.jicu.extend.WXEventModule;
 import com.xzl.jicu.extend.WXNetworkModule;
@@ -26,7 +25,6 @@ import com.xzl.jicu.extend.WXWebBrowserModule;
 import com.xzl.jicu.extend.WXWeixinModule;
 import com.xzl.jicu.util.AppConfig;
 import com.xzl.jicu.util.Constants;
-import com.xzl.jicu.util.GlobalMap;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -83,8 +81,5 @@ public class WXApplication extends Application {
 
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);  // 初始化 JPush
-        String registrationId = JPushInterface.getRegistrationID(this);
-        GlobalMap.addValue("jpushRegId", registrationId);
-        Log.d(TAG, "JPush's registrationId：" + registrationId);
     }
 }

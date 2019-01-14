@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.WXSDKInstance;
+import com.xzl.jicu.util.SpUtils;
 import com.xzl.jicu.util.WXSdkUtils;
 
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class AppReceiver extends BroadcastReceiver {
                 String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
                 Log.d(TAG, "接收Registration Id : " + regId);
                 //send the Registration Id to your server...
-
+                SpUtils.commit("jpushRegId", regId);
             } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
                 Log.d(TAG, "接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 

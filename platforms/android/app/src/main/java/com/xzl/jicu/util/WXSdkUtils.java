@@ -30,6 +30,14 @@ public class WXSdkUtils {
         return mInstanceList.get(mInstanceList.size() - 1);
     }
 
+    public synchronized static WXSDKInstance getRootInstance() throws Exception {
+        if (mInstanceList.size() == 0) {
+            throw new Exception("mInstanceList is empty");
+        }
+
+        return mInstanceList.get(0);
+    }
+
     public synchronized static void setActionBar(ActionBar bar) {
         actionBarList.add(bar);
     }

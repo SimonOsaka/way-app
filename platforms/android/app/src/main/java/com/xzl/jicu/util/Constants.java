@@ -20,4 +20,9 @@ public class Constants {
 
     //weixin
     public static final String WEIXIN_APP_ID = "wxe49647d07bf7a3b0";
+
+    //SharedPreferences
+    public static final String GLOBAL_DATA = "global_data";
+
+    public static final String STRING_EMPTY = "";
 }

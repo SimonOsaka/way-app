@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.taobao.android.weex.plugin.gradle'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion project.compileSdkVersion
     buildToolsVersion '28.0.3'
@@ -21,19 +25,28 @@ android {
             }
         }
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "322f4fe6d107907c07775867", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
     }
+
+
+    flavorDimensions "default"
+
+    productFlavors {
+        develop { dimension "default" }
+        xiaomi { dimension "default" }
+        huawei { dimension "default" }
+        anzhi { dimension "default" }
+    }
+
     applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.equals('app-debug.apk')) {
-                def fileName = outputFile.name.replace("app-debug.apk", "weex-app.apk")
-//                output.outputFile = new File(outputFile.parent, fileName)
-                outputFileName = fileName
-            }
+        variant.outputs.all {
+            //println "输出apk地址:" + outputFile.parentFile.absolutePath + java.io.File.separator
+            def fileName = "jicu_${variant.productFlavors[0].name}-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
+            println "输出apk的名字:" + outputFileName
+            outputFileName = fileName
         }
     }
     signingConfigs {

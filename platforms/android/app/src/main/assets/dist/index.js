@@ -730,10 +730,8 @@ function checkNetworkStatus() {
 function getAppVersion() {
   var appVertionText = '';
   console.log('http.js', '获取appVersion', '开始', appVertionText);
-  var bundleUrl = weex.config.bundleUrl;
-  bundleUrl = new String(bundleUrl);
-  var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
-  if (isAndroidAssets) {
+  var isIOS = weex.config.env.platform.toLowerCase() === 'ios';
+  if (!isIOS) {
     appVertionText = weex.requireModule('version').getAppVersion();
     console.log('http.js', 'app版本，appVertionText=', appVertionText);
   } else {
@@ -4171,24 +4169,36 @@ exports.default = {
       (0, _utils3.getStorageVal)('way:user').then(function (data) {
         var longitude = 0;
         var latitude = 0;
-        dictionary.getDict('longitude', function (resp) {
-          console.log('获取iOS native经度', resp);
-          longitude = resp;
-        });
-        dictionary.getDict('latitude', function (resp) {
-          console.log('获取iOS native纬度', resp);
-          latitude = resp;
-        });
-        var deviceToken = '';
-        dictionary.getDict('deviceToken', function (resp) {
-          console.log('首页-获取iOS deviceToken', resp);
-          deviceToken = resp;
-        });
         var jpushRegId = '';
-        dictionary.getDict('jpushRegId', function (resp) {
-          console.log('首页-获取jpushRegId', resp);
-          jpushRegId = resp;
-        });
+        var deviceToken = '';
+        var isIOS = weex.config.env.platform.toLowerCase() === 'ios';
+        if (isIOS) {
+          dictionary.getDict('longitude', function (resp) {
+            console.log('获取iOS native经度', resp);
+            longitude = resp;
+          });
+          dictionary.getDict('latitude', function (resp) {
+            console.log('获取iOS native纬度', resp);
+            latitude = resp;
+          });
+          dictionary.getDict('deviceToken', function (resp) {
+            console.log('首页-获取iOS deviceToken', resp);
+            deviceToken = resp;
+          });
+          dictionary.getDict('jpushRegId', function (resp) {
+            console.log('首页-获取jpushRegId', resp);
+            jpushRegId = resp;
+          });
+        } else {
+          longitude = dictionary.getDict('longitude');
+          console.log('获取native经度', longitude);
+
+          latitude = dictionary.getDict('latitude');
+          console.log('获取native纬度', latitude);
+
+          jpushRegId = dictionary.getDict('jpushRegId');
+          console.log('获取jpushRegId', jpushRegId);
+        }
         var user = JSON.parse(data);
         var userLoginId = user.userLoginId;
         var syncParams = {

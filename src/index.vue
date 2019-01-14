@@ -791,24 +791,36 @@ export default {
       getStorageVal('way:user').then(data => {
         let longitude = 0
         let latitude = 0
-        dictionary.getDict('longitude', function(resp) {
-          console.log('获取iOS native经度', resp)
-          longitude = resp
-        })
-        dictionary.getDict('latitude', function(resp) {
-          console.log('获取iOS native纬度', resp)
-          latitude = resp
-        })
-        let deviceToken = ''
-        dictionary.getDict('deviceToken', function(resp) {
-          console.log('首页-获取iOS deviceToken', resp)
-          deviceToken = resp
-        })
         let jpushRegId = ''
-        dictionary.getDict('jpushRegId', function(resp) {
-          console.log('首页-获取jpushRegId', resp)
-          jpushRegId = resp
-        })
+        let deviceToken = ''
+        const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+        if (isIOS) {
+          dictionary.getDict('longitude', function(resp) {
+            console.log('获取iOS native经度', resp)
+            longitude = resp
+          })
+          dictionary.getDict('latitude', function(resp) {
+            console.log('获取iOS native纬度', resp)
+            latitude = resp
+          })
+          dictionary.getDict('deviceToken', function(resp) {
+            console.log('首页-获取iOS deviceToken', resp)
+            deviceToken = resp
+          })
+          dictionary.getDict('jpushRegId', function(resp) {
+            console.log('首页-获取jpushRegId', resp)
+            jpushRegId = resp
+          })
+        } else {
+          longitude = dictionary.getDict('longitude')
+          console.log('获取native经度', longitude)
+
+          latitude = dictionary.getDict('latitude')
+          console.log('获取native纬度', latitude)
+
+          jpushRegId = dictionary.getDict('jpushRegId')
+          console.log('获取jpushRegId', jpushRegId)
+        }
         const user = JSON.parse(data)
         const userLoginId = user.userLoginId
         const syncParams = {

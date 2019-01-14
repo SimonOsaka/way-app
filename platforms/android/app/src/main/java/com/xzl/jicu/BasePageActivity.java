@@ -15,8 +15,8 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.xzl.jicu.extend.NetBroadcastReceiver;
 import com.xzl.jicu.util.APKVersionCodeUtils;
-import com.xzl.jicu.util.GlobalMap;
 import com.xzl.jicu.util.NetUtil;
+import com.xzl.jicu.util.SpUtils;
 import com.xzl.jicu.util.WXApi;
 import com.xzl.jicu.util.WXSdkUtils;
 
@@ -147,8 +147,8 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
                 StringBuffer sb = new StringBuffer();
                 //errCode等于0代表定位成功，其他的为定位失败，具体的可以参照官网定位错误码说明
                 if (location.getErrorCode() == 0) {
-                    GlobalMap.addValue("longitude", String.valueOf(location.getLongitude()));
-                    GlobalMap.addValue("latitude", String.valueOf(location.getLatitude()));
+                    SpUtils.apply("longitude", String.valueOf(location.getLongitude()));
+                    SpUtils.apply("latitude", String.valueOf(location.getLatitude()));
 
                     sb.append("定位成功" + "\n");
                     sb.append("定位类型: " + location.getLocationType() + "\n");
