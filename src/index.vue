@@ -2,7 +2,7 @@
 <div>
   <wxc-tab-bar ref="wxc-tab-bar" :tab-titles="tabTitles" :tab-styles="tabStyles" title-type="iconFont" duration="0" @wxcTabBarCurrentTabSelected="wxcTabBarCurrentTabSelected">
     <div class="item-container" :style="contentStyle">
-      <wxc-searchbar class="searchbar" placeholder="输入商品名称" theme="gray" mod="hasDep" :dep-name="city" @wxcSearchbarInputReturned="wxcSearchbarInputOnInput" @wxcSearchbarDepChooseClicked="wxcSearchbarDepChooseClicked"></wxc-searchbar>
+      <wxc-searchbar class="searchbar" placeholder="输入商品名称" theme="gray" mod="hasDep" return-key-type="search" :dep-name="city" @wxcSearchbarInputReturned="wxcSearchbarInputOnInput" @wxcSearchbarDepChooseClicked="wxcSearchbarDepChooseClicked"></wxc-searchbar>
       <scroller :style="mcScrollerStyle" @loadmore="fetchMc" loadmoreoffset="10" v-if="!main.queryListNoDataShow">
         <div class="m_cell" v-for="(commodityObj, i) in main.queryList" :key="i">
           <div class="m_cell_split" v-if="i != 0"></div>

@@ -24642,6 +24642,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": "输入商品名称",
       "theme": "gray",
       "mod": "hasDep",
+      "return-key-type": "search",
       "dep-name": _vm.city,
       "data-evt-wxcSearchbarInputReturned": "",
       "data-evt-wxcSearchbarDepChooseClicked": ""

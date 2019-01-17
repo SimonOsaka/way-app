@@ -19,6 +19,10 @@ public class WXApi {
         }
     }
 
+    public static IWXAPI getApi() {
+        return api;
+    }
+
     public static void sendReq(SendMessageToWX.Req req) {
         api.sendReq(req);
     }

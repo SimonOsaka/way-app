@@ -4800,6 +4800,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": "输入商品名称",
       "theme": "gray",
       "mod": "hasDep",
+      "returnKeyType": "search",
       "depName": _vm.city
     },
     on: {

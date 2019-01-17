@@ -10,9 +10,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
-import com.tencent.mm.opensdk.modelbase.BaseReq;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.xzl.jicu.extend.NetBroadcastReceiver;
 import com.xzl.jicu.util.APKVersionCodeUtils;
 import com.xzl.jicu.util.NetUtil;
@@ -20,10 +17,7 @@ import com.xzl.jicu.util.SpUtils;
 import com.xzl.jicu.util.WXApi;
 import com.xzl.jicu.util.WXSdkUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class BasePageActivity extends AbsWeexActivity implements NetBroadcastReceiver.NetEvevt, IWXAPIEventHandler {
+public class BasePageActivity extends AbsWeexActivity implements NetBroadcastReceiver.NetEvevt {
 
     private static final String TAG = "BasePageActivity";
     public static NetBroadcastReceiver.NetEvevt evevt;
@@ -55,7 +49,7 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
 
         startLocation();
 
-        WXApi.regApi(this);
+
     }
 
     @Override
@@ -265,39 +259,15 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
         }
     }
 
-    @Override
-    public void onReq(BaseReq baseReq) {
-
-    }
-
-    @Override
-    public void onResp(BaseResp resp) {
-        Log.d(TAG, "微信onResp" + resp);
-
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("errCode", resp.errCode);
-        resultMap.put("errStr", resp.errStr);
-
-        switch (resp.errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                break;
-            case BaseResp.ErrCode.ERR_USER_CANCEL:
-                break;
-            case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                break;
-            case BaseResp.ErrCode.ERR_UNSUPPORT:
-                break;
-            default:
-                break;
-        }
-
-        mInstance.fireGlobalEventCallback("weixinCallback", resultMap);
-    }
-
-
     private void setCustomActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.actionbar_layout);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        WXApi.regApi(this);
     }
 }
