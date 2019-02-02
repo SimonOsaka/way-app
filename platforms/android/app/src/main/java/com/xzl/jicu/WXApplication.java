@@ -79,7 +79,7 @@ public class WXApplication extends Application {
         // 将该app注册到微信
         api.registerApp(Constants.WEIXIN_APP_ID);
 
-        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);  // 初始化 JPush
     }
 }

@@ -95,7 +95,7 @@ export default {
           token: this.my.userToken
         },
         body: {
-          realUserLoginId: this.my.userLoginId,
+          userLoginId: this.my.userLoginId,
           pageNum: this.discount.pageNum++,
           pageSize: this.discount.pageSize
         }
