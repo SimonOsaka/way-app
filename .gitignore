@@ -5,3 +5,6 @@
 /release/
 .DS_Store
 /platforms/android/app/develop
+/platforms/android/app/anzhi
+/platforms/android/app/huawei
+/platforms/android/app/xiaomi

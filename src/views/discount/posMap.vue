@@ -35,7 +35,7 @@ export default {
         },
         err => {
           navigator.pop({
-            animated: true
+            animated: 'true'
           })
         }
       )

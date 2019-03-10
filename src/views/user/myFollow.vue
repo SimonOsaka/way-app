@@ -17,7 +17,7 @@
             </div>
             <div slot="value">
               <wxc-button v-if="item.hasFollowed === 0" type="red" size="small" text="取消关注" @wxcButtonClicked="btnCancelFollowClicked(i)"></wxc-button>
-              <text v-else class="c_name">已取消</text>
+              <text v-else class="c_cancel_text">已取消</text>
             </div>
           </wxc-cell>
         </div>
@@ -113,6 +113,7 @@ export default {
     },
     btnCancelFollowClicked(i) {
       cancelFollow({
+        shopId: this.follow.list[i].shopId,
         userLoginId: this.my.userLoginId
       }, {
         token: this.my.userToken
@@ -148,5 +149,8 @@ export default {
 }
 .c_real {
   font-size: 24px;
+}
+.c_cancel_text {
+  font-size: 28px;
 }
 </style>

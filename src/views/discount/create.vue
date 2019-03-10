@@ -250,7 +250,7 @@ export default {
 
       let _this = this
       getStorageVal('way:user').then(data => {
-        this.isShow = true
+        // this.isShow = true
         this.btnDisabled = true
         let user = JSON.parse(data)
         http({
@@ -273,7 +273,7 @@ export default {
         }).then(
           function(data) {
             if (data.code != 200) {
-              _this.isShow = false
+              // _this.isShow = false
               _this.btnDisabled = false
               modal.toast({
                 message: data.msg,
@@ -282,20 +282,20 @@ export default {
               return
             }
 
-            _this.isShow = false
+            // _this.isShow = false
 
             modal.toast({
               message: '提交成功',
               duration: 2
             })
 
-            let lateTimeout = setTimeout(() => {
-              clearTimeout(lateTimeout)
-              postMessage('m:way:discount:refresh')
+            // let lateTimeout = setTimeout(() => {
+              // clearTimeout(lateTimeout)
+              postMessage('m:way:discount:refresh', 'success')
               navigator.pop({
-                animated: true
+                animated: 'true'
               })
-            }, 2000)
+            // }, 2000)
           },
           function(error) {
             console.error('failure', error)

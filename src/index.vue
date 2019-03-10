@@ -49,7 +49,7 @@
             <div slot="title">
               <div style="flex-direction: row;">
                 <text class="c_name" style="width: 460px;">{{discountObj.cName}}</text>
-                <div style="flex: 1 1 0%; -webkit-box-flex: 1;">
+                <div style="flex: auto; -webkit-box-flex: 1;">
                   <text style="text-align: right; font-size: 26px; padding-top: 5px;">{{discountObj.mDistance}}</text>
                 </div>
               </div>

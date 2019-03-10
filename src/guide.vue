@@ -38,7 +38,7 @@ export default {
         weex.requireModule("rootview").refresh();
       }
       navigator.pop({
-        animated: false
+        animated: 'false'
       });
     }
   },

@@ -126,7 +126,7 @@ export default {
             console.log('设置city data')
             postMessage('m:way:city')
             navigator.pop({
-              animated: true
+              animated: 'true'
             })
           })
         },

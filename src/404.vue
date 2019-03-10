@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     resultButtonClick(e) {
-      navigator.pop({ animated: true })
+      navigator.pop({ animated: 'true' })
       //   modal.toast({
       //     message: `你点击了按钮`,
       //     duration: 1
