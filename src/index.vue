@@ -88,6 +88,10 @@
                   @wxcCellClicked="userDiscountClick"
                   :has-top-border="true" :has-arrow="true"></wxc-cell>
 
+        <wxc-cell v-if="my.userLoginId != 0" title="我的关注"
+                  @wxcCellClicked="userFollowClick"
+                  :has-top-border="true" :has-arrow="true"></wxc-cell>
+
         <wxc-cell v-else :has-arrow="false" :cell-style="cellStyle" :has-top-border="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false">
           <div slot="title">
             <wxc-button type="blue" text="登录" @wxcButtonClicked="loginClicked"></wxc-button>
@@ -711,6 +715,12 @@ export default {
     userDiscountClick() {
       navigator.push({
         url: getEntryUrl('views/user/myDiscount'),
+        animated: 'true'
+      })
+    },
+    userFollowClick() {
+      navigator.push({
+        url: getEntryUrl('views/user/myFollow'),
         animated: 'true'
       })
     },

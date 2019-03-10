@@ -7,3 +7,12 @@ export function syncUserDevice(params) {
     body: params
   });
 }
+
+export function userShopFollows(params, headers) {
+  return http({
+    method: "POST",
+    url: "/shop/user/follows",
+    headers: headers,
+    body: params
+  });
+}
