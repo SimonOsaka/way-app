@@ -100,7 +100,7 @@ export default {
           shopId: this.shop.id,
           userLoginId: this.user.userLoginId === 0 ? undefined : this.user.userLoginId
         },{
-          token: this.user.token
+          token: this.user.token === '' ? undefined : this.user.token
         }).then((data) => {
             if (data.code != 200) {
               return
