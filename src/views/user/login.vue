@@ -14,7 +14,7 @@
       </div>
       <div class="content" v-else>
         <div>
-          <input type="text" maxlength="16" return-key-type="done" @input="userNameOninput" style="width: 702px;" class="input" placeholder="用户名" />
+          <input type="text" maxlength="16" return-key-type="done" @input="userNameOninput" style="width: 702px;" class="input" placeholder="手机号" />
         </div>
         <div style="flex-direction: row; margin-top: 20px;">
           <input type="password" maxlength="16" return-key-type="go" style="width: 702px; " @input="userPasswordOninput" class="input" placeholder="密码" />
@@ -103,7 +103,7 @@ export default {
         this.dialogShow = true
         return
       } else {
-        let mobile_mode = /^1[34578]\d{9}$/
+        let mobile_mode = /^1[3456789]\d{9}$/
         if (!mobile_mode.test(this.userTel)) {
           this.dialogContent = '手机号格式不正确'
           this.dialogShow = true
@@ -227,9 +227,15 @@ export default {
     userNameLoginClicked() {
       if (isEmpty(this.userName) || isEmpty(this.userPasword)) {
         modal.toast({
-          message: '用户名和密码必须填写',
+          message: '手机号和密码必须填写',
           duration: 1.5
         })
+        return
+      }
+
+      if (!this.checkMobileNumber(this.userName)) {
+        this.dialogContent = '手机号格式不正确'
+        this.dialogShow = true
         return
       }
 
@@ -283,6 +289,13 @@ export default {
       )
 
       console.log(this.userTel, this.userValidCode)
+    },
+    checkMobileNumber(number) {
+      let mobile_mode = /^1[3456789]\d{9}$/
+      if (!mobile_mode.test(number)) {
+        return false
+      }
+      return true
     }
   }
 }
