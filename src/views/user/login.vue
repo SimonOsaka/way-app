@@ -46,12 +46,14 @@ import {
   initIconfont,
   isEmpty,
   setStorageVal,
+  getStorageVal,
   modalDebug,
   getUrlKey,
   setPageTitle,
   titlebar
 } from '../../tools/utils.js'
 import { http } from '../../tools/http.js'
+import { updateUserProfileAddress } from '../../api/user.js'
 import category from '../../components/category.vue'
 import navbar from '../../include/navbar.vue'
 const navigator = weex.requireModule('navigator')
@@ -258,8 +260,23 @@ export default {
           }
 
           modalDebug(JSON.stringify(data))
-
+          
           let userProfile = data.data
+          getStorageVal('way:city').then(
+            data => {
+              let city = JSON.parse(data)
+              updateUserProfileAddress({
+                userLoginId: userProfile.userLoginId,
+                addressName: city.name,
+                addressLongitude: city.lng,
+                addressLatitude: city.lat
+              }, {
+                token: userProfile.token
+              })
+            },
+            error => {}
+          )
+          
           setStorageVal(
             'way:user',
             JSON.stringify({

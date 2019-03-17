@@ -1,3 +1,3139 @@
 // { "framework": "Vue"} 
 
-!function(e){function t(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,t),r.l=!0,r.exports}var n={};t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=81)}([function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}function r(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}Object.defineProperty(t,"__esModule",{value:!0});var i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},a=n(3),s=o(a),c={UrlParser:s.default,_typeof:function(e){return Object.prototype.toString.call(e).slice(8,-1).toLowerCase()},isPlainObject:function(e){return"object"===c._typeof(e)},isString:function(e){return"string"==typeof e},isNonEmptyArray:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];return e&&e.length>0&&Array.isArray(e)&&void 0!==e},isObject:function(e){return e&&"object"===(void 0===e?"undefined":i(e))&&!Array.isArray(e)},isEmptyObject:function(e){return 0===Object.keys(e).length&&e.constructor===Object},decodeIconFont:function(e){var t=/&#x[a-z|0-9]{4,5};?/g;return t.test(e)?e.replace(new RegExp(t,"g"),function(e){var t=e.replace(/&#x/,"0x").replace(/;$/,"");return String.fromCharCode(t)}):e},mergeDeep:function(e){for(var t=arguments.length,n=Array(t>1?t-1:0),o=1;o<t;o++)n[o-1]=arguments[o];if(!n.length)return e;var i=n.shift();if(c.isObject(e)&&c.isObject(i))for(var a in i)c.isObject(i[a])?(e[a]||Object.assign(e,r({},a,{})),c.mergeDeep(e[a],i[a])):Object.assign(e,r({},a,i[a]));return c.mergeDeep.apply(c,[e].concat(n))},appendProtocol:function(e){if(/^\/\//.test(e)){return"http"+(/^https:/.test(weex.config.bundleUrl)?"s":"")+":"+e}return e},encodeURLParams:function(e){return new s.default(e,!0).toString()},goToH5Page:function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1],n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:null,o=weex.requireModule("navigator"),r=new c.UrlParser(e,!0),i=c.appendProtocol(r.toString());o.push({url:c.encodeURLParams(i),animated:t.toString()},n)},env:{isTaobao:function(){return/(tb|taobao|淘宝)/i.test(weex.config.env.appName)},isTrip:function(){return"LX"===weex.config.env.appName},isBoat:function(){var e=weex.config.env.appName;return"Boat"===e||"BoatPlayground"===e},isWeb:function(){var e=weex.config.env.platform;return"object"===("undefined"==typeof window?"undefined":i(window))&&"web"===e.toLowerCase()},isIOS:function(){return"ios"===weex.config.env.platform.toLowerCase()},isIPhoneX:function(){var e=weex.config.env.deviceHeight;return c.env.isWeb()?void 0!==("undefined"==typeof window?"undefined":i(window))&&window.screen&&window.screen.width&&window.screen.height&&375===parseInt(window.screen.width,10)&&812===parseInt(window.screen.height,10):c.env.isIOS()&&2436===e},isAndroid:function(){return"android"===weex.config.env.platform.toLowerCase()},isAlipay:function(){return"AP"===weex.config.env.appName},isTmall:function(){return/(tm|tmall|天猫)/i.test(weex.config.env.appName)},isAliWeex:function(){return c.env.isTmall()||c.env.isTrip()||c.env.isTaobao()},getPageHeight:function(){var e=weex.config.env,t=c.env.isWeb()?0:c.env.isIPhoneX()?176:132;return e.deviceHeight/e.deviceWidth*750-t},getScreenHeight:function(){var e=weex.config.env;return e.deviceHeight/e.deviceWidth*750}},compareVersion:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"0.0.0",t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"0.0.0";if(e===t)return!0;for(var n=e.split("."),o=t.split("."),r=Math.max(n.length,o.length),i=0;i<r;i++){var a=~~o[i],s=~~n[i];if(a<s)return!0;if(a>s)return!1}return!1},arrayChunk:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:4,n=[];return e&&e.length>0&&(n=e.map(function(n,o){return o%t==0?e.slice(o,o+t):null}).filter(function(e){return e})),n},truncateString:function(e,t){for(var n=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],o=0,r="",i="",a=/[^\x00-\xff]/g,s=e.replace(a,"**").length,c=0;c<s&&(i=e.charAt(c).toString(),null!==i.match(a)?o+=2:o++,!(o>t));c++)r+=i;return n&&s>t&&(r+="..."),r},objToParams:function(e){var t="";for(var n in e)""!==t&&(t+="&"),t+=n+"="+encodeURIComponent(e[n]);return t},paramsToObj:function(e){var t={};try{t=JSON.parse('{"'+decodeURI(e).replace(/"/g,'\\"').replace(/&/g,'","').replace(/=/g,'":"')+'"}')}catch(e){}return t},animation:{pageTransitionAnimation:function(e,t,n,o){weex.requireModule("animation").transition(e,{styles:{transform:t},duration:n?250:300,timingFunction:n?"ease-in":"ease-out",delay:0},function(){o&&o()})}},uiStyle:{pageTransitionAnimationStyle:function(e){return"push"===e?{left:"750px",top:"0px",height:weex.config.env.deviceHeight/weex.config.env.deviceWidth*750+"px"}:"model"===e?{top:weex.config.env.deviceHeight/weex.config.env.deviceWidth*750+"px",left:"0px",height:weex.config.env.deviceHeight/weex.config.env.deviceWidth*750+"px"}:{}}}};t.default=c},function(e,t,n){"use strict";function o(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};if(!r())return new Promise(function(e,t){t({statusText:"网络无连接"})});var t={method:"GET",type:"json",headers:{}},n=weex.requireModule("modal"),o=weex.requireModule("stream"),s=(weex.config.env.platform.toLowerCase(),Object.assign(t,e));if(s.url="http://api.jicu.vip"+s.url,s.headers.referer=a,"GET"===s.method){if(s.params){var c=Object.keys(s.params).reduce(function(e,t){return""+e+t+"="+s.params[t]+"&"},"?appVersion="+i()+"&");s.url=s.url.concat(c).slice(0,-1)}}else"POST"===s.method&&s.body&&(s.body=JSON.stringify(Object.assign(s.body,{appVerion:i()})),s.headers["Content-Type"]="application/json");return new Promise(function(e,t){o.fetch(s,function(o){o.ok?e(o.data):(n.toast({message:"网络无连接",duration:1}),t(o))})})}function r(){var e=weex.requireModule("network"),t=!0;return e.getNetworkStatus(function(e){"NONE"===e&&(weex.requireModule("modal").toast({message:"网络无连接",duration:1}),t=!1)}),t}function i(){var e="";return"ios"===weex.config.env.platform.toLowerCase()?weex.requireModule("version").getAppVersion(function(t){e=t}):e=weex.requireModule("version").getAppVersion(),e}Object.defineProperty(t,"__esModule",{value:!0}),t.http=o;var a="ios.jicu.vip"},function(e,t,n){"use strict";function o(){weex.requireModule("dom").addRule("fontFace",{fontFamily:"iconfont",src:"url('local:///font/iconfont.ttf')"})}function r(e){}function i(e){document.querySelector('meta[property="og:image"]').setAttribute("content",e||"")}function a(e,t){var n=weex.config.bundleUrl,o=n.indexOf("your_current_IP")>=0||n.indexOf("file://assets/")>=0,r=n.indexOf("file:///")>=0&&n.indexOf(".app")>0,i="web"===weex.config.env.platform.toLowerCase(),a="";if(i){if(a="/"+e+".html",t){a+="?";var s=[];for(var c in t)if(t.hasOwnProperty(c)){var l=t[c];s.push(c+"="+l)}a+=s.join("&")}}else r?a=n.split("bundlejs")[0]+"/bundlejs/"+e+".js":o&&(a=n.split("/dist")[0]+"/dist/"+e+".js");return a}function s(e,t){var n=new RegExp("(^|&)"+t+"=([^&]*)(&|$)","i"),o=e.slice(e.indexOf("?")+1).match(n);if(null!=o)try{return decodeURIComponent(o[2])}catch(e){return null}return null}function c(e){if(null==e||""==e||"undefined"==e||"null"==e)return!0;if(e.length>0)return!1;if(0===e.length)return!0;for(var t in e)if(hasOwnProperty.call(e,t))return!1;return!0}function l(){return weex.config.env.platform.toLowerCase()}function u(e){var t=weex.requireModule("storage"),n="";return t.getItem(e,function(e){"success"==e.result&&(n=e.data)}),n}function d(e,t){return y(e+t),new Promise(function(n,o){y("promise..."),weex.requireModule("storage").setItem(e,t,function(e){y("setItem result:"+JSON.stringify(e)),"success"==e.result?n(e.result):o(e)})})}function f(e){return new Promise(function(t,n){var o=weex.requireModule("storage"),r="";o.getItem(e,function(e){"success"==e.result?(r=e.data,t(r)):n(e)})})}function p(e,t){weex.requireModule("storage").setItem(e,t,function(e){return"success"==e.result&&"undefined"==e.data})}function h(e,t){if("web"===l()){weex.requireModule("storage").setItem(e,t,function(e){return"success"==e.result&&"undefined"==e.data})}else{new BroadcastChannel(e).postMessage(t)}}function g(e,t){var n={status:1,val:void 0};new BroadcastChannel(e).onmessage=function(e){e.data&&(n.val=e.data),n.status=0,t(n)}}function y(){arguments.length>0&&void 0!==arguments[0]&&arguments[0]}function m(e){return decodeURIComponent((new RegExp("[?|&]"+e+"=([^&;]+?)(&|#|;|$)").exec(location.href)||[,""])[1].replace(/\+/g,"%20"))||null}function b(e){weex.requireModule("titlebar").setTitle(e)}Object.defineProperty(t,"__esModule",{value:!0}),t.initIconfont=o,t.setPageTitle=r,t.setOgImage=i,t.getEntryUrl=a,t.getUrlSearch=s,t.isEmpty=c,t.whichPlatform=l,t.getStorageValue=u,t.setStorageVal=d,t.getStorageVal=f,t.setStorageValue=p,t.postMessage=h,t.receiveMessage=g,t.modalDebug=y,t.getUrlKey=m,t.titlebar=b;weex.requireModule("modal")},function(e,t,n){"use strict";function o(e){e=e||global.location||{};var t,n={},o=void 0===e?"undefined":l(e);if("blob:"===e.protocol)n=new a(unescape(e.pathname),{});else if("string"===o){n=new a(e,{});for(t in g)delete n[t]}else if("object"===o){for(t in e)t in g||(n[t]=e[t]);void 0===n.slashes&&(n.slashes=p.test(e.href))}return n}function r(e){var t=f.exec(e);return{protocol:t[1]?t[1].toLowerCase():"",slashes:!!t[2],rest:t[3]}}function i(e,t){for(var n=(t||"/").split("/").slice(0,-1).concat(e.split("/")),o=n.length,r=n[o-1],i=!1,a=0;o--;)"."===n[o]?n.splice(o,1):".."===n[o]?(n.splice(o,1),a++):a&&(0===o&&(i=!0),n.splice(o,1),a--);return i&&n.unshift(""),"."!==r&&".."!==r||n.push(""),n.join("/")}function a(e,t,n){if(!(this instanceof a))return new a(e,t,n);var s,c,f,p,g,y,m=h.slice(),b=void 0===t?"undefined":l(t),v=this,w=0;for("object"!==b&&"string"!==b&&(n=t,t=null),n&&"function"!=typeof n&&(n=d.parse),t=o(t),c=r(e||""),s=!c.protocol&&!c.slashes,v.slashes=c.slashes||s&&t.slashes,v.protocol=c.protocol||t.protocol||"",e=c.rest,c.slashes||(m[2]=[/(.*)/,"pathname"]);w<m.length;w++)p=m[w],f=p[0],y=p[1],f!==f?v[y]=e:"string"==typeof f?~(g=e.indexOf(f))&&("number"==typeof p[2]?(v[y]=e.slice(0,g),e=e.slice(g+p[2])):(v[y]=e.slice(g),e=e.slice(0,g))):(g=f.exec(e))&&(v[y]=g[1],e=e.slice(0,g.index)),v[y]=v[y]||(s&&p[3]?t[y]||"":""),p[4]&&(v[y]=v[y].toLowerCase());n&&(v.query=n(v.query)),s&&t.slashes&&"/"!==v.pathname.charAt(0)&&(""!==v.pathname||""!==t.pathname)&&(v.pathname=i(v.pathname,t.pathname)),u(v.port,v.protocol)||(v.host=v.hostname,v.port=""),v.username=v.password="",v.auth&&(p=v.auth.split(":"),v.username=p[0]||"",v.password=p[1]||""),v.origin=v.protocol&&v.host&&"file:"!==v.protocol?v.protocol+"//"+v.host:"null",v.href=v.toString()}function s(e,t,n){var o=this;switch(e){case"query":"string"==typeof t&&t.length&&(t=(n||d.parse)(t)),o[e]=t;break;case"port":o[e]=t,u(t,o.protocol)?t&&(o.host=o.hostname+":"+t):(o.host=o.hostname,o[e]="");break;case"hostname":o[e]=t,o.port&&(t+=":"+o.port),o.host=t;break;case"host":o[e]=t,/:\d+$/.test(t)?(t=t.split(":"),o.port=t.pop(),o.hostname=t.join(":")):(o.hostname=t,o.port="");break;case"protocol":o.protocol=t.toLowerCase(),o.slashes=!n;break;case"pathname":case"hash":if(t){var r="pathname"===e?"/":"#";o[e]=t.charAt(0)!==r?r+t:t}else o[e]=t;break;default:o[e]=t}for(var i=0;i<h.length;i++){var a=h[i];a[4]&&(o[a[1]]=o[a[1]].toLowerCase())}return o.origin=o.protocol&&o.host&&"file:"!==o.protocol?o.protocol+"//"+o.host:"null",o.href=o.toString(),o}function c(e){e&&"function"==typeof e||(e=d.stringify);var t,n=this,o=n.protocol;o&&":"!==o.charAt(o.length-1)&&(o+=":");var r=o+(n.slashes?"//":"");return n.username&&(r+=n.username,n.password&&(r+=":"+n.password),r+="@"),r+=n.host+n.pathname,t="object"===l(n.query)?e(n.query):n.query,t&&(r+="?"!==t.charAt(0)?"?"+t:t),n.hash&&(r+=n.hash),r}var l="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},u=n(4),d=n(5),f=/^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i,p=/^[A-Za-z][A-Za-z0-9+-.]*:\/\//,h=[["#","hash"],["?","query"],["/","pathname"],["@","auth",1],[NaN,"host",void 0,1,1],[/:(\d+)$/,"port",void 0,1],[NaN,"hostname",void 0,1,1]],g={hash:1,query:1};a.prototype={set:s,toString:c},a.extractProtocol=r,a.location=o,a.qs=d,e.exports=a},function(e,t,n){"use strict";e.exports=function(e,t){if(t=t.split(":")[0],!(e=+e))return!1;switch(t){case"http":case"ws":return 80!==e;case"https":case"wss":return 443!==e;case"ftp":return 21!==e;case"gopher":return 70!==e;case"file":return!1}return 0!==e}},function(e,t,n){"use strict";function o(e){return decodeURIComponent(e.replace(/\+/g," "))}function r(e){for(var t,n=/([^=?&]+)=?([^&]*)/g,r={};t=n.exec(e);r[o(t[1])]=o(t[2]));return r}function i(e,t){t=t||"";var n=[];"string"!=typeof t&&(t="?");for(var o in e)a.call(e,o)&&n.push(encodeURIComponent(o)+"="+encodeURIComponent(e[o]));return n.length?t+n.join("&"):""}var a=Object.prototype.hasOwnProperty;t.stringify=i,t.parse=r},function(e,t,n){var o,r,i=[];i.push(n(7)),o=n(8);var a=n(9);r=o=o||{},"object"!=typeof o.default&&"function"!=typeof o.default||(r=o=o.default),"function"==typeof r&&(r=r.options),r.render=a.render,r.staticRenderFns=a.staticRenderFns,r._scopeId="data-v-cc674820",r.style=r.style||{},i.forEach(function(e){for(var t in e)r.style[t]=e[t]}),"function"==typeof __register_static_styles__&&__register_static_styles__(r._scopeId,i),e.exports=o},function(e,t){e.exports={container:{flexDirection:"row",position:"fixed",top:0,left:0,right:0,width:750},"right-text":{position:"absolute",bottom:28,right:32,textAlign:"right",fontSize:32,fontFamily:"'Open Sans', sans-serif"},"left-text":{position:"absolute",bottom:28,left:32,textAlign:"left",fontSize:32,fontFamily:"'Open Sans', sans-serif"},"center-text":{position:"absolute",bottom:25,left:172,right:172,textAlign:"center",fontSize:36,fontWeight:"bold"},"left-image":{position:"absolute",bottom:20,left:28,width:50,height:50},"right-image":{position:"absolute",bottom:20,right:28,width:50,height:50}}},function(e,t,n){"use strict";e.exports={props:{dataRole:{default:"navbar"},backgroundColor:{default:"black"},height:{default:88},title:{default:""},titleColor:{default:"black"},rightItemSrc:{default:""},rightItemTitle:{default:""},rightItemColor:{default:"black"},leftItemSrc:{default:""},leftItemTitle:{default:""},leftItemColor:{default:"black"}},methods:{onclickrightitem:function(e){this.$emit("naviBarRightItemClick")},onclickleftitem:function(e){this.$emit("naviBarLeftItemClick")}},beforeCreated:function(){this.show="ios"===weex.config.env.platform.toLowerCase()}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return e.show?n("div",{staticClass:["container"],style:{height:e.height,backgroundColor:e.backgroundColor},attrs:{dataRole:e.dataRole}},[e.rightItemSrc?e._e():n("text",{staticClass:["right-text"],style:{color:e.rightItemColor},attrs:{naviItemPosition:"right"},on:{click:e.onclickrightitem}},[e._v(e._s(e.rightItemTitle))]),e.rightItemSrc?n("image",{staticClass:["right-image"],attrs:{naviItemPosition:"right",src:e.rightItemSrc},on:{click:e.onclickrightitem}}):e._e(),e.leftItemSrc?e._e():n("text",{staticClass:["left-text"],style:{color:e.leftItemColor},attrs:{naviItemPosition:"left"},on:{click:e.onclickleftitem}},[e._v(e._s(e.leftItemTitle))]),e.leftItemSrc?n("image",{staticClass:["left-image"],attrs:{naviItemPosition:"left",src:e.leftItemSrc},on:{click:e.onclickleftitem}}):e._e(),n("text",{staticClass:["center-text"],style:{color:e.titleColor},attrs:{naviItemPosition:"center",value:e.title}})]):e._e()},staticRenderFns:[]}},function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var r=n(11);Object.defineProperty(t,"default",{enumerable:!0,get:function(){return o(r).default}})},function(e,t,n){var o,r,i=[];i.push(n(12)),o=n(13);var a=n(14);r=o=o||{},"object"!=typeof o.default&&"function"!=typeof o.default||(r=o=o.default),"function"==typeof r&&(r=r.options),r.render=a.render,r.staticRenderFns=a.staticRenderFns,r._scopeId="data-v-eff0e228",r.style=r.style||{},i.forEach(function(e){for(var t in e)r.style[t]=e[t]}),"function"==typeof __register_static_styles__&&__register_static_styles__(r._scopeId,i),e.exports=o},function(e,t){e.exports={"wxc-cell":{flexDirection:"row",alignItems:"center",paddingLeft:"24",paddingRight:"24",backgroundColor:"#ffffff"},"cell-margin":{marginBottom:"24"},"cell-title":{flex:1},"cell-indent":{paddingBottom:"30",paddingTop:"30"},"has-desc":{paddingBottom:"18",paddingTop:"18"},"cell-top-border":{borderTopColor:"#e2e2e2",borderTopWidth:"1"},"cell-bottom-border":{borderBottomColor:"#e2e2e2",borderBottomWidth:"1"},"cell-label-text":{fontSize:"30",color:"#666666",width:"188",marginRight:"10"},"cell-arrow-icon":{width:"22",height:"22"},"cell-content":{color:"#333333",fontSize:"30",lineHeight:"40"},"cell-desc-text":{color:"#999999",fontSize:"24",lineHeight:"30",marginTop:"4",marginRight:"30"},"extra-content-text":{fontSize:"28",color:"#999999",marginRight:"4"}}},function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),i=o(r);t.default={props:{label:{type:String,default:""},title:{type:String,default:""},extraContent:{type:String,default:""},desc:{type:String,default:""},link:{type:String,default:""},hasTopBorder:{type:Boolean,default:!1},hasMargin:{type:Boolean,default:!1},hasBottomBorder:{type:Boolean,default:!0},hasArrow:{type:Boolean,default:!1},arrowIcon:{type:String,default:"https://gw.alicdn.com/tfs/TB11zBUpwMPMeJjy1XbXXcwxVXa-22-22.png"},hasVerticalIndent:{type:Boolean,default:!0},cellStyle:{type:Object,default:function(){return{}}},autoAccessible:{type:Boolean,default:!0}},methods:{cellClicked:function(e){var t=this.link;this.$emit("wxcCellClicked",{e:e}),t&&i.default.goToH5Page(t,!0)}}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",{class:["wxc-cell",e.hasTopBorder&&"cell-top-border",e.hasBottomBorder&&"cell-bottom-border",e.hasMargin&&"cell-margin",e.hasVerticalIndent&&"cell-indent",e.desc&&"has-desc"],style:e.cellStyle,attrs:{accessible:e.autoAccessible,ariaLabel:e.label+","+e.title+","+e.desc},on:{click:e.cellClicked}},[e._t("label",[e.label?n("div",[n("text",{staticClass:["cell-label-text"]},[e._v(e._s(e.label))])]):e._e()]),n("div",{staticClass:["cell-title"]},[e._t("title",[n("text",{staticClass:["cell-content"]},[e._v(e._s(e.title))]),e.desc?n("text",{staticClass:["cell-desc-text"]},[e._v(e._s(e.desc))]):e._e()])],2),e._t("value"),e._t("default"),e.extraContent?n("text",{staticClass:["extra-content-text"]},[e._v(e._s(e.extraContent))]):e._e(),e.hasArrow?n("image",{staticClass:["cell-arrow-icon"],attrs:{src:e.arrowIcon,ariaHidden:!0}}):e._e()],2)},staticRenderFns:[]}},,,,,,,,,,,,function(e,t){e.exports={category:{marginTop:"20",paddingLeft:"24",width:"750",height:"68",backgroundColor:"#f2f3f4",justifyContent:"center"},"category-text":{color:"#000000",fontWeight:"600",fontSize:"28"}}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default={props:{title:String}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",{staticClass:["category"]},[n("text",{staticClass:["category-text"]},[e._v(e._s(e.title))])])},staticRenderFns:[]}},,,,,,,function(e,t,n){var o,r,i=[];i.push(n(26)),o=n(27);var a=n(28);r=o=o||{},"object"!=typeof o.default&&"function"!=typeof o.default||(r=o=o.default),"function"==typeof r&&(r=r.options),r.render=a.render,r.staticRenderFns=a.staticRenderFns,r._scopeId="data-v-376cda0e",r.style=r.style||{},i.forEach(function(e){for(var t in e)r.style[t]=e[t]}),"function"==typeof __register_static_styles__&&__register_static_styles__(r._scopeId,i),e.exports=o},,,,,,function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var r=n(42);Object.defineProperty(t,"default",{enumerable:!0,get:function(){return o(r).default}})},function(e,t,n){var o,r,i=[];i.push(n(43)),o=n(44);var a=n(46);r=o=o||{},"object"!=typeof o.default&&"function"!=typeof o.default||(r=o=o.default),"function"==typeof r&&(r=r.options),r.render=a.render,r.staticRenderFns=a.staticRenderFns,r._scopeId="data-v-6447ff37",r.style=r.style||{},i.forEach(function(e){for(var t in e)r.style[t]=e[t]}),"function"==typeof __register_static_styles__&&__register_static_styles__(r._scopeId,i),e.exports=o},function(e,t){e.exports={"wxc-search-bar":{paddingLeft:"20",paddingRight:"20",backgroundColor:"#ffffff",width:"750",height:"84",flexDirection:"row"},"wxc-search-bar-yellow":{backgroundColor:"#ffc900"},"search-bar-input":{position:"absolute",top:"10",paddingTop:0,paddingBottom:0,paddingRight:"40",paddingLeft:"60",fontSize:"26",width:"624",height:"64",lineHeight:"64",backgroundColor:"#E5E5E5",borderRadius:"6"},"search-bar-input-yellow":{backgroundColor:"#fff6d6"},"search-bar-icon":{position:"absolute",width:"30",height:"30",left:"34",top:"28"},"search-bar-close":{position:"absolute",width:"30",height:"30",right:"120",top:"28"},"search-bar-button":{width:"94",height:"36",fontSize:"30",textAlign:"center",backgroundColor:"#ffffff",marginTop:"16",marginRight:0,color:"#333333",position:"absolute",right:"8",top:"9"},"search-bar-button-yellow":{backgroundColor:"#FFC900"},"input-has-dep":{paddingLeft:"240",width:"710"},"bar-dep":{width:"170",paddingRight:"12",paddingLeft:"12",height:"42",alignItems:"center",flexDirection:"row",position:"absolute",left:"24",top:"22",borderRightStyle:"solid",borderRightWidth:"1",borderRightColor:"#C7C7C7"},"bar-dep-yellow":{borderRightColor:"#C7C7C7"},"dep-text":{flex:1,textAlign:"center",fontSize:"26",color:"#666666",marginRight:"6",lines:1,textOverflow:"ellipsis"},"dep-arrow":{width:"24",height:"24"},"icon-has-dep":{left:"214"},"disabled-input":{width:"750",height:"64",position:"absolute",left:0,backgroundColor:"rgba(0,0,0,0)"},"has-dep-disabled":{width:"550",left:"200"}}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=n(45);t.default={props:{disabled:{type:Boolean,default:!1},alwaysShowCancel:{type:Boolean,default:!1},inputType:{type:String,default:"text"},returnKeyType:{type:String,default:"default"},mod:{type:String,default:"default"},autofocus:{type:Boolean,default:!1},theme:{type:String,default:"gray"},barStyle:{type:Object,default:function(){return{}}},defaultValue:{type:String,default:""},placeholder:{type:String,default:"搜索"},cancelLabel:{type:String,default:"取消 "},depName:{type:String,default:"杭州"}},computed:{needShowCancel:function(){return this.alwaysShowCancel||this.showCancel},buttonStyle:function(){var e=this.barStyle;return e.backgroundColor?{backgroundColor:e.backgroundColor}:{}}},data:function(){return{inputIcon:o.INPUT_ICON,closeIcon:o.CLOSE_ICON,arrowIcon:o.ARROW_ICON,showCancel:!1,showClose:!1,value:""}},created:function(){this.defaultValue&&(this.value=this.defaultValue),this.disabled&&(this.showCancel=!1,this.showClose=!1)},methods:{onBlur:function(){var e=this;setTimeout(function(){e.showCancel=!1,e.detectShowClose(),e.$emit("wxcSearchbarInputOnBlur",{value:e.value})},10)},autoBlur:function(){this.$refs["search-input"].blur()},onFocus:function(){this.isDisabled||(this.showCancel=!0,this.detectShowClose(),this.$emit("wxcSearchbarInputOnFocus",{value:this.value}))},closeClicked:function(){this.value="",this.showCancel&&(this.showCancel=!1),this.showClose&&(this.showClose=!1),this.$emit("wxcSearchbarCloseClicked",{value:this.value}),this.$emit("wxcSearchbarInputOnInput",{value:this.value})},onInput:function(e){this.value=e.value,this.showCancel=!0,this.detectShowClose(),this.$emit("wxcSearchbarInputOnInput",{value:this.value})},onSubmit:function(e){this.onBlur(),this.value=e.value,this.showCancel=!0,this.detectShowClose(),this.$emit("wxcSearchbarInputReturned",{value:this.value})},cancelClicked:function(){this.showCancel&&(this.showCancel=!1),this.showClose&&(this.showClose=!1),this.$emit("wxcSearchbarCancelClicked",{value:this.value})},detectShowClose:function(){this.showClose=this.value.length>0&&this.showCancel},depClicked:function(){this.$emit("wxcSearchbarDepChooseClicked",{})},inputDisabledClicked:function(){this.$emit("wxcSearchbarInputDisabledClicked",{})},setValue:function(e){this.value=e}}}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});t.INPUT_ICON="https://gw.alicdn.com/tfs/TB1FZB.pwMPMeJjy1XdXXasrXXa-30-30.png",t.CLOSE_ICON="https://gw.alicdn.com/tfs/TB1sZB.pwMPMeJjy1XdXXasrXXa-24-24.png",t.ARROW_ICON="https://gw.alicdn.com/tfs/TB1vZB.pwMPMeJjy1XdXXasrXXa-24-24.png"},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",["default"===e.mod?n("div",{class:["wxc-search-bar","wxc-search-bar-"+e.theme],style:e.barStyle},[n("input",{ref:"search-input",class:["search-bar-input","search-bar-input-"+e.theme],style:{width:e.needShowCancel?"624px":"710px"},attrs:{returnKeyType:e.returnKeyType,autofocus:e.autofocus,disabled:e.disabled,value:e.value,type:e.inputType,placeholder:e.placeholder},on:{blur:e.onBlur,focus:e.onFocus,input:e.onInput,return:e.onSubmit}}),e.disabled?n("div",{staticClass:["disabled-input"],on:{click:e.inputDisabledClicked}}):e._e(),n("image",{staticClass:["search-bar-icon"],attrs:{ariaHidden:!0,src:e.inputIcon}}),e.showClose?n("image",{staticClass:["search-bar-close"],attrs:{ariaHidden:!0,src:e.closeIcon},on:{click:e.closeClicked}}):e._e(),e.needShowCancel?n("text",{class:["search-bar-button","search-bar-button-"+e.theme],style:e.buttonStyle,on:{click:e.cancelClicked}},[e._v(e._s(e.cancelLabel))]):e._e()]):e._e(),"hasDep"===e.mod?n("div",{class:["wxc-search-bar","wxc-search-bar-"+e.theme],style:e.barStyle},[n("input",{class:["search-bar-input","input-has-dep","search-bar-input-"+e.theme],attrs:{disabled:e.disabled,autofocus:e.autofocus,returnKeyType:e.returnKeyType,value:e.value,type:e.inputType,placeholder:e.placeholder},on:{blur:e.onBlur,focus:e.onFocus,input:e.onInput,return:e.onSubmit}}),e.disabled?n("div",{staticClass:["disabled-input","has-dep-disabled"],on:{click:e.inputDisabledClicked}}):e._e(),n("div",{class:["bar-dep",".bar-dep-"+e.theme],on:{click:e.depClicked}},[n("text",{staticClass:["dep-text"]},[e._v(e._s(e.depName))]),n("image",{staticClass:["dep-arrow"],attrs:{src:e.arrowIcon,ariaHidden:!0}})]),n("image",{staticClass:["search-bar-icon","icon-has-dep"],attrs:{ariaHidden:!0,src:e.inputIcon}})]):e._e()])},staticRenderFns:[]}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,function(e,t,n){var o,r,i=[];i.push(n(82)),o=n(83);var a=n(84);r=o=o||{},"object"!=typeof o.default&&"function"!=typeof o.default||(r=o=o.default),"function"==typeof r&&(r=r.options),r.render=a.render,r.staticRenderFns=a.staticRenderFns,r._scopeId="data-v-30a6a9c8",r.style=r.style||{},i.forEach(function(e){for(var t in e)r.style[t]=e[t]}),"function"==typeof __register_static_styles__&&__register_static_styles__(r._scopeId,i),e.exports=o,e.exports.el="true",new Vue(e.exports)},function(e,t){e.exports={scroller:{width:"750"}}},function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),i=o(r),a=n(10),s=o(a),c=n(41),l=o(c),u=n(6),d=o(u),f=n(2),p=n(1),h=n(35),g=o(h),y=weex.requireModule("navigator"),m=weex.requireModule("dictionary");t.default={components:{WxcSearchbar:l.default,WxcCell:s.default,category:g.default,navbar:d.default},data:function(){return{searchList:[],keywords:"",alwaysShowCancel:!1,returnKeyType:"done",inputTimeout:null,currentAddress:"",city:{}}},beforeCreate:function(){(0,f.titlebar)("选择城市"),m.getDict("longitude",function(e){}),m.getDict("latitude",function(e){})},methods:{wxcIndexlistItemClicked:function(e){var t=this.searchList[e];this.city={name:t.addressTitle},this.regeo(t.addressLocation)},wxcSearchbarInputOnInput:function(e){var t=this;this.keywords=e.value,this.inputTimeout&&clearTimeout(this.inputTimeout);this.inputTimeout=setTimeout(function(){t.inputTipsFetch()},500)},inputTipsFetch:function(){var e=this;(0,p.http)({method:"POST",url:"/amap/inputtips",headers:{},body:{keywords:this.keywords}}).then(function(t){if(200==t.code){e.searchList.splice(0,e.searchList.length);t.data.forEach(function(t){e.searchList.push({addressTitle:t.name,addressDesc:t.district+t.address,addressLocation:t.location})})}},function(e){})},regeo:function(e){var t=this;(0,p.http)({method:"POST",url:"/amap/regeo",headers:{},body:{location:e}}).then(function(n){if(200==n.code){var o=n.data,r=o.cityCode,i=e.split(",");t.city.lng=i[0],t.city.lat=i[1],t.city.cityCode=r,(0,f.setStorageVal)("way:city",JSON.stringify(t.city)).then(function(e){(0,f.postMessage)("m:way:city"),y.pop({animated:"true"})})}},function(e){})}},created:function(){var e=i.default.env.getPageHeight();i.default.env.getScreenHeight();this.scrollerStyle={height:e+"px"};var t=this;(0,f.getStorageVal)("way:city").then(function(e){var n=JSON.parse(e);t.currentAddress=n.name},function(e){})}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",[n("navbar",{attrs:{title:"选择城市",backgroundColor:"#45b5f0",height:"88"}}),n("scroller",{staticClass:["scroller"],style:e.scrollerStyle},[n("wxc-searchbar",{ref:"wxc-searchbar",attrs:{placeholder:"请输入您所在的位置（例如：xx市xx区xx街）",alwaysShowCancel:e.alwaysShowCancel,returnKeyType:e.returnKeyType},on:{wxcSearchbarInputReturned:e.wxcSearchbarInputOnInput}}),""!=e.currentAddress?n("div",[n("category",{attrs:{title:"当前地址"}}),n("wxc-cell",{attrs:{title:e.currentAddress,hasArrow:!1,hasTopBorder:!0}})],1):e._e(),e.searchList.length>0?n("div",[n("category",{attrs:{title:"搜索地址"}}),e._l(e.searchList,function(t,o){return n("wxc-cell",{key:o,attrs:{title:t.addressTitle,desc:t.addressDesc,hasArrow:!1,hasTopBorder:!0},on:{wxcCellClicked:function(t){e.wxcIndexlistItemClicked(o)}}})})],2):e._e()],1)],1)},staticRenderFns:[]}}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 81);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                                                * CopyRight (C) 2017-2022 Alibaba Group Holding Limited.
+                                                                                                                                                                                                                                                                                * Created by Tw93 on 17/11/01
+                                                                                                                                                                                                                                                                                */
+
+var _urlParse = __webpack_require__(3);
+
+var _urlParse2 = _interopRequireDefault(_urlParse);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Utils = {
+  UrlParser: _urlParse2.default,
+  _typeof: function _typeof(obj) {
+    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+  },
+  isPlainObject: function isPlainObject(obj) {
+    return Utils._typeof(obj) === 'object';
+  },
+  isString: function isString(obj) {
+    return typeof obj === 'string';
+  },
+  isNonEmptyArray: function isNonEmptyArray() {
+    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+    return obj && obj.length > 0 && Array.isArray(obj) && typeof obj !== 'undefined';
+  },
+  isObject: function isObject(item) {
+    return item && (typeof item === 'undefined' ? 'undefined' : _typeof2(item)) === 'object' && !Array.isArray(item);
+  },
+  isEmptyObject: function isEmptyObject(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  },
+  decodeIconFont: function decodeIconFont(text) {
+    // 正则匹配 图标和文字混排 eg: 我去上学校&#xe600;,天天不&#xe600;迟到
+    var regExp = /&#x[a-z|0-9]{4,5};?/g;
+    if (regExp.test(text)) {
+      return text.replace(new RegExp(regExp, 'g'), function (iconText) {
+        var replace = iconText.replace(/&#x/, '0x').replace(/;$/, '');
+        return String.fromCharCode(replace);
+      });
+    } else {
+      return text;
+    }
+  },
+  mergeDeep: function mergeDeep(target) {
+    for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      sources[_key - 1] = arguments[_key];
+    }
+
+    if (!sources.length) return target;
+    var source = sources.shift();
+    if (Utils.isObject(target) && Utils.isObject(source)) {
+      for (var key in source) {
+        if (Utils.isObject(source[key])) {
+          if (!target[key]) {
+            Object.assign(target, _defineProperty({}, key, {}));
+          }
+          Utils.mergeDeep(target[key], source[key]);
+        } else {
+          Object.assign(target, _defineProperty({}, key, source[key]));
+        }
+      }
+    }
+    return Utils.mergeDeep.apply(Utils, [target].concat(sources));
+  },
+  appendProtocol: function appendProtocol(url) {
+    if (/^\/\//.test(url)) {
+      var bundleUrl = weex.config.bundleUrl;
+
+      return 'http' + (/^https:/.test(bundleUrl) ? 's' : '') + ':' + url;
+    }
+    return url;
+  },
+  encodeURLParams: function encodeURLParams(url) {
+    var parsedUrl = new _urlParse2.default(url, true);
+    return parsedUrl.toString();
+  },
+  goToH5Page: function goToH5Page(jumpUrl) {
+    var animated = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var callback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    var Navigator = weex.requireModule('navigator');
+    var jumpUrlObj = new Utils.UrlParser(jumpUrl, true);
+    var url = Utils.appendProtocol(jumpUrlObj.toString());
+    Navigator.push({
+      url: Utils.encodeURLParams(url),
+      animated: animated.toString()
+    }, callback);
+  },
+
+  env: {
+    isTaobao: function isTaobao() {
+      var appName = weex.config.env.appName;
+
+      return (/(tb|taobao|淘宝)/i.test(appName)
+      );
+    },
+    isTrip: function isTrip() {
+      var appName = weex.config.env.appName;
+
+      return appName === 'LX';
+    },
+    isBoat: function isBoat() {
+      var appName = weex.config.env.appName;
+
+      return appName === 'Boat' || appName === 'BoatPlayground';
+    },
+    isWeb: function isWeb() {
+      var platform = weex.config.env.platform;
+
+      return (typeof window === 'undefined' ? 'undefined' : _typeof2(window)) === 'object' && platform.toLowerCase() === 'web';
+    },
+    isIOS: function isIOS() {
+      var platform = weex.config.env.platform;
+
+      return platform.toLowerCase() === 'ios';
+    },
+
+    /**
+     * 是否为 iPhone X
+     * @returns {boolean}
+     */
+    isIPhoneX: function isIPhoneX() {
+      var deviceHeight = weex.config.env.deviceHeight;
+
+      if (Utils.env.isWeb()) {
+        return (typeof window === 'undefined' ? 'undefined' : _typeof2(window)) !== undefined && window.screen && window.screen.width && window.screen.height && parseInt(window.screen.width, 10) === 375 && parseInt(window.screen.height, 10) === 812;
+      }
+      return Utils.env.isIOS() && deviceHeight === 2436;
+    },
+    isAndroid: function isAndroid() {
+      var platform = weex.config.env.platform;
+
+      return platform.toLowerCase() === 'android';
+    },
+    isAlipay: function isAlipay() {
+      var appName = weex.config.env.appName;
+
+      return appName === 'AP';
+    },
+    isTmall: function isTmall() {
+      var appName = weex.config.env.appName;
+
+      return (/(tm|tmall|天猫)/i.test(appName)
+      );
+    },
+    isAliWeex: function isAliWeex() {
+      return Utils.env.isTmall() || Utils.env.isTrip() || Utils.env.isTaobao();
+    },
+
+    /**
+     * 获取weex屏幕真实的设置高度，需要减去导航栏高度
+     * @returns {Number}
+     */
+    getPageHeight: function getPageHeight() {
+      var env = weex.config.env;
+
+      var navHeight = Utils.env.isWeb() ? 0 : Utils.env.isIPhoneX() ? 176 : 132;
+      return env.deviceHeight / env.deviceWidth * 750 - navHeight;
+    },
+
+    /**
+     * 获取weex屏幕真实的设置高度
+     * @returns {Number}
+     */
+    getScreenHeight: function getScreenHeight() {
+      var env = weex.config.env;
+
+      return env.deviceHeight / env.deviceWidth * 750;
+    }
+  },
+
+  /**
+   * 版本号比较
+   * @memberOf Utils
+   * @param currVer {string}
+   * @param promoteVer {string}
+   * @returns {boolean}
+   * @example
+   *
+   * const { Utils } = require('@ali/wx-bridge');
+   * const { compareVersion } = Utils;
+   * console.log(compareVersion('0.1.100', '0.1.11')); // 'true'
+   */
+  compareVersion: function compareVersion() {
+    var currVer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '0.0.0';
+    var promoteVer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0.0.0';
+
+    if (currVer === promoteVer) return true;
+    var currVerArr = currVer.split('.');
+    var promoteVerArr = promoteVer.split('.');
+    var len = Math.max(currVerArr.length, promoteVerArr.length);
+    for (var i = 0; i < len; i++) {
+      var proVal = ~~promoteVerArr[i];
+      var curVal = ~~currVerArr[i];
+      if (proVal < curVal) {
+        return true;
+      } else if (proVal > curVal) {
+        return false;
+      }
+    }
+    return false;
+  },
+
+  /**
+   * 分割数组
+   * @param arr 被分割数组
+   * @param size 分割数组的长度
+   * @returns {Array}
+   */
+  arrayChunk: function arrayChunk() {
+    var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+
+    var groups = [];
+    if (arr && arr.length > 0) {
+      groups = arr.map(function (e, i) {
+        return i % size === 0 ? arr.slice(i, i + size) : null;
+      }).filter(function (e) {
+        return e;
+      });
+    }
+    return groups;
+  },
+
+  /*
+   * 截断字符串
+   * @param str 传入字符串
+   * @param len 截断长度
+   * @param hasDot 末尾是否...
+   * @returns {String}
+   */
+  truncateString: function truncateString(str, len) {
+    var hasDot = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+    var newLength = 0;
+    var newStr = '';
+    var singleChar = '';
+    var chineseRegex = /[^\x00-\xff]/g;
+    var strLength = str.replace(chineseRegex, '**').length;
+    for (var i = 0; i < strLength; i++) {
+      singleChar = str.charAt(i).toString();
+      if (singleChar.match(chineseRegex) !== null) {
+        newLength += 2;
+      } else {
+        newLength++;
+      }
+      if (newLength > len) {
+        break;
+      }
+      newStr += singleChar;
+    }
+
+    if (hasDot && strLength > len) {
+      newStr += '...';
+    }
+    return newStr;
+  },
+
+  /*
+   * 转换 obj 为 url params参数
+   * @param obj 传入字符串
+   * @returns {String}
+   */
+  objToParams: function objToParams(obj) {
+    var str = "";
+    for (var key in obj) {
+      if (str !== "") {
+        str += "&";
+      }
+      str += key + "=" + encodeURIComponent(obj[key]);
+    }
+    return str;
+  },
+
+  /*
+   * 转换 url params参数为obj
+   * @param str 传入url参数字符串
+   * @returns {Object}
+   */
+  paramsToObj: function paramsToObj(str) {
+    var obj = {};
+    try {
+      obj = JSON.parse('{"' + decodeURI(str).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+    } catch (e) {
+      console.log(e);
+    }
+    return obj;
+  },
+
+  animation: {
+    /**
+     * 返回定义页面转场动画起初的位置
+     * @param ref
+     * @param transform 运动类型
+     * @param status
+     * @param callback 回调函数
+     */
+    pageTransitionAnimation: function pageTransitionAnimation(ref, transform, status, callback) {
+      var animation = weex.requireModule('animation');
+      animation.transition(ref, {
+        styles: {
+          transform: transform
+        },
+        duration: status ? 250 : 300, // ms
+        timingFunction: status ? 'ease-in' : 'ease-out',
+        delay: 0 // ms
+      }, function () {
+        callback && callback();
+      });
+    }
+  },
+  uiStyle: {
+    /**
+     * 返回定义页面转场动画起初的位置
+     * @param animationType 页面转场动画的类型 push，model
+     * @param size 分割数组的长度
+     * @returns {}
+     */
+    pageTransitionAnimationStyle: function pageTransitionAnimationStyle(animationType) {
+      if (animationType === 'push') {
+        return {
+          left: '750px',
+          top: '0px',
+          height: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px'
+        };
+      } else if (animationType === 'model') {
+        return {
+          top: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px',
+          left: '0px',
+          height: weex.config.env.deviceHeight / weex.config.env.deviceWidth * 750 + 'px'
+        };
+      }
+      return {};
+    }
+  }
+};
+
+exports.default = Utils;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.http = http;
+var referer = 'ios.jicu.vip';
+function http() {
+  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (!checkNetworkStatus()) {
+    console.log('终止网络请求');
+    return new Promise(function (resolve, reject) {
+      reject({ statusText: '网络无连接' });
+    });
+  }
+  var DEFAULT_OPTION = {
+    method: 'GET',
+    type: 'json', // json、text、jsonp
+    headers: {}
+  };
+
+  var modal = weex.requireModule('modal');
+  var stream = weex.requireModule('stream');
+  var platform = weex.config.env.platform.toLowerCase();
+
+  // 正式环境域名
+  var apiRoot = 'http://api.jicu.vip'; //'http://your.prod.domain.com'
+  var isProduction = "common" === 'production';
+  console.log('环境显示', isProduction, platform);
+  if (!isProduction && platform === 'android') {
+    apiRoot = 'http://10.0.2.2';
+  }
+
+  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
+  options.url = apiRoot + options.url;
+  options.headers['referer'] = referer;
+  if (options.method === 'GET') {
+    if (options.params) {
+      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
+        return '' + acc + key + '=' + options.params[key] + '&';
+      }, '?appVersion=' + getAppVersion() + '&');
+      options.url = options.url.concat(paramStr).slice(0, -1);
+    }
+  } else if (options.method === 'POST') {
+    if (options.body) {
+      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
+      options.headers['Content-Type'] = 'application/json';
+    }
+  }
+  console.log('请求选项', options);
+  return new Promise(function (resolve, reject) {
+    stream.fetch(options, function (response) {
+      if (response.ok) {
+        console.log('stream response', response);
+        resolve(response.data);
+      } else {
+        modal.toast({
+          message: '\u7F51\u7EDC\u65E0\u8FDE\u63A5',
+          duration: 1
+        });
+        console.log('stream reject', response);
+        reject(response);
+      }
+    });
+  });
+}
+
+function checkNetworkStatus() {
+  var network = weex.requireModule('network');
+  var ok = true;
+  network.getNetworkStatus(function (statusText) {
+    if (statusText === 'NONE') {
+      console.log('checkNetworkStatus', '当前没有网络');
+      weex.requireModule('modal').toast({
+        message: '网络无连接',
+        duration: 1
+      });
+      ok = false;
+    } else {
+      console.log('网络连接正常');
+    }
+  });
+  return ok;
+}
+
+function getAppVersion() {
+  var appVertionText = '';
+  console.log('http.js', '获取appVersion', '开始', appVertionText);
+  var isIOS = weex.config.env.platform.toLowerCase() === 'ios';
+  if (!isIOS) {
+    appVertionText = weex.requireModule('version').getAppVersion();
+    console.log('http.js', 'app版本，appVertionText=', appVertionText);
+  } else {
+    weex.requireModule('version').getAppVersion(function (versionText) {
+      console.log('http.js', 'app版本', versionText);
+      appVertionText = versionText;
+    });
+  }
+  console.log('http.js', '获取appVersion', '结束', appVertionText);
+  return appVertionText;
+}
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.initIconfont = initIconfont;
+exports.setPageTitle = setPageTitle;
+exports.setOgImage = setOgImage;
+exports.getEntryUrl = getEntryUrl;
+exports.getUrlSearch = getUrlSearch;
+exports.isEmpty = isEmpty;
+exports.whichPlatform = whichPlatform;
+exports.getStorageValue = getStorageValue;
+exports.setStorageVal = setStorageVal;
+exports.getStorageVal = getStorageVal;
+exports.setStorageValue = setStorageValue;
+exports.postMessage = postMessage;
+exports.receiveMessage = receiveMessage;
+exports.modalDebug = modalDebug;
+exports.getUrlKey = getUrlKey;
+exports.titlebar = titlebar;
+function initIconfont() {
+  var domModule = weex.requireModule('dom');
+  domModule.addRule('fontFace', {
+    fontFamily: 'iconfont',
+    src: "url('local:///font/iconfont.ttf')"
+  });
+}
+
+function setPageTitle(title) {
+  // if (document) {
+  //   document.title = title || '页面'
+  // }
+}
+
+function setOgImage(imgUrl) {
+  document.querySelector('meta[property="og:image"]').setAttribute('content', imgUrl || '');
+}
+
+function getEntryUrl(filename, parameters) {
+  var bundleUrl = weex.config.bundleUrl;
+
+  // const host = /\/\/([^/]+?)\//.exec(bundleUrl)[0]
+
+  var isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0;
+  var isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('.app') > 0;
+
+  var isWeb = weex.config.env.platform.toLowerCase() === 'web';
+  var url = '';
+  if (isWeb) {
+    url = '/' + filename + '.html';
+    if (parameters) {
+      url += '?';
+      var ps = [];
+      for (var key in parameters) {
+        if (parameters.hasOwnProperty(key)) {
+          var val = parameters[key];
+          ps.push(key + '=' + val);
+        }
+      }
+      url += ps.join('&');
+    }
+  } else {
+    if (isiOSAssets) {
+      url = bundleUrl.split('bundlejs')[0] + '/bundlejs/' + filename + '.js';
+      console.log('getEntryUrl, ios', url);
+    } else if (isAndroidAssets) {
+      url = bundleUrl.split('/dist')[0] + '/dist/' + filename + '.js';
+    }
+  }
+  return url;
+}
+
+function getUrlSearch(url, name) {
+  var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+  var r = url.slice(url.indexOf('?') + 1).match(reg);
+  if (r != null) {
+    try {
+      return decodeURIComponent(r[2]);
+    } catch (_e) {
+      return null;
+    }
+  }
+  return null;
+}
+
+function isEmpty(obj) {
+  if (obj == null || obj == '' || obj == 'undefined' || obj == 'null') {
+    return true;
+  }
+  if (obj.length > 0) return false;
+  if (obj.length === 0) return true;
+  for (var key in obj) {
+    if (hasOwnProperty.call(obj, key)) return false;
+  }
+  return true;
+}
+
+function whichPlatform() {
+  return weex.config.env.platform.toLowerCase();
+}
+var modal = weex.requireModule('modal');
+function getStorageValue(key) {
+  var storage = weex.requireModule('storage');
+  var storageVal = '';
+  storage.getItem(key, function (e) {
+    console.log(e);
+    if (e.result == 'success') {
+      storageVal = e.data;
+    }
+  });
+  return storageVal;
+}
+
+function setStorageVal(key, val) {
+  modalDebug(key + val);
+  return new Promise(function (resolve, reject) {
+    modalDebug('promise...');
+    var storage = weex.requireModule('storage');
+    storage.setItem(key, val, function (e) {
+      modalDebug('setItem result:' + JSON.stringify(e));
+      if (e.result == 'success') {
+        resolve(e.result);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
+function getStorageVal(key) {
+  return new Promise(function (resolve, reject) {
+    var storage = weex.requireModule('storage');
+    var storageVal = '';
+    storage.getItem(key, function (e) {
+      console.log('getStorageVal', e);
+      if (e.result == 'success') {
+        storageVal = e.data;
+        resolve(storageVal);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
+function setStorageValue(key, val) {
+  var storage = weex.requireModule('storage');
+  storage.setItem(key, val, function (e) {
+    if (e.result == 'success' && e.data == 'undefined') {
+      console.log('setStorageValue', e);
+      return true;
+    }
+    return false;
+  });
+}
+
+function postMessage(key, val) {
+  if (whichPlatform() === 'web') {
+    var storage = weex.requireModule('storage');
+    storage.setItem(key, val, function (e) {
+      console.info('发送消息', key, val, e);
+      if (e.result == 'success' && e.data == 'undefined') {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  } else {
+    console.log('postMessage start', key, val);
+    var a = new BroadcastChannel(key);
+    a.postMessage(val);
+    console.log('postMessage over', key, val);
+  }
+}
+
+function receiveMessage(key, success) {
+  var data = {
+    status: 1,
+    val: undefined
+  };
+  console.log(key, whichPlatform());
+  var b = new BroadcastChannel(key);
+  b.onmessage = function (event) {
+    console.log('b.onmessage', key, event);
+    if (event.data) {
+      data.val = event.data;
+    }
+    data.status = 0;
+    success(data);
+    console.log('接收消息返回', data);
+  };
+}
+
+function modalDebug() {
+  var info = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+  if (false) {
+    var _modal = weex.requireModule('modal');
+    _modal.toast({
+      message: info,
+      duration: 3
+    });
+  }
+}
+
+function getUrlKey(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+function titlebar(title) {
+  // const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+  // if (isIOS) {
+  weex.requireModule('titlebar').setTitle(title);
+  // }
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var required = __webpack_require__(4),
+    qs = __webpack_require__(5),
+    protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i,
+    slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
+
+/**
+ * These are the parse rules for the URL parser, it informs the parser
+ * about:
+ *
+ * 0. The char it Needs to parse, if it's a string it should be done using
+ *    indexOf, RegExp using exec and NaN means set as current value.
+ * 1. The property we should set when parsing this value.
+ * 2. Indication if it's backwards or forward parsing, when set as number it's
+ *    the value of extra chars that should be split off.
+ * 3. Inherit from location if non existing in the parser.
+ * 4. `toLowerCase` the resulting value.
+ */
+var rules = [['#', 'hash'], // Extract from the back.
+['?', 'query'], // Extract from the back.
+['/', 'pathname'], // Extract from the back.
+['@', 'auth', 1], // Extract from the front.
+[NaN, 'host', undefined, 1, 1], // Set left over value.
+[/:(\d+)$/, 'port', undefined, 1], // RegExp the back.
+[NaN, 'hostname', undefined, 1, 1] // Set left over.
+];
+
+/**
+ * These properties should not be copied or inherited from. This is only needed
+ * for all non blob URL's as a blob URL does not include a hash, only the
+ * origin.
+ *
+ * @type {Object}
+ * @private
+ */
+var ignore = { hash: 1, query: 1 };
+
+/**
+ * The location object differs when your code is loaded through a normal page,
+ * Worker or through a worker using a blob. And with the blobble begins the
+ * trouble as the location object will contain the URL of the blob, not the
+ * location of the page where our code is loaded in. The actual origin is
+ * encoded in the `pathname` so we can thankfully generate a good "default"
+ * location from it so we can generate proper relative URL's again.
+ *
+ * @param {Object|String} loc Optional default location object.
+ * @returns {Object} lolcation object.
+ * @api public
+ */
+function lolcation(loc) {
+  loc = loc || global.location || {};
+
+  var finaldestination = {},
+      type = typeof loc === 'undefined' ? 'undefined' : _typeof(loc),
+      key;
+
+  if ('blob:' === loc.protocol) {
+    finaldestination = new URL(unescape(loc.pathname), {});
+  } else if ('string' === type) {
+    finaldestination = new URL(loc, {});
+    for (key in ignore) {
+      delete finaldestination[key];
+    }
+  } else if ('object' === type) {
+    for (key in loc) {
+      if (key in ignore) continue;
+      finaldestination[key] = loc[key];
+    }
+
+    if (finaldestination.slashes === undefined) {
+      finaldestination.slashes = slashes.test(loc.href);
+    }
+  }
+
+  return finaldestination;
+}
+
+/**
+ * @typedef ProtocolExtract
+ * @type Object
+ * @property {String} protocol Protocol matched in the URL, in lowercase.
+ * @property {Boolean} slashes `true` if protocol is followed by "//", else `false`.
+ * @property {String} rest Rest of the URL that is not part of the protocol.
+ */
+
+/**
+ * Extract protocol information from a URL with/without double slash ("//").
+ *
+ * @param {String} address URL we want to extract from.
+ * @return {ProtocolExtract} Extracted information.
+ * @api private
+ */
+function extractProtocol(address) {
+  var match = protocolre.exec(address);
+
+  return {
+    protocol: match[1] ? match[1].toLowerCase() : '',
+    slashes: !!match[2],
+    rest: match[3]
+  };
+}
+
+/**
+ * Resolve a relative URL pathname against a base URL pathname.
+ *
+ * @param {String} relative Pathname of the relative URL.
+ * @param {String} base Pathname of the base URL.
+ * @return {String} Resolved pathname.
+ * @api private
+ */
+function resolve(relative, base) {
+  var path = (base || '/').split('/').slice(0, -1).concat(relative.split('/')),
+      i = path.length,
+      last = path[i - 1],
+      unshift = false,
+      up = 0;
+
+  while (i--) {
+    if (path[i] === '.') {
+      path.splice(i, 1);
+    } else if (path[i] === '..') {
+      path.splice(i, 1);
+      up++;
+    } else if (up) {
+      if (i === 0) unshift = true;
+      path.splice(i, 1);
+      up--;
+    }
+  }
+
+  if (unshift) path.unshift('');
+  if (last === '.' || last === '..') path.push('');
+
+  return path.join('/');
+}
+
+/**
+ * The actual URL instance. Instead of returning an object we've opted-in to
+ * create an actual constructor as it's much more memory efficient and
+ * faster and it pleases my OCD.
+ *
+ * @constructor
+ * @param {String} address URL we want to parse.
+ * @param {Object|String} location Location defaults for relative paths.
+ * @param {Boolean|Function} parser Parser for the query string.
+ * @api public
+ */
+function URL(address, location, parser) {
+  if (!(this instanceof URL)) {
+    return new URL(address, location, parser);
+  }
+
+  var relative,
+      extracted,
+      parse,
+      instruction,
+      index,
+      key,
+      instructions = rules.slice(),
+      type = typeof location === 'undefined' ? 'undefined' : _typeof(location),
+      url = this,
+      i = 0;
+
+  //
+  // The following if statements allows this module two have compatibility with
+  // 2 different API:
+  //
+  // 1. Node.js's `url.parse` api which accepts a URL, boolean as arguments
+  //    where the boolean indicates that the query string should also be parsed.
+  //
+  // 2. The `URL` interface of the browser which accepts a URL, object as
+  //    arguments. The supplied object will be used as default values / fall-back
+  //    for relative paths.
+  //
+  if ('object' !== type && 'string' !== type) {
+    parser = location;
+    location = null;
+  }
+
+  if (parser && 'function' !== typeof parser) parser = qs.parse;
+
+  location = lolcation(location);
+
+  //
+  // Extract protocol information before running the instructions.
+  //
+  extracted = extractProtocol(address || '');
+  relative = !extracted.protocol && !extracted.slashes;
+  url.slashes = extracted.slashes || relative && location.slashes;
+  url.protocol = extracted.protocol || location.protocol || '';
+  address = extracted.rest;
+
+  //
+  // When the authority component is absent the URL starts with a path
+  // component.
+  //
+  if (!extracted.slashes) instructions[2] = [/(.*)/, 'pathname'];
+
+  for (; i < instructions.length; i++) {
+    instruction = instructions[i];
+    parse = instruction[0];
+    key = instruction[1];
+
+    if (parse !== parse) {
+      url[key] = address;
+    } else if ('string' === typeof parse) {
+      if (~(index = address.indexOf(parse))) {
+        if ('number' === typeof instruction[2]) {
+          url[key] = address.slice(0, index);
+          address = address.slice(index + instruction[2]);
+        } else {
+          url[key] = address.slice(index);
+          address = address.slice(0, index);
+        }
+      }
+    } else if (index = parse.exec(address)) {
+      url[key] = index[1];
+      address = address.slice(0, index.index);
+    }
+
+    url[key] = url[key] || (relative && instruction[3] ? location[key] || '' : '');
+
+    //
+    // Hostname, host and protocol should be lowercased so they can be used to
+    // create a proper `origin`.
+    //
+    if (instruction[4]) url[key] = url[key].toLowerCase();
+  }
+
+  //
+  // Also parse the supplied query string in to an object. If we're supplied
+  // with a custom parser as function use that instead of the default build-in
+  // parser.
+  //
+  if (parser) url.query = parser(url.query);
+
+  //
+  // If the URL is relative, resolve the pathname against the base URL.
+  //
+  if (relative && location.slashes && url.pathname.charAt(0) !== '/' && (url.pathname !== '' || location.pathname !== '')) {
+    url.pathname = resolve(url.pathname, location.pathname);
+  }
+
+  //
+  // We should not add port numbers if they are already the default port number
+  // for a given protocol. As the host also contains the port number we're going
+  // override it with the hostname which contains no port number.
+  //
+  if (!required(url.port, url.protocol)) {
+    url.host = url.hostname;
+    url.port = '';
+  }
+
+  //
+  // Parse down the `auth` for the username and password.
+  //
+  url.username = url.password = '';
+  if (url.auth) {
+    instruction = url.auth.split(':');
+    url.username = instruction[0] || '';
+    url.password = instruction[1] || '';
+  }
+
+  url.origin = url.protocol && url.host && url.protocol !== 'file:' ? url.protocol + '//' + url.host : 'null';
+
+  //
+  // The href is just the compiled result.
+  //
+  url.href = url.toString();
+}
+
+/**
+ * This is convenience method for changing properties in the URL instance to
+ * insure that they all propagate correctly.
+ *
+ * @param {String} part          Property we need to adjust.
+ * @param {Mixed} value          The newly assigned value.
+ * @param {Boolean|Function} fn  When setting the query, it will be the function
+ *                               used to parse the query.
+ *                               When setting the protocol, double slash will be
+ *                               removed from the final url if it is true.
+ * @returns {URL}
+ * @api public
+ */
+function set(part, value, fn) {
+  var url = this;
+
+  switch (part) {
+    case 'query':
+      if ('string' === typeof value && value.length) {
+        value = (fn || qs.parse)(value);
+      }
+
+      url[part] = value;
+      break;
+
+    case 'port':
+      url[part] = value;
+
+      if (!required(value, url.protocol)) {
+        url.host = url.hostname;
+        url[part] = '';
+      } else if (value) {
+        url.host = url.hostname + ':' + value;
+      }
+
+      break;
+
+    case 'hostname':
+      url[part] = value;
+
+      if (url.port) value += ':' + url.port;
+      url.host = value;
+      break;
+
+    case 'host':
+      url[part] = value;
+
+      if (/:\d+$/.test(value)) {
+        value = value.split(':');
+        url.port = value.pop();
+        url.hostname = value.join(':');
+      } else {
+        url.hostname = value;
+        url.port = '';
+      }
+
+      break;
+
+    case 'protocol':
+      url.protocol = value.toLowerCase();
+      url.slashes = !fn;
+      break;
+
+    case 'pathname':
+    case 'hash':
+      if (value) {
+        var char = part === 'pathname' ? '/' : '#';
+        url[part] = value.charAt(0) !== char ? char + value : value;
+      } else {
+        url[part] = value;
+      }
+      break;
+
+    default:
+      url[part] = value;
+  }
+
+  for (var i = 0; i < rules.length; i++) {
+    var ins = rules[i];
+
+    if (ins[4]) url[ins[1]] = url[ins[1]].toLowerCase();
+  }
+
+  url.origin = url.protocol && url.host && url.protocol !== 'file:' ? url.protocol + '//' + url.host : 'null';
+
+  url.href = url.toString();
+
+  return url;
+}
+
+/**
+ * Transform the properties back in to a valid and full URL string.
+ *
+ * @param {Function} stringify Optional query stringify function.
+ * @returns {String}
+ * @api public
+ */
+function toString(stringify) {
+  if (!stringify || 'function' !== typeof stringify) stringify = qs.stringify;
+
+  var query,
+      url = this,
+      protocol = url.protocol;
+
+  if (protocol && protocol.charAt(protocol.length - 1) !== ':') protocol += ':';
+
+  var result = protocol + (url.slashes ? '//' : '');
+
+  if (url.username) {
+    result += url.username;
+    if (url.password) result += ':' + url.password;
+    result += '@';
+  }
+
+  result += url.host + url.pathname;
+
+  query = 'object' === _typeof(url.query) ? stringify(url.query) : url.query;
+  if (query) result += '?' !== query.charAt(0) ? '?' + query : query;
+
+  if (url.hash) result += url.hash;
+
+  return result;
+}
+
+URL.prototype = { set: set, toString: toString };
+
+//
+// Expose the URL parser and some additional properties that might be useful for
+// others or testing.
+//
+URL.extractProtocol = extractProtocol;
+URL.location = lolcation;
+URL.qs = qs;
+
+module.exports = URL;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Check if we're required to add a port number.
+ *
+ * @see https://url.spec.whatwg.org/#default-port
+ * @param {Number|String} port Port number we need to check
+ * @param {String} protocol Protocol we need to check against.
+ * @returns {Boolean} Is it a default port for the given protocol
+ * @api private
+ */
+
+module.exports = function required(port, protocol) {
+  protocol = protocol.split(':')[0];
+  port = +port;
+
+  if (!port) return false;
+
+  switch (protocol) {
+    case 'http':
+    case 'ws':
+      return port !== 80;
+
+    case 'https':
+    case 'wss':
+      return port !== 443;
+
+    case 'ftp':
+      return port !== 21;
+
+    case 'gopher':
+      return port !== 70;
+
+    case 'file':
+      return false;
+  }
+
+  return port !== 0;
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var has = Object.prototype.hasOwnProperty;
+
+/**
+ * Decode a URI encoded string.
+ *
+ * @param {String} input The URI encoded string.
+ * @returns {String} The decoded string.
+ * @api private
+ */
+function decode(input) {
+  return decodeURIComponent(input.replace(/\+/g, ' '));
+}
+
+/**
+ * Simple query string parser.
+ *
+ * @param {String} query The query string that needs to be parsed.
+ * @returns {Object}
+ * @api public
+ */
+function querystring(query) {
+  var parser = /([^=?&]+)=?([^&]*)/g,
+      result = {},
+      part;
+
+  //
+  // Little nifty parsing hack, leverage the fact that RegExp.exec increments
+  // the lastIndex property so we can continue executing this loop until we've
+  // parsed all results.
+  //
+  for (; part = parser.exec(query); result[decode(part[1])] = decode(part[2])) {}
+
+  return result;
+}
+
+/**
+ * Transform a query string to an object.
+ *
+ * @param {Object} obj Object that should be transformed.
+ * @param {String} prefix Optional prefix.
+ * @returns {String}
+ * @api public
+ */
+function querystringify(obj, prefix) {
+  prefix = prefix || '';
+
+  var pairs = [];
+
+  //
+  // Optionally prefix with a '?' if needed
+  //
+  if ('string' !== typeof prefix) prefix = '?';
+
+  for (var key in obj) {
+    if (has.call(obj, key)) {
+      pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+    }
+  }
+
+  return pairs.length ? prefix + pairs.join('&') : '';
+}
+
+//
+// Expose the module.
+//
+exports.stringify = querystringify;
+exports.parse = querystring;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(7)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(8)
+
+/* template */
+var __vue_template__ = __webpack_require__(9)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/include/navbar.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-cc674820"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "container": {
+    "flexDirection": "row",
+    "position": "fixed",
+    "top": 0,
+    "left": 0,
+    "right": 0,
+    "width": 750
+  },
+  "right-text": {
+    "position": "absolute",
+    "bottom": 28,
+    "right": 32,
+    "textAlign": "right",
+    "fontSize": 32,
+    "fontFamily": "'Open Sans', sans-serif"
+  },
+  "left-text": {
+    "position": "absolute",
+    "bottom": 28,
+    "left": 32,
+    "textAlign": "left",
+    "fontSize": 32,
+    "fontFamily": "'Open Sans', sans-serif"
+  },
+  "center-text": {
+    "position": "absolute",
+    "bottom": 25,
+    "left": 172,
+    "right": 172,
+    "textAlign": "center",
+    "fontSize": 36,
+    "fontWeight": "bold"
+  },
+  "left-image": {
+    "position": "absolute",
+    "bottom": 20,
+    "left": 28,
+    "width": 50,
+    "height": 50
+  },
+  "right-image": {
+    "position": "absolute",
+    "bottom": 20,
+    "right": 28,
+    "width": 50,
+    "height": 50
+  }
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  props: {
+    dataRole: { default: 'navbar' },
+    //导航条背景色
+    backgroundColor: { default: 'black' },
+    //导航条高度
+    height: { default: 88 },
+    //导航条标题
+    title: { default: '' },
+    //导航条标题颜色
+    titleColor: { default: 'black' },
+    //右侧按钮图片
+    rightItemSrc: { default: '' },
+    //右侧按钮标题
+    rightItemTitle: { default: '' },
+    //右侧按钮标题颜色
+    rightItemColor: { default: 'black' },
+    //左侧按钮图片
+    leftItemSrc: { default: '' },
+    //左侧按钮标题
+    leftItemTitle: { default: '' },
+    //左侧按钮颜色
+    leftItemColor: { default: 'black' }
+  },
+  methods: {
+    onclickrightitem: function onclickrightitem(e) {
+      this.$emit('naviBarRightItemClick');
+    },
+    onclickleftitem: function onclickleftitem(e) {
+      this.$emit('naviBarLeftItemClick');
+    }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
+  }
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.show) ? _c('div', {
+    staticClass: ["container"],
+    style: {
+      height: _vm.height,
+      backgroundColor: _vm.backgroundColor
+    },
+    attrs: {
+      "dataRole": _vm.dataRole
+    }
+  }, [(!_vm.rightItemSrc) ? _c('text', {
+    staticClass: ["right-text"],
+    style: {
+      color: _vm.rightItemColor
+    },
+    attrs: {
+      "naviItemPosition": "right"
+    },
+    on: {
+      "click": _vm.onclickrightitem
+    }
+  }, [_vm._v(_vm._s(_vm.rightItemTitle))]) : _vm._e(), (_vm.rightItemSrc) ? _c('image', {
+    staticClass: ["right-image"],
+    attrs: {
+      "naviItemPosition": "right",
+      "src": _vm.rightItemSrc
+    },
+    on: {
+      "click": _vm.onclickrightitem
+    }
+  }) : _vm._e(), (!_vm.leftItemSrc) ? _c('text', {
+    staticClass: ["left-text"],
+    style: {
+      color: _vm.leftItemColor
+    },
+    attrs: {
+      "naviItemPosition": "left"
+    },
+    on: {
+      "click": _vm.onclickleftitem
+    }
+  }, [_vm._v(_vm._s(_vm.leftItemTitle))]) : _vm._e(), (_vm.leftItemSrc) ? _c('image', {
+    staticClass: ["left-image"],
+    attrs: {
+      "naviItemPosition": "left",
+      "src": _vm.leftItemSrc
+    },
+    on: {
+      "click": _vm.onclickleftitem
+    }
+  }) : _vm._e(), _c('text', {
+    staticClass: ["center-text"],
+    style: {
+      color: _vm.titleColor
+    },
+    attrs: {
+      "naviItemPosition": "center",
+      "value": _vm.title
+    }
+  })]) : _vm._e()
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(11);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(12)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(13)
+
+/* template */
+var __vue_template__ = __webpack_require__(14)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-cell/index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-eff0e228"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "wxc-cell": {
+    "flexDirection": "row",
+    "alignItems": "center",
+    "paddingLeft": "24",
+    "paddingRight": "24",
+    "backgroundColor": "#ffffff"
+  },
+  "cell-margin": {
+    "marginBottom": "24"
+  },
+  "cell-title": {
+    "flex": 1
+  },
+  "cell-indent": {
+    "paddingBottom": "30",
+    "paddingTop": "30"
+  },
+  "has-desc": {
+    "paddingBottom": "18",
+    "paddingTop": "18"
+  },
+  "cell-top-border": {
+    "borderTopColor": "#e2e2e2",
+    "borderTopWidth": "1"
+  },
+  "cell-bottom-border": {
+    "borderBottomColor": "#e2e2e2",
+    "borderBottomWidth": "1"
+  },
+  "cell-label-text": {
+    "fontSize": "30",
+    "color": "#666666",
+    "width": "188",
+    "marginRight": "10"
+  },
+  "cell-arrow-icon": {
+    "width": "22",
+    "height": "22"
+  },
+  "cell-content": {
+    "color": "#333333",
+    "fontSize": "30",
+    "lineHeight": "40"
+  },
+  "cell-desc-text": {
+    "color": "#999999",
+    "fontSize": "24",
+    "lineHeight": "30",
+    "marginTop": "4",
+    "marginRight": "30"
+  },
+  "extra-content-text": {
+    "fontSize": "28",
+    "color": "#999999",
+    "marginRight": "4"
+  }
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  props: {
+    label: {
+      type: String,
+      default: ''
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    extraContent: {
+      type: String,
+      default: ''
+    },
+    desc: {
+      type: String,
+      default: ''
+    },
+    link: {
+      type: String,
+      default: ''
+    },
+    hasTopBorder: {
+      type: Boolean,
+      default: false
+    },
+    hasMargin: {
+      type: Boolean,
+      default: false
+    },
+    hasBottomBorder: {
+      type: Boolean,
+      default: true
+    },
+    hasArrow: {
+      type: Boolean,
+      default: false
+    },
+    arrowIcon: {
+      type: String,
+      default: 'https://gw.alicdn.com/tfs/TB11zBUpwMPMeJjy1XbXXcwxVXa-22-22.png'
+    },
+    hasVerticalIndent: {
+      type: Boolean,
+      default: true
+    },
+    cellStyle: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    },
+    autoAccessible: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    cellClicked: function cellClicked(e) {
+      var link = this.link;
+      this.$emit('wxcCellClicked', { e: e });
+      link && _utils2.default.goToH5Page(link, true);
+    }
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    class: ['wxc-cell', _vm.hasTopBorder && 'cell-top-border', _vm.hasBottomBorder && 'cell-bottom-border', _vm.hasMargin && 'cell-margin', _vm.hasVerticalIndent && 'cell-indent', _vm.desc && 'has-desc'],
+    style: _vm.cellStyle,
+    attrs: {
+      "accessible": _vm.autoAccessible,
+      "ariaLabel": (_vm.label + "," + _vm.title + "," + _vm.desc)
+    },
+    on: {
+      "click": _vm.cellClicked
+    }
+  }, [_vm._t("label", [(_vm.label) ? _c('div', [_c('text', {
+    staticClass: ["cell-label-text"]
+  }, [_vm._v(_vm._s(_vm.label))])]) : _vm._e()]), _c('div', {
+    staticClass: ["cell-title"]
+  }, [_vm._t("title", [_c('text', {
+    staticClass: ["cell-content"]
+  }, [_vm._v(_vm._s(_vm.title))]), (_vm.desc) ? _c('text', {
+    staticClass: ["cell-desc-text"]
+  }, [_vm._v(_vm._s(_vm.desc))]) : _vm._e()])], 2), _vm._t("value"), _vm._t("default"), (_vm.extraContent) ? _c('text', {
+    staticClass: ["extra-content-text"]
+  }, [_vm._v(_vm._s(_vm.extraContent))]) : _vm._e(), (_vm.hasArrow) ? _c('image', {
+    staticClass: ["cell-arrow-icon"],
+    attrs: {
+      "src": _vm.arrowIcon,
+      "ariaHidden": true
+    }
+  }) : _vm._e()], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "category": {
+    "marginTop": "20",
+    "paddingLeft": "24",
+    "width": "750",
+    "height": "68",
+    "backgroundColor": "#f2f3f4",
+    "justifyContent": "center"
+  },
+  "category-text": {
+    "color": "#000000",
+    "fontWeight": "600",
+    "fontSize": "28"
+  }
+}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  props: {
+    title: String
+  }
+};
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["category"]
+  }, [_c('text', {
+    staticClass: ["category-text"]
+  }, [_vm._v(_vm._s(_vm.title))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.syncUserDevice = syncUserDevice;
+exports.userShopFollows = userShopFollows;
+exports.updateUserProfileAddress = updateUserProfileAddress;
+exports.queryUserAddressList = queryUserAddressList;
+exports.createUserAddress = createUserAddress;
+exports.updateUserAddress = updateUserAddress;
+exports.deleteUserAddress = deleteUserAddress;
+
+var _http = __webpack_require__(1);
+
+function syncUserDevice(params) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/device/sync",
+    headers: {},
+    body: params
+  });
+}
+
+function userShopFollows(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/shop/user/follows",
+    headers: headers,
+    body: params
+  });
+}
+
+function updateUserProfileAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/profile/address/update",
+    headers: headers,
+    body: params
+  });
+}
+
+function queryUserAddressList(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/list",
+    headers: headers,
+    body: params
+  });
+}
+
+function createUserAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/create",
+    headers: headers,
+    body: params
+  });
+}
+
+function updateUserAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/update",
+    headers: headers,
+    body: params
+  });
+}
+
+function deleteUserAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/delete",
+    headers: headers,
+    body: params
+  });
+}
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(26)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(27)
+
+/* template */
+var __vue_template__ = __webpack_require__(28)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/components/category.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-376cda0e"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(43);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(44)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(45)
+
+/* template */
+var __vue_template__ = __webpack_require__(47)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-searchbar/index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-6447ff37"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "wxc-search-bar": {
+    "paddingLeft": "20",
+    "paddingRight": "20",
+    "backgroundColor": "#ffffff",
+    "width": "750",
+    "height": "84",
+    "flexDirection": "row"
+  },
+  "wxc-search-bar-yellow": {
+    "backgroundColor": "#ffc900"
+  },
+  "search-bar-input": {
+    "position": "absolute",
+    "top": "10",
+    "paddingTop": 0,
+    "paddingBottom": 0,
+    "paddingRight": "40",
+    "paddingLeft": "60",
+    "fontSize": "26",
+    "width": "624",
+    "height": "64",
+    "lineHeight": "64",
+    "backgroundColor": "#E5E5E5",
+    "borderRadius": "6"
+  },
+  "search-bar-input-yellow": {
+    "backgroundColor": "#fff6d6"
+  },
+  "search-bar-icon": {
+    "position": "absolute",
+    "width": "30",
+    "height": "30",
+    "left": "34",
+    "top": "28"
+  },
+  "search-bar-close": {
+    "position": "absolute",
+    "width": "30",
+    "height": "30",
+    "right": "120",
+    "top": "28"
+  },
+  "search-bar-button": {
+    "width": "94",
+    "height": "36",
+    "fontSize": "30",
+    "textAlign": "center",
+    "backgroundColor": "#ffffff",
+    "marginTop": "16",
+    "marginRight": 0,
+    "color": "#333333",
+    "position": "absolute",
+    "right": "8",
+    "top": "9"
+  },
+  "search-bar-button-yellow": {
+    "backgroundColor": "#FFC900"
+  },
+  "input-has-dep": {
+    "paddingLeft": "240",
+    "width": "710"
+  },
+  "bar-dep": {
+    "width": "170",
+    "paddingRight": "12",
+    "paddingLeft": "12",
+    "height": "42",
+    "alignItems": "center",
+    "flexDirection": "row",
+    "position": "absolute",
+    "left": "24",
+    "top": "22",
+    "borderRightStyle": "solid",
+    "borderRightWidth": "1",
+    "borderRightColor": "#C7C7C7"
+  },
+  "bar-dep-yellow": {
+    "borderRightColor": "#C7C7C7"
+  },
+  "dep-text": {
+    "flex": 1,
+    "textAlign": "center",
+    "fontSize": "26",
+    "color": "#666666",
+    "marginRight": "6",
+    "lines": 1,
+    "textOverflow": "ellipsis"
+  },
+  "dep-arrow": {
+    "width": "24",
+    "height": "24"
+  },
+  "icon-has-dep": {
+    "left": "214"
+  },
+  "disabled-input": {
+    "width": "750",
+    "height": "64",
+    "position": "absolute",
+    "left": 0,
+    "backgroundColor": "rgba(0,0,0,0)"
+  },
+  "has-dep-disabled": {
+    "width": "550",
+    "left": "200"
+  }
+}
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _type = __webpack_require__(46);
+
+exports.default = {
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    alwaysShowCancel: {
+      type: Boolean,
+      default: false
+    },
+    inputType: {
+      type: String,
+      default: 'text'
+    },
+    returnKeyType: {
+      type: String,
+      default: 'default'
+    },
+    mod: {
+      type: String,
+      default: 'default'
+    },
+    autofocus: {
+      type: Boolean,
+      default: false
+    },
+    theme: {
+      type: String,
+      default: 'gray'
+    },
+    barStyle: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    },
+    defaultValue: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: '搜索'
+    },
+    cancelLabel: {
+      type: String,
+      default: '取消 '
+    },
+    depName: {
+      type: String,
+      default: '杭州'
+    }
+  },
+  computed: {
+    needShowCancel: function needShowCancel() {
+      return this.alwaysShowCancel || this.showCancel;
+    },
+    buttonStyle: function buttonStyle() {
+      var barStyle = this.barStyle;
+
+      if (barStyle.backgroundColor) {
+        return { backgroundColor: barStyle.backgroundColor };
+      }
+      return {};
+    }
+  },
+  data: function data() {
+    return {
+      inputIcon: _type.INPUT_ICON,
+      closeIcon: _type.CLOSE_ICON,
+      arrowIcon: _type.ARROW_ICON,
+      showCancel: false,
+      showClose: false,
+      value: ''
+
+    };
+  },
+  created: function created() {
+    this.defaultValue && (this.value = this.defaultValue);
+    if (this.disabled) {
+      this.showCancel = false;
+      this.showClose = false;
+    }
+  },
+
+  methods: {
+    onBlur: function onBlur() {
+      var self = this;
+      setTimeout(function () {
+        self.showCancel = false;
+        self.detectShowClose();
+        self.$emit('wxcSearchbarInputOnBlur', { value: self.value });
+      }, 10);
+    },
+    autoBlur: function autoBlur() {
+      this.$refs['search-input'].blur();
+    },
+    onFocus: function onFocus() {
+      if (this.isDisabled) {
+        return;
+      }
+      this.showCancel = true;
+      this.detectShowClose();
+      this.$emit('wxcSearchbarInputOnFocus', { value: this.value });
+    },
+    closeClicked: function closeClicked() {
+      this.value = '';
+      this.showCancel && (this.showCancel = false);
+      this.showClose && (this.showClose = false);
+      this.$emit('wxcSearchbarCloseClicked', { value: this.value });
+      this.$emit('wxcSearchbarInputOnInput', { value: this.value });
+    },
+    onInput: function onInput(e) {
+      this.value = e.value;
+      this.showCancel = true;
+      this.detectShowClose();
+      this.$emit('wxcSearchbarInputOnInput', { value: this.value });
+    },
+    onSubmit: function onSubmit(e) {
+      this.onBlur();
+      this.value = e.value;
+      this.showCancel = true;
+      this.detectShowClose();
+      this.$emit('wxcSearchbarInputReturned', { value: this.value });
+    },
+    cancelClicked: function cancelClicked() {
+      this.showCancel && (this.showCancel = false);
+      this.showClose && (this.showClose = false);
+      this.$emit('wxcSearchbarCancelClicked', { value: this.value });
+    },
+    detectShowClose: function detectShowClose() {
+      this.showClose = this.value.length > 0 && this.showCancel;
+    },
+    depClicked: function depClicked() {
+      this.$emit('wxcSearchbarDepChooseClicked', {});
+    },
+    inputDisabledClicked: function inputDisabledClicked() {
+      this.$emit('wxcSearchbarInputDisabledClicked', {});
+    },
+    setValue: function setValue(value) {
+      this.value = value;
+    }
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * CopyRight (C) 2017-2022 Alibaba Group Holding Limited.
+ * Created by Tw93 on 2016/10/31.
+ */
+
+var INPUT_ICON = exports.INPUT_ICON = "https://gw.alicdn.com/tfs/TB1FZB.pwMPMeJjy1XdXXasrXXa-30-30.png";
+var CLOSE_ICON = exports.CLOSE_ICON = "https://gw.alicdn.com/tfs/TB1sZB.pwMPMeJjy1XdXXasrXXa-24-24.png";
+var ARROW_ICON = exports.ARROW_ICON = "https://gw.alicdn.com/tfs/TB1vZB.pwMPMeJjy1XdXXasrXXa-24-24.png";
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [(_vm.mod === 'default') ? _c('div', {
+    class: ['wxc-search-bar', 'wxc-search-bar-' + _vm.theme],
+    style: _vm.barStyle
+  }, [_c('input', {
+    ref: "search-input",
+    class: ['search-bar-input', 'search-bar-input-' + _vm.theme],
+    style: {
+      width: _vm.needShowCancel ? '624px' : '710px'
+    },
+    attrs: {
+      "returnKeyType": _vm.returnKeyType,
+      "autofocus": _vm.autofocus,
+      "disabled": _vm.disabled,
+      "value": _vm.value,
+      "type": _vm.inputType,
+      "placeholder": _vm.placeholder
+    },
+    on: {
+      "blur": _vm.onBlur,
+      "focus": _vm.onFocus,
+      "input": _vm.onInput,
+      "return": _vm.onSubmit
+    }
+  }), (_vm.disabled) ? _c('div', {
+    staticClass: ["disabled-input"],
+    on: {
+      "click": _vm.inputDisabledClicked
+    }
+  }) : _vm._e(), _c('image', {
+    staticClass: ["search-bar-icon"],
+    attrs: {
+      "ariaHidden": true,
+      "src": _vm.inputIcon
+    }
+  }), (_vm.showClose) ? _c('image', {
+    staticClass: ["search-bar-close"],
+    attrs: {
+      "ariaHidden": true,
+      "src": _vm.closeIcon
+    },
+    on: {
+      "click": _vm.closeClicked
+    }
+  }) : _vm._e(), (_vm.needShowCancel) ? _c('text', {
+    class: ['search-bar-button', 'search-bar-button-' + _vm.theme],
+    style: _vm.buttonStyle,
+    on: {
+      "click": _vm.cancelClicked
+    }
+  }, [_vm._v(_vm._s(_vm.cancelLabel))]) : _vm._e()]) : _vm._e(), (_vm.mod === 'hasDep') ? _c('div', {
+    class: ['wxc-search-bar', 'wxc-search-bar-' + _vm.theme],
+    style: _vm.barStyle
+  }, [_c('input', {
+    class: ['search-bar-input', 'input-has-dep', 'search-bar-input-' + _vm.theme],
+    attrs: {
+      "disabled": _vm.disabled,
+      "autofocus": _vm.autofocus,
+      "returnKeyType": _vm.returnKeyType,
+      "value": _vm.value,
+      "type": _vm.inputType,
+      "placeholder": _vm.placeholder
+    },
+    on: {
+      "blur": _vm.onBlur,
+      "focus": _vm.onFocus,
+      "input": _vm.onInput,
+      "return": _vm.onSubmit
+    }
+  }), (_vm.disabled) ? _c('div', {
+    staticClass: ["disabled-input", "has-dep-disabled"],
+    on: {
+      "click": _vm.inputDisabledClicked
+    }
+  }) : _vm._e(), _c('div', {
+    class: ['bar-dep', '.bar-dep-' + _vm.theme],
+    on: {
+      "click": _vm.depClicked
+    }
+  }, [_c('text', {
+    staticClass: ["dep-text"]
+  }, [_vm._v(_vm._s(_vm.depName))]), _c('image', {
+    staticClass: ["dep-arrow"],
+    attrs: {
+      "src": _vm.arrowIcon,
+      "ariaHidden": true
+    }
+  })]), _c('image', {
+    staticClass: ["search-bar-icon", "icon-has-dep"],
+    attrs: {
+      "ariaHidden": true,
+      "src": _vm.inputIcon
+    }
+  })]) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(82)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(83)
+
+/* template */
+var __vue_template__ = __webpack_require__(84)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/city/index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-30a6a9c8"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "scroller": {
+    "width": "750"
+  }
+}
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _wxcCell = __webpack_require__(10);
+
+var _wxcCell2 = _interopRequireDefault(_wxcCell);
+
+var _wxcSearchbar = __webpack_require__(42);
+
+var _wxcSearchbar2 = _interopRequireDefault(_wxcSearchbar);
+
+var _navbar = __webpack_require__(6);
+
+var _navbar2 = _interopRequireDefault(_navbar);
+
+var _utils3 = __webpack_require__(2);
+
+var _http = __webpack_require__(1);
+
+var _user = __webpack_require__(35);
+
+var _category = __webpack_require__(36);
+
+var _category2 = _interopRequireDefault(_category);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var navigator = weex.requireModule('navigator');
+var dictionary = weex.requireModule('dictionary');
+
+exports.default = {
+  components: { WxcSearchbar: _wxcSearchbar2.default, WxcCell: _wxcCell2.default, category: _category2.default, navbar: _navbar2.default },
+  data: function data() {
+    return {
+      searchList: [],
+      keywords: '',
+      alwaysShowCancel: false,
+      returnKeyType: 'done',
+      inputTimeout: null,
+      currentAddress: '',
+      city: {}
+    };
+  },
+  beforeCreate: function beforeCreate() {
+    (0, _utils3.titlebar)('选择城市');
+    dictionary.getDict('longitude', function (resp) {
+      console.log('获取iOS native经度', resp);
+    });
+    dictionary.getDict('latitude', function (resp) {
+      console.log('获取iOS native纬度', resp);
+    });
+  },
+
+  methods: {
+    wxcIndexlistItemClicked: function wxcIndexlistItemClicked(i) {
+      console.log(i);
+      var rs = this.searchList[i];
+      this.city = { name: rs.addressTitle };
+      this.regeo(rs.addressLocation);
+    },
+    wxcSearchbarInputOnInput: function wxcSearchbarInputOnInput(e) {
+      var _this2 = this;
+
+      this.keywords = e.value;
+      if (this.inputTimeout) {
+        clearTimeout(this.inputTimeout);
+      }
+      var _this = this;
+      this.inputTimeout = setTimeout(function () {
+        _this2.inputTipsFetch();
+      }, 500);
+    },
+    inputTipsFetch: function inputTipsFetch() {
+      var _this = this;
+      (0, _http.http)({
+        method: 'POST',
+        url: '/amap/inputtips',
+        headers: {},
+        body: {
+          keywords: this.keywords
+        }
+      }).then(function (data) {
+        if (data.code != 200) {
+          return;
+        }
+        _this.searchList.splice(0, _this.searchList.length);
+        var inputTipsList = data.data;
+        inputTipsList.forEach(function (tip) {
+          _this.searchList.push({
+            addressTitle: tip.name,
+            addressDesc: tip.district + tip.address,
+            addressLocation: tip.location
+          });
+        });
+      }, function (error) {
+        console.error('failure', error);
+      });
+    },
+    regeo: function regeo(location) {
+      var _this = this;
+      (0, _http.http)({
+        method: 'POST',
+        url: '/amap/regeo',
+        headers: {},
+        body: {
+          location: location
+        }
+      }).then(function (data) {
+        if (data.code != 200) {
+          return;
+        }
+
+        var regeoData = data.data;
+        var cityCode = regeoData.cityCode;
+
+        var loc = location.split(',');
+
+        _this.city.lng = loc[0];
+        _this.city.lat = loc[1];
+        _this.city.cityCode = cityCode;
+        (0, _utils3.getStorageVal)('way:user').then(function (data) {
+          var user = JSON.parse(data);
+          (0, _user.updateUserProfileAddress)({
+            userLoginId: user.userLoginId,
+            addressName: _this.city.name,
+            addressLongitude: _this.city.lng,
+            addressLatitude: _this.city.lat
+          }, {
+            token: user.userToken
+          });
+        }, function (error) {});
+
+        (0, _utils3.setStorageVal)('way:city', JSON.stringify(_this.city)).then(function (data) {
+          console.log('设置city data');
+          (0, _utils3.postMessage)('m:way:city');
+          navigator.pop({
+            animated: 'true'
+          });
+        });
+      }, function (error) {
+        console.error('failure', error);
+      });
+    }
+  },
+  created: function created() {
+    var pageHeight = _utils2.default.env.getPageHeight();
+    var screenHeight = _utils2.default.env.getScreenHeight();
+    this.scrollerStyle = { height: pageHeight + 'px' };
+
+    var _this = this;
+    (0, _utils3.getStorageVal)('way:city').then(function (data) {
+      var city = JSON.parse(data);
+      _this.currentAddress = city.name;
+    }, function (error) {});
+  }
+};
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('navbar', {
+    attrs: {
+      "title": "选择城市",
+      "backgroundColor": "#45b5f0",
+      "height": "88"
+    }
+  }), _c('scroller', {
+    staticClass: ["scroller"],
+    style: _vm.scrollerStyle
+  }, [_c('wxc-searchbar', {
+    ref: "wxc-searchbar",
+    attrs: {
+      "placeholder": "请输入您所在的位置（例如：xx市xx区xx街）",
+      "alwaysShowCancel": _vm.alwaysShowCancel,
+      "returnKeyType": _vm.returnKeyType
+    },
+    on: {
+      "wxcSearchbarInputReturned": _vm.wxcSearchbarInputOnInput
+    }
+  }), (_vm.currentAddress != '') ? _c('div', [_c('category', {
+    attrs: {
+      "title": "当前地址"
+    }
+  }), _c('wxc-cell', {
+    attrs: {
+      "title": _vm.currentAddress,
+      "hasArrow": false,
+      "hasTopBorder": true
+    }
+  })], 1) : _vm._e(), (_vm.searchList.length > 0) ? _c('div', [_c('category', {
+    attrs: {
+      "title": "搜索地址"
+    }
+  }), _vm._l((_vm.searchList), function(result, i) {
+    return _c('wxc-cell', {
+      key: i,
+      attrs: {
+        "title": result.addressTitle,
+        "desc": result.addressDesc,
+        "hasArrow": false,
+        "hasTopBorder": true
+      },
+      on: {
+        "wxcCellClicked": function($event) {
+          _vm.wxcIndexlistItemClicked(i)
+        }
+      }
+    })
+  })], 2) : _vm._e()], 1)], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ })
+/******/ ]);

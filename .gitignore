@@ -8,3 +8,9 @@
 /platforms/android/app/anzhi
 /platforms/android/app/huawei
 /platforms/android/app/xiaomi
+/platforms/android/app/src/main/assets/dist/*.html
+/platforms/android/app/src/main/assets/dist/*.web.js
+/platforms/android/app/src/main/assets/dist/*/*.html
+/platforms/android/app/src/main/assets/dist/*/*.web.js
+/platforms/android/app/src/main/assets/dist/*/*/*.html
+/platforms/android/app/src/main/assets/dist/*/*/*.web.js

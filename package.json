@@ -7,6 +7,7 @@
   "scripts": {
     "start": "npm run serve",
     "build": "webpack --env.NODE_ENV=common",
+    "build:dev": "webpack --env.NODE_ENV=development",
     "build:prod": "webpack --env.NODE_ENV=production",
     "build:prod:web": "webpack --env.NODE_ENV=release",
     "build:plugin": "webpack --env.NODE_ENV=plugin",
@@ -16,7 +17,8 @@
     "dev": "webpack --env.NODE_ENV=common --progress --watch",
     "serve": "webpack-dev-server --env.NODE_ENV=development --progress",
     "copy:ios": "npm run build:prod && rm -rf ./platforms/ios/bundlejs && sed -i '' 's/isAlipay/isAp/g' `grep isAlipay -rl ./dist` && cp -r ./dist/ ./platforms/ios/bundlejs/",
-    "copy:android": "npm run build:prod && rm -rf ./platforms/android/app/src/main/assets/dist && cp -r ./dist/ ./platforms/android/app/src/main/assets/dist/",
+    "android:prod": "npm run build:prod && rm -rf ./platforms/android/app/src/main/assets/dist && cp -r ./dist/ ./platforms/android/app/src/main/assets/dist/",
+    "android:dev": "npm run build && rm -rf ./platforms/android/app/src/main/assets/dist && cp -r ./dist/ ./platforms/android/app/src/main/assets/dist/",
     "ios": "weex run ios",
     "web": "npm run serve",
     "android": "weex run android",

@@ -29,6 +29,7 @@ import {
   titlebar
 } from '../../tools/utils.js'
 import { http } from '../../tools/http.js'
+import { updateUserProfileAddress } from '../../api/user.js'
 import category from '../../components/category.vue'
 const navigator = weex.requireModule('navigator')
 const dictionary = weex.requireModule('dictionary')
@@ -122,6 +123,22 @@ export default {
           _this.city.lng = loc[0]
           _this.city.lat = loc[1]
           _this.city.cityCode = cityCode
+          getStorageVal('way:user').then(
+            data => {
+              let user = JSON.parse(data)
+              updateUserProfileAddress({
+                userLoginId: user.userLoginId,
+                addressName: _this.city.name,
+                addressLongitude: _this.city.lng,
+                addressLatitude: _this.city.lat
+              }, {
+                token: user.userToken
+              })
+            },
+            error => {
+            }
+          )
+
           setStorageVal('way:city', JSON.stringify(_this.city)).then(data => {
             console.log('设置city data')
             postMessage('m:way:city')
