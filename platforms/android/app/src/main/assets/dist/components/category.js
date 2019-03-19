@@ -62,33 +62,35 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 65);
+/******/ 	return __webpack_require__(__webpack_require__.s = 74);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 26:
+/***/ 23:
 /***/ (function(module, exports) {
 
 module.exports = {
   "category": {
     "marginTop": "20",
-    "paddingLeft": "24",
     "width": "750",
     "height": "68",
     "backgroundColor": "#f2f3f4",
-    "justifyContent": "center"
+    "flexDirection": "row"
   },
   "category-text": {
+    "paddingTop": "20",
+    "paddingLeft": "24",
     "color": "#000000",
     "fontWeight": "600",
-    "fontSize": "28"
+    "fontSize": "28",
+    "width": "375"
   }
 }
 
 /***/ }),
 
-/***/ 27:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -119,16 +121,23 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
 
 exports.default = {
   props: {
-    title: String
+    title: {
+      type: String,
+      default: ''
+    }
   }
 };
 
 /***/ }),
 
-/***/ 28:
+/***/ 25:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -136,27 +145,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: ["category"]
   }, [_c('text', {
     staticClass: ["category-text"]
-  }, [_vm._v(_vm._s(_vm.title))])])
+  }, [_vm._v(_vm._s(_vm.title))]), _vm._t("right"), _vm._t("default")], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 65:
+/***/ 74:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(26)
+__vue_styles__.push(__webpack_require__(23)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(27)
+__vue_exports__ = __webpack_require__(24)
 
 /* template */
-var __vue_template__ = __webpack_require__(28)
+var __vue_template__ = __webpack_require__(25)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||

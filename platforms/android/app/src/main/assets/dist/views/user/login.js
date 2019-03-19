@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 137);
+/******/ 	return __webpack_require__(__webpack_require__.s = 150);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -531,21 +531,44 @@ function getAppVersion() {
 
 /***/ }),
 
-/***/ 137:
+/***/ 15:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(16);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ 150:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(138)
+__vue_styles__.push(__webpack_require__(151)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(139)
+__vue_exports__ = __webpack_require__(152)
 
 /* template */
-var __vue_template__ = __webpack_require__(140)
+var __vue_template__ = __webpack_require__(153)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -578,7 +601,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 138:
+/***/ 151:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -637,7 +660,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 139:
+/***/ 152:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -651,11 +674,11 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcDialog = __webpack_require__(29);
+var _wxcDialog = __webpack_require__(30);
 
 var _wxcDialog2 = _interopRequireDefault(_wxcDialog);
 
-var _wxcButton = __webpack_require__(16);
+var _wxcButton = __webpack_require__(15);
 
 var _wxcButton2 = _interopRequireDefault(_wxcButton);
 
@@ -663,7 +686,7 @@ var _utils3 = __webpack_require__(2);
 
 var _http = __webpack_require__(1);
 
-var _user = __webpack_require__(35);
+var _user = __webpack_require__(22);
 
 var _category = __webpack_require__(36);
 
@@ -956,7 +979,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 140:
+/***/ 153:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1110,67 +1133,21 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 15:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _index = __webpack_require__(22);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_index).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-
 /***/ 16:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _index = __webpack_require__(17);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_index).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-
-/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(18)
+__vue_styles__.push(__webpack_require__(17)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(19)
+__vue_exports__ = __webpack_require__(18)
 
 /* template */
-var __vue_template__ = __webpack_require__(21)
+var __vue_template__ = __webpack_require__(20)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -1201,7 +1178,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 18:
+/***/ 17:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1223,7 +1200,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 19:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1247,7 +1224,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _type = __webpack_require__(20);
+var _type = __webpack_require__(19);
 
 exports.default = {
   props: {
@@ -1313,6 +1290,89 @@ exports.default = {
 
 /***/ }),
 
+/***/ 19:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var STYLE_MAP = exports.STYLE_MAP = {
+  red: {
+    backgroundColor: '#FF5000'
+  },
+  yellow: {
+    backgroundColor: '#FFC900'
+  },
+  white: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#A5A5A5',
+    borderWidth: '1px'
+  },
+  blue: {
+    backgroundColor: '#0F8DE8'
+  },
+  green: {
+    backgroundColor: '#19be6b'
+  }
+};
+
+var TEXT_STYLE_MAP = exports.TEXT_STYLE_MAP = {
+  red: {
+    color: '#FFFFFF'
+  },
+  yellow: {
+    color: '#FFFFFF'
+  },
+  blue: {
+    color: '#FFFFFF'
+  },
+  white: {
+    color: '#3D3D3D'
+  },
+  green: {
+    color: '#FFFFFF'
+  }
+};
+
+var BUTTON_STYLE_MAP = exports.BUTTON_STYLE_MAP = {
+  full: {
+    width: '702px',
+    height: '88px'
+  },
+  big: {
+    width: '339px',
+    height: '70px'
+  },
+  medium: {
+    width: '218px',
+    height: '60px'
+  },
+  small: {
+    width: '157px',
+    height: '44px'
+  }
+};
+
+var TEXT_FONTSIZE_STYLE_MAP = exports.TEXT_FONTSIZE_STYLE_MAP = {
+  full: {
+    fontSize: '36px'
+  },
+  big: {
+    fontSize: '32px'
+  },
+  medium: {
+    fontSize: '28px'
+  },
+  small: {
+    fontSize: '24px'
+  }
+};
+
+/***/ }),
+
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1332,6 +1392,7 @@ exports.whichPlatform = whichPlatform;
 exports.getStorageValue = getStorageValue;
 exports.setStorageVal = setStorageVal;
 exports.getStorageVal = getStorageVal;
+exports.removeStorage = removeStorage;
 exports.setStorageValue = setStorageValue;
 exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
@@ -1463,6 +1524,22 @@ function getStorageVal(key) {
   });
 }
 
+function removeStorage(key) {
+  return new Promise(function (resolve, reject) {
+    var storage = weex.requireModule('storage');
+    var storageVal = '';
+    storage.removeItem(key, function (e) {
+      console.log('getStorageVal', e);
+      if (e.result == 'success') {
+        storageVal = e.data;
+        resolve(storageVal);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
 function setStorageValue(key, val) {
   var storage = weex.requireModule('storage');
   storage.setItem(key, val, function (e) {
@@ -1537,89 +1614,6 @@ function titlebar(title) {
 /***/ }),
 
 /***/ 20:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var STYLE_MAP = exports.STYLE_MAP = {
-  red: {
-    backgroundColor: '#FF5000'
-  },
-  yellow: {
-    backgroundColor: '#FFC900'
-  },
-  white: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#A5A5A5',
-    borderWidth: '1px'
-  },
-  blue: {
-    backgroundColor: '#0F8DE8'
-  },
-  green: {
-    backgroundColor: '#19be6b'
-  }
-};
-
-var TEXT_STYLE_MAP = exports.TEXT_STYLE_MAP = {
-  red: {
-    color: '#FFFFFF'
-  },
-  yellow: {
-    color: '#FFFFFF'
-  },
-  blue: {
-    color: '#FFFFFF'
-  },
-  white: {
-    color: '#3D3D3D'
-  },
-  green: {
-    color: '#FFFFFF'
-  }
-};
-
-var BUTTON_STYLE_MAP = exports.BUTTON_STYLE_MAP = {
-  full: {
-    width: '702px',
-    height: '88px'
-  },
-  big: {
-    width: '339px',
-    height: '70px'
-  },
-  medium: {
-    width: '218px',
-    height: '60px'
-  },
-  small: {
-    width: '157px',
-    height: '44px'
-  }
-};
-
-var TEXT_FONTSIZE_STYLE_MAP = exports.TEXT_FONTSIZE_STYLE_MAP = {
-  full: {
-    fontSize: '36px'
-  },
-  big: {
-    fontSize: '32px'
-  },
-  medium: {
-    fontSize: '28px'
-  },
-  small: {
-    fontSize: '24px'
-  }
-};
-
-/***/ }),
-
-/***/ 21:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1642,21 +1636,212 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
+/***/ 21:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(26);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
 /***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.syncUserDevice = syncUserDevice;
+exports.userShopFollows = userShopFollows;
+exports.updateUserProfileAddress = updateUserProfileAddress;
+exports.queryUserAddressList = queryUserAddressList;
+exports.createUserAddress = createUserAddress;
+exports.updateUserAddress = updateUserAddress;
+exports.deleteUserAddress = deleteUserAddress;
+
+var _http = __webpack_require__(1);
+
+function syncUserDevice(params) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/device/sync",
+    headers: {},
+    body: params
+  });
+}
+
+function userShopFollows(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/shop/user/follows",
+    headers: headers,
+    body: params
+  });
+}
+
+function updateUserProfileAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/profile/address/update",
+    headers: headers,
+    body: params
+  });
+}
+
+function queryUserAddressList(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/list",
+    headers: headers,
+    body: params
+  });
+}
+
+function createUserAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/create",
+    headers: headers,
+    body: params
+  });
+}
+
+function updateUserAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/update",
+    headers: headers,
+    body: params
+  });
+}
+
+function deleteUserAddress(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/user/address/delete",
+    headers: headers,
+    body: params
+  });
+}
+
+/***/ }),
+
+/***/ 23:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "category": {
+    "marginTop": "20",
+    "width": "750",
+    "height": "68",
+    "backgroundColor": "#f2f3f4",
+    "flexDirection": "row"
+  },
+  "category-text": {
+    "paddingTop": "20",
+    "paddingLeft": "24",
+    "color": "#000000",
+    "fontWeight": "600",
+    "fontSize": "28",
+    "width": "375"
+  }
+}
+
+/***/ }),
+
+/***/ 24:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  props: {
+    title: {
+      type: String,
+      default: ''
+    }
+  }
+};
+
+/***/ }),
+
+/***/ 25:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["category"]
+  }, [_c('text', {
+    staticClass: ["category-text"]
+  }, [_vm._v(_vm._s(_vm.title))]), _vm._t("right"), _vm._t("default")], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(23)
+__vue_styles__.push(__webpack_require__(27)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(24)
+__vue_exports__ = __webpack_require__(28)
 
 /* template */
-var __vue_template__ = __webpack_require__(25)
+var __vue_template__ = __webpack_require__(29)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -1687,7 +1872,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 23:
+/***/ 27:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1703,7 +1888,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 24:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1824,7 +2009,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 25:
+/***/ 29:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1841,104 +2026,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 26:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "category": {
-    "marginTop": "20",
-    "paddingLeft": "24",
-    "width": "750",
-    "height": "68",
-    "backgroundColor": "#f2f3f4",
-    "justifyContent": "center"
-  },
-  "category-text": {
-    "color": "#000000",
-    "fontWeight": "600",
-    "fontSize": "28"
-  }
-}
-
-/***/ }),
-
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  props: {
-    title: String
-  }
-};
-
-/***/ }),
-
-/***/ 28:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["category"]
-  }, [_c('text', {
-    staticClass: ["category-text"]
-  }, [_vm._v(_vm._s(_vm.title))])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _index = __webpack_require__(30);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_index).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
 
@@ -2361,18 +2448,41 @@ module.exports = URL;
 /***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(31);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(31)
+__vue_styles__.push(__webpack_require__(32)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(32)
+__vue_exports__ = __webpack_require__(33)
 
 /* template */
-var __vue_template__ = __webpack_require__(34)
+var __vue_template__ = __webpack_require__(35)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2403,7 +2513,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2477,7 +2587,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 32:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2487,11 +2597,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _wxcOverlay = __webpack_require__(15);
+var _wxcOverlay = __webpack_require__(21);
 
 var _wxcOverlay2 = _interopRequireDefault(_wxcOverlay);
 
-var _type = __webpack_require__(33);
+var _type = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2700,7 +2810,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2719,7 +2829,7 @@ var UN_CHECKED = exports.UN_CHECKED = 'https://gw.alicdn.com/tfs/TB1hE3VpgMPMeJj
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -2781,90 +2891,6 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 35:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.syncUserDevice = syncUserDevice;
-exports.userShopFollows = userShopFollows;
-exports.updateUserProfileAddress = updateUserProfileAddress;
-exports.queryUserAddressList = queryUserAddressList;
-exports.createUserAddress = createUserAddress;
-exports.updateUserAddress = updateUserAddress;
-exports.deleteUserAddress = deleteUserAddress;
-
-var _http = __webpack_require__(1);
-
-function syncUserDevice(params) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/device/sync",
-    headers: {},
-    body: params
-  });
-}
-
-function userShopFollows(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/user/follows",
-    headers: headers,
-    body: params
-  });
-}
-
-function updateUserProfileAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/profile/address/update",
-    headers: headers,
-    body: params
-  });
-}
-
-function queryUserAddressList(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/list",
-    headers: headers,
-    body: params
-  });
-}
-
-function createUserAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/create",
-    headers: headers,
-    body: params
-  });
-}
-
-function updateUserAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/update",
-    headers: headers,
-    body: params
-  });
-}
-
-function deleteUserAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/delete",
-    headers: headers,
-    body: params
-  });
-}
-
-/***/ }),
-
 /***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2872,14 +2898,14 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(26)
+__vue_styles__.push(__webpack_require__(23)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(27)
+__vue_exports__ = __webpack_require__(24)
 
 /* template */
-var __vue_template__ = __webpack_require__(28)
+var __vue_template__ = __webpack_require__(25)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||

@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 90);
+/******/ 	return __webpack_require__(__webpack_require__.s = 112);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -547,6 +547,7 @@ exports.whichPlatform = whichPlatform;
 exports.getStorageValue = getStorageValue;
 exports.setStorageVal = setStorageVal;
 exports.getStorageVal = getStorageVal;
+exports.removeStorage = removeStorage;
 exports.setStorageValue = setStorageValue;
 exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
@@ -667,6 +668,22 @@ function getStorageVal(key) {
     var storage = weex.requireModule('storage');
     var storageVal = '';
     storage.getItem(key, function (e) {
+      console.log('getStorageVal', e);
+      if (e.result == 'success') {
+        storageVal = e.data;
+        resolve(storageVal);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
+function removeStorage(key) {
+  return new Promise(function (resolve, reject) {
+    var storage = weex.requireModule('storage');
+    var storageVal = '';
+    storage.removeItem(key, function (e) {
       console.log('getStorageVal', e);
       if (e.result == 'success') {
         storageVal = e.data;
@@ -1941,7 +1958,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(22);
+var _index = __webpack_require__(16);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -1956,40 +1973,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _index = __webpack_require__(17);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_index).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(18)
+__vue_styles__.push(__webpack_require__(17)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(19)
+__vue_exports__ = __webpack_require__(18)
 
 /* template */
-var __vue_template__ = __webpack_require__(21)
+var __vue_template__ = __webpack_require__(20)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2019,7 +2014,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2040,7 +2035,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2064,7 +2059,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _type = __webpack_require__(20);
+var _type = __webpack_require__(19);
 
 exports.default = {
   props: {
@@ -2129,7 +2124,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2211,7 +2206,7 @@ var TEXT_FONTSIZE_STYLE_MAP = exports.TEXT_FONTSIZE_STYLE_MAP = {
 };
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -2233,21 +2228,125 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 22 */
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(26);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 22 */,
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "category": {
+    "marginTop": "20",
+    "width": "750",
+    "height": "68",
+    "backgroundColor": "#f2f3f4",
+    "flexDirection": "row"
+  },
+  "category-text": {
+    "paddingTop": "20",
+    "paddingLeft": "24",
+    "color": "#000000",
+    "fontWeight": "600",
+    "fontSize": "28",
+    "width": "375"
+  }
+}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  props: {
+    title: {
+      type: String,
+      default: ''
+    }
+  }
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["category"]
+  }, [_c('text', {
+    staticClass: ["category-text"]
+  }, [_vm._v(_vm._s(_vm.title))]), _vm._t("right"), _vm._t("default")], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(23)
+__vue_styles__.push(__webpack_require__(27)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(24)
+__vue_exports__ = __webpack_require__(28)
 
 /* template */
-var __vue_template__ = __webpack_require__(25)
+var __vue_template__ = __webpack_require__(29)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2277,7 +2376,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2292,7 +2391,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2412,7 +2511,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -2431,79 +2530,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "category": {
-    "marginTop": "20",
-    "paddingLeft": "24",
-    "width": "750",
-    "height": "68",
-    "backgroundColor": "#f2f3f4",
-    "justifyContent": "center"
-  },
-  "category-text": {
-    "color": "#000000",
-    "fontWeight": "600",
-    "fontSize": "28"
-  }
-}
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  props: {
-    title: String
-  }
-};
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["category"]
-  }, [_c('text', {
-    staticClass: ["category-text"]
-  }, [_vm._v(_vm._s(_vm.title))])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 29 */,
 /* 30 */,
 /* 31 */,
 /* 32 */,
@@ -2517,14 +2543,14 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(26)
+__vue_styles__.push(__webpack_require__(23)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(27)
+__vue_exports__ = __webpack_require__(24)
 
 /* template */
-var __vue_template__ = __webpack_require__(28)
+var __vue_template__ = __webpack_require__(25)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2664,7 +2690,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _wxcOverlay = __webpack_require__(15);
+var _wxcOverlay = __webpack_require__(21);
 
 var _wxcOverlay2 = _interopRequireDefault(_wxcOverlay);
 
@@ -2958,15 +2984,521 @@ module.exports.render._withStripped = true
 /* 45 */,
 /* 46 */,
 /* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(49);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(50)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(51)
+
+/* template */
+var __vue_template__ = __webpack_require__(56)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-grid-select/index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-3e7db4ef"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "grid-select": {
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "flexWrap": "wrap"
+  }
+}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var _option = __webpack_require__(52);
+
+var _option2 = _interopRequireDefault(_option);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  components: { Option: _option2.default },
+  props: {
+    // 标识, 当界面展示多个grid, 防止v-for :key重复
+    id: {
+      type: String,
+      default: 'one'
+    },
+    // 列数
+    cols: {
+      type: Number,
+      default: 4
+    },
+    // 是否单选
+    single: {
+      type: Boolean,
+      default: false
+    },
+    // 数据
+    list: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    // 选择个数限制
+    limit: {
+      type: Number
+    },
+    // 用户自定义样式，用于个性化设置option样式
+    customStyles: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    }
+  },
+  data: function data() {
+    return {
+      dList: this.initList()
+    };
+  },
+
+  computed: {
+    cHackList: function cHackList() {
+      var list = this.list,
+          cols = this.cols;
+
+      var remainder = list.length % cols;
+      var len = remainder ? cols - remainder : 0;
+
+      return Array.apply(null, { length: len });
+    }
+  },
+  watch: {
+    list: function list() {
+      this.dList = this.initList();
+    }
+  },
+  created: function created() {
+    // 行间距
+    this.lineSpacing = this.customStyles.lineSpacing || '12px';
+  },
+
+  methods: {
+    onSelect: function onSelect(index) {
+      var checked = this.dList[index].checked;
+      if (this.limit <= this.checkedCount && !checked) {
+        this.$emit('overLimit', this.limit);
+      } else {
+        this.updateList(index);
+        this.$emit('select', {
+          selectIndex: index,
+          checked: !checked,
+          checkedList: this.dList.filter(function (item) {
+            return item.checked;
+          })
+        });
+      }
+    },
+    initList: function initList() {
+      var single = this.single;
+      var checkedCount = 0;
+
+      var dList = this.list.map(function (item, i) {
+        var checked = item.checked,
+            disabled = item.disabled;
+
+        disabled = !!disabled;
+        // disabled为true时认为checked无效，同时单选模式下只认为第一个checked为true的为有效值
+        checked = !disabled && !!checked && (!single || checkedCount === 0);
+        if (item.checked) checkedCount += 1;
+        return _extends({}, item, {
+          checked: checked,
+          disabled: disabled
+        });
+      });
+
+      this.checkedCount = checkedCount;
+      return dList;
+    },
+    updateList: function updateList(index) {
+      var single = this.single;
+      var checkedCount = 0;
+      this.dList = this.dList.map(function (item, i) {
+        if (single) {
+          item.checked = index === i && !item.checked;
+        } else {
+          if (i === index) item.checked = !item.checked;
+        }
+        if (item.checked) checkedCount += 1;
+        return item;
+      });
+      this.checkedCount = checkedCount;
+    }
+  }
+};
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(53)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(54)
+
+/* template */
+var __vue_template__ = __webpack_require__(55)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-grid-select/option.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-8da092b0"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "grid-option": {
+    "justifyContent": "center",
+    "borderRadius": "8",
+    "borderWidth": "2",
+    "paddingLeft": "6",
+    "paddingRight": "6"
+  },
+  "text-title": {
+    "lines": 2,
+    "lineHeight": "30",
+    "textOverflow": "ellipsis",
+    "textAlign": "center",
+    "fontSize": "26"
+  },
+  "image-checked": {
+    "position": "absolute",
+    "right": 0,
+    "bottom": 0,
+    "width": "38",
+    "height": "34"
+  }
+}
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  props: {
+    index: {
+      type: Number,
+      default: -1
+    },
+    // 是否选中
+    checked: {
+      type: Boolean,
+      default: false
+    },
+    // 是否可选
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    // 标题
+    title: {
+      type: String,
+      default: ''
+    },
+    width: {
+      type: String,
+      default: '166px'
+    },
+    height: {
+      type: String,
+      default: '72px'
+    },
+    // 默认 x
+    icon: {
+      type: String,
+      default: 'https://gw.alicdn.com/tfs/TB1IAByhgMPMeJjy1XdXXasrXXa-38-34.png'
+    },
+    // 正常状态文字色值
+    color: {
+      type: String,
+      default: '#3d3d3d'
+    },
+    // 选中状态文字色值
+    checkedColor: {
+      type: String,
+      default: '#3d3d3d'
+    },
+    // 不可选状态文字色值
+    disabledColor: {
+      type: String,
+      default: '#9b9b9b'
+    },
+    // 正常状态边框色值
+    borderColor: {
+      type: String,
+      default: 'transparent'
+    },
+    // 选中状态边框色值
+    checkedBorderColor: {
+      type: String,
+      default: '#ffb200'
+    },
+    // 不可选状态边框色值
+    disabledBorderColor: {
+      type: String,
+      default: 'transparent'
+    },
+    // 正常状态背景色值
+    backgroundColor: {
+      type: String,
+      default: '#f6f6f6'
+    },
+    // 选中状态背景色值
+    checkedBackgroundColor: {
+      type: String,
+      default: '#ffffff'
+    },
+    // 不可选状态背景色值
+    disabledBackgroundColor: {
+      type: String,
+      default: '#f6f6f6'
+    }
+  },
+  computed: {
+    cWrapperStyle: function cWrapperStyle() {
+      var checked = this.checked,
+          disabled = this.disabled,
+          width = this.width,
+          height = this.height,
+          borderColor = this.borderColor,
+          checkedBorderColor = this.checkedBorderColor,
+          disabledBorderColor = this.disabledBorderColor,
+          backgroundColor = this.backgroundColor,
+          checkedBackgroundColor = this.checkedBackgroundColor,
+          disabledBackgroundColor = this.disabledBackgroundColor;
+
+      return {
+        width: width,
+        height: height,
+        borderColor: disabled ? disabledBorderColor : checked ? checkedBorderColor : borderColor,
+        backgroundColor: disabled ? disabledBackgroundColor : checked ? checkedBackgroundColor : backgroundColor
+      };
+    },
+    cTitleStyle: function cTitleStyle() {
+      var checked = this.checked,
+          disabled = this.disabled,
+          color = this.color,
+          checkedColor = this.checkedColor,
+          disabledColor = this.disabledColor;
+
+      return {
+        color: disabled ? disabledColor : checked ? checkedColor : color
+      };
+    }
+  },
+  methods: {
+    onClick: function onClick() {
+      if (!this.disabled) {
+        this.$emit('select', this.index);
+      }
+    }
+  }
+};
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["grid-option"],
+    style: _vm.cWrapperStyle,
+    attrs: {
+      "accessible": true,
+      "ariaLabel": (_vm.title + "," + (_vm.checked?'已选中':'未选中'))
+    },
+    on: {
+      "click": _vm.onClick
+    }
+  }, [(_vm.title) ? _c('text', {
+    staticClass: ["text-title"],
+    style: _vm.cTitleStyle
+  }, [_vm._v(_vm._s(_vm.title))]) : _vm._e(), (_vm.checked && _vm.icon) ? _c('image', {
+    staticClass: ["image-checked"],
+    attrs: {
+      "src": _vm.icon
+    }
+  }) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["grid-select"]
+  }, [_vm._l((_vm.dList), function(item, index) {
+    return _c('option', _vm._b({
+      key: index,
+      style: {
+        marginTop: index >= _vm.cols ? _vm.lineSpacing : null
+      },
+      attrs: {
+        "index": index
+      },
+      on: {
+        "select": function($event) {
+          _vm.onSelect(index)
+        }
+      }
+    }, 'option', Object.assign({}, _vm.customStyles, item), false))
+  }), _vm._l((_vm.cHackList), function(item, index) {
+    return _c('option', _vm._b({
+      key: _vm.id + index,
+      style: {
+        opacity: 0,
+        marginTop: _vm.dList.length >= _vm.cols ? _vm.lineSpacing : null
+      }
+    }, 'option', Object.assign({}, _vm.customStyles, item), false))
+  })], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
 /* 57 */,
 /* 58 */,
 /* 59 */,
@@ -3000,21 +3532,43 @@ module.exports.render._withStripped = true
 /* 87 */,
 /* 88 */,
 /* 89 */,
-/* 90 */
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(91)
+__vue_styles__.push(__webpack_require__(113)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(92)
+__vue_exports__ = __webpack_require__(114)
 
 /* template */
-var __vue_template__ = __webpack_require__(108)
+var __vue_template__ = __webpack_require__(121)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3046,7 +3600,7 @@ new Vue(module.exports)
 
 
 /***/ }),
-/* 91 */
+/* 113 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3088,7 +3642,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 92 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3106,7 +3660,7 @@ var _wxcMask = __webpack_require__(37);
 
 var _wxcMask2 = _interopRequireDefault(_wxcMask);
 
-var _wxcLoading = __webpack_require__(93);
+var _wxcLoading = __webpack_require__(115);
 
 var _wxcLoading2 = _interopRequireDefault(_wxcLoading);
 
@@ -3114,11 +3668,11 @@ var _wxcCell = __webpack_require__(10);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
-var _wxcButton = __webpack_require__(16);
+var _wxcButton = __webpack_require__(15);
 
 var _wxcButton2 = _interopRequireDefault(_wxcButton);
 
-var _wxcGridSelect = __webpack_require__(99);
+var _wxcGridSelect = __webpack_require__(48);
 
 var _wxcGridSelect2 = _interopRequireDefault(_wxcGridSelect);
 
@@ -3408,7 +3962,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 93 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3418,7 +3972,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(94);
+var _index = __webpack_require__(116);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -3430,21 +3984,21 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 94 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(95)
+__vue_styles__.push(__webpack_require__(117)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(96)
+__vue_exports__ = __webpack_require__(118)
 
 /* template */
-var __vue_template__ = __webpack_require__(98)
+var __vue_template__ = __webpack_require__(120)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -3474,7 +4028,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 95 */
+/* 117 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3520,7 +4074,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 96 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3530,7 +4084,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(97);
+var _type = __webpack_require__(119);
 
 var _utils = __webpack_require__(0);
 
@@ -3706,7 +4260,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 97 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3724,7 +4278,7 @@ var BLACK_GIF = exports.BLACK_GIF = 'https://img.alicdn.com/tfs/TB1Ep_9NVXXXXb8X
 var PART = exports.PART = 'https://gtms02.alicdn.com/tfs/TB1y4QbSXXXXXbgapXXXXXXXXXX-50-50.gif';
 
 /***/ }),
-/* 98 */
+/* 120 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3758,522 +4312,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports.render._withStripped = true
 
 /***/ }),
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _index = __webpack_require__(100);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_index).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(101)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(102)
-
-/* template */
-var __vue_template__ = __webpack_require__(107)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-grid-select/index.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-3e7db4ef"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "grid-select": {
-    "flexDirection": "row",
-    "justifyContent": "space-between",
-    "flexWrap": "wrap"
-  }
-}
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var _option = __webpack_require__(103);
-
-var _option2 = _interopRequireDefault(_option);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  components: { Option: _option2.default },
-  props: {
-    // 标识, 当界面展示多个grid, 防止v-for :key重复
-    id: {
-      type: String,
-      default: 'one'
-    },
-    // 列数
-    cols: {
-      type: Number,
-      default: 4
-    },
-    // 是否单选
-    single: {
-      type: Boolean,
-      default: false
-    },
-    // 数据
-    list: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    // 选择个数限制
-    limit: {
-      type: Number
-    },
-    // 用户自定义样式，用于个性化设置option样式
-    customStyles: {
-      type: Object,
-      default: function _default() {
-        return {};
-      }
-    }
-  },
-  data: function data() {
-    return {
-      dList: this.initList()
-    };
-  },
-
-  computed: {
-    cHackList: function cHackList() {
-      var list = this.list,
-          cols = this.cols;
-
-      var remainder = list.length % cols;
-      var len = remainder ? cols - remainder : 0;
-
-      return Array.apply(null, { length: len });
-    }
-  },
-  watch: {
-    list: function list() {
-      this.dList = this.initList();
-    }
-  },
-  created: function created() {
-    // 行间距
-    this.lineSpacing = this.customStyles.lineSpacing || '12px';
-  },
-
-  methods: {
-    onSelect: function onSelect(index) {
-      var checked = this.dList[index].checked;
-      if (this.limit <= this.checkedCount && !checked) {
-        this.$emit('overLimit', this.limit);
-      } else {
-        this.updateList(index);
-        this.$emit('select', {
-          selectIndex: index,
-          checked: !checked,
-          checkedList: this.dList.filter(function (item) {
-            return item.checked;
-          })
-        });
-      }
-    },
-    initList: function initList() {
-      var single = this.single;
-      var checkedCount = 0;
-
-      var dList = this.list.map(function (item, i) {
-        var checked = item.checked,
-            disabled = item.disabled;
-
-        disabled = !!disabled;
-        // disabled为true时认为checked无效，同时单选模式下只认为第一个checked为true的为有效值
-        checked = !disabled && !!checked && (!single || checkedCount === 0);
-        if (item.checked) checkedCount += 1;
-        return _extends({}, item, {
-          checked: checked,
-          disabled: disabled
-        });
-      });
-
-      this.checkedCount = checkedCount;
-      return dList;
-    },
-    updateList: function updateList(index) {
-      var single = this.single;
-      var checkedCount = 0;
-      this.dList = this.dList.map(function (item, i) {
-        if (single) {
-          item.checked = index === i && !item.checked;
-        } else {
-          if (i === index) item.checked = !item.checked;
-        }
-        if (item.checked) checkedCount += 1;
-        return item;
-      });
-      this.checkedCount = checkedCount;
-    }
-  }
-};
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(104)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(105)
-
-/* template */
-var __vue_template__ = __webpack_require__(106)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-grid-select/option.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-8da092b0"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-/* 104 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "grid-option": {
-    "justifyContent": "center",
-    "borderRadius": "8",
-    "borderWidth": "2",
-    "paddingLeft": "6",
-    "paddingRight": "6"
-  },
-  "text-title": {
-    "lines": 2,
-    "lineHeight": "30",
-    "textOverflow": "ellipsis",
-    "textAlign": "center",
-    "fontSize": "26"
-  },
-  "image-checked": {
-    "position": "absolute",
-    "right": 0,
-    "bottom": 0,
-    "width": "38",
-    "height": "34"
-  }
-}
-
-/***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  props: {
-    index: {
-      type: Number,
-      default: -1
-    },
-    // 是否选中
-    checked: {
-      type: Boolean,
-      default: false
-    },
-    // 是否可选
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    // 标题
-    title: {
-      type: String,
-      default: ''
-    },
-    width: {
-      type: String,
-      default: '166px'
-    },
-    height: {
-      type: String,
-      default: '72px'
-    },
-    // 默认 x
-    icon: {
-      type: String,
-      default: 'https://gw.alicdn.com/tfs/TB1IAByhgMPMeJjy1XdXXasrXXa-38-34.png'
-    },
-    // 正常状态文字色值
-    color: {
-      type: String,
-      default: '#3d3d3d'
-    },
-    // 选中状态文字色值
-    checkedColor: {
-      type: String,
-      default: '#3d3d3d'
-    },
-    // 不可选状态文字色值
-    disabledColor: {
-      type: String,
-      default: '#9b9b9b'
-    },
-    // 正常状态边框色值
-    borderColor: {
-      type: String,
-      default: 'transparent'
-    },
-    // 选中状态边框色值
-    checkedBorderColor: {
-      type: String,
-      default: '#ffb200'
-    },
-    // 不可选状态边框色值
-    disabledBorderColor: {
-      type: String,
-      default: 'transparent'
-    },
-    // 正常状态背景色值
-    backgroundColor: {
-      type: String,
-      default: '#f6f6f6'
-    },
-    // 选中状态背景色值
-    checkedBackgroundColor: {
-      type: String,
-      default: '#ffffff'
-    },
-    // 不可选状态背景色值
-    disabledBackgroundColor: {
-      type: String,
-      default: '#f6f6f6'
-    }
-  },
-  computed: {
-    cWrapperStyle: function cWrapperStyle() {
-      var checked = this.checked,
-          disabled = this.disabled,
-          width = this.width,
-          height = this.height,
-          borderColor = this.borderColor,
-          checkedBorderColor = this.checkedBorderColor,
-          disabledBorderColor = this.disabledBorderColor,
-          backgroundColor = this.backgroundColor,
-          checkedBackgroundColor = this.checkedBackgroundColor,
-          disabledBackgroundColor = this.disabledBackgroundColor;
-
-      return {
-        width: width,
-        height: height,
-        borderColor: disabled ? disabledBorderColor : checked ? checkedBorderColor : borderColor,
-        backgroundColor: disabled ? disabledBackgroundColor : checked ? checkedBackgroundColor : backgroundColor
-      };
-    },
-    cTitleStyle: function cTitleStyle() {
-      var checked = this.checked,
-          disabled = this.disabled,
-          color = this.color,
-          checkedColor = this.checkedColor,
-          disabledColor = this.disabledColor;
-
-      return {
-        color: disabled ? disabledColor : checked ? checkedColor : color
-      };
-    }
-  },
-  methods: {
-    onClick: function onClick() {
-      if (!this.disabled) {
-        this.$emit('select', this.index);
-      }
-    }
-  }
-};
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["grid-option"],
-    style: _vm.cWrapperStyle,
-    attrs: {
-      "accessible": true,
-      "ariaLabel": (_vm.title + "," + (_vm.checked?'已选中':'未选中'))
-    },
-    on: {
-      "click": _vm.onClick
-    }
-  }, [(_vm.title) ? _c('text', {
-    staticClass: ["text-title"],
-    style: _vm.cTitleStyle
-  }, [_vm._v(_vm._s(_vm.title))]) : _vm._e(), (_vm.checked && _vm.icon) ? _c('image', {
-    staticClass: ["image-checked"],
-    attrs: {
-      "src": _vm.icon
-    }
-  }) : _vm._e()])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 107 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["grid-select"]
-  }, [_vm._l((_vm.dList), function(item, index) {
-    return _c('option', _vm._b({
-      key: index,
-      style: {
-        marginTop: index >= _vm.cols ? _vm.lineSpacing : null
-      },
-      attrs: {
-        "index": index
-      },
-      on: {
-        "select": function($event) {
-          _vm.onSelect(index)
-        }
-      }
-    }, 'option', Object.assign({}, _vm.customStyles, item), false))
-  }), _vm._l((_vm.cHackList), function(item, index) {
-    return _c('option', _vm._b({
-      key: _vm.id + index,
-      style: {
-        opacity: 0,
-        marginTop: _vm.dList.length >= _vm.cols ? _vm.lineSpacing : null
-      }
-    }, 'option', Object.assign({}, _vm.customStyles, item), false))
-  })], 2)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 108 */
+/* 121 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 171);
+/******/ 	return __webpack_require__(__webpack_require__.s = 189);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10953,6 +10953,7 @@ exports.whichPlatform = whichPlatform;
 exports.getStorageValue = getStorageValue;
 exports.setStorageVal = setStorageVal;
 exports.getStorageVal = getStorageVal;
+exports.removeStorage = removeStorage;
 exports.setStorageValue = setStorageValue;
 exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
@@ -11073,6 +11074,22 @@ function getStorageVal(key) {
     var storage = weex.requireModule('storage');
     var storageVal = '';
     storage.getItem(key, function (e) {
+      console.log('getStorageVal', e);
+      if (e.result == 'success') {
+        storageVal = e.data;
+        resolve(storageVal);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
+function removeStorage(key) {
+  return new Promise(function (resolve, reject) {
+    var storage = weex.requireModule('storage');
+    var storageVal = '';
+    storage.removeItem(key, function (e) {
       console.log('getStorageVal', e);
       if (e.result == 'success') {
         storageVal = e.data;
@@ -11776,7 +11793,22 @@ if(false) {
 
 /***/ }),
 
-/***/ 171:
+/***/ 18:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.container[data-v-29859cfc] {\n  flex-direction: row;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  width: 750;\n}\n.right-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  right: 32;\n  text-align: right;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  left: 32;\n  text-align: left;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 25;\n  left: 172;\n  right: 172;\n  text-align: center;\n  font-size: 36;\n  font-weight: bold;\n}\n.left-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  left: 28;\n  width: 50;\n  height: 50;\n}\n.right-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  right: 28;\n  width: 50;\n  height: 50;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 189:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11794,24 +11826,157 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _weexVueRender2.default.init(_vue2.default);
 
-var App = __webpack_require__(172);
+var App = __webpack_require__(190);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ }),
 
-/***/ 172:
+/***/ 19:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  props: {
+    dataRole: { default: 'navbar' },
+    //导航条背景色
+    backgroundColor: { default: 'black' },
+    //导航条高度
+    height: { default: 88 },
+    //导航条标题
+    title: { default: '' },
+    //导航条标题颜色
+    titleColor: { default: 'black' },
+    //右侧按钮图片
+    rightItemSrc: { default: '' },
+    //右侧按钮标题
+    rightItemTitle: { default: '' },
+    //右侧按钮标题颜色
+    rightItemColor: { default: 'black' },
+    //左侧按钮图片
+    leftItemSrc: { default: '' },
+    //左侧按钮标题
+    leftItemTitle: { default: '' },
+    //左侧按钮颜色
+    leftItemColor: { default: 'black' }
+  },
+  methods: {
+    onclickrightitem: function onclickrightitem(e) {
+      this.$emit('naviBarRightItemClick');
+    },
+    onclickleftitem: function onclickleftitem(e) {
+      this.$emit('naviBarLeftItemClick');
+    }
+  },
+  beforeCreated: function beforeCreated() {
+    this.show = weex.config.env.platform.toLowerCase() === 'ios';
+  }
+};
+
+/***/ }),
+
+/***/ 190:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(173)
+  __webpack_require__(191)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(175),
+  __webpack_require__(193),
   /* template */
-  __webpack_require__(176),
+  __webpack_require__(194),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -11844,13 +12009,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 173:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(174);
+var content = __webpack_require__(192);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -11871,7 +12036,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 174:
+/***/ 192:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -11886,7 +12051,7 @@ exports.push([module.i, "\n.iconfont[data-v-dc75c858] {\n  font-family: iconfont
 
 /***/ }),
 
-/***/ 175:
+/***/ 193:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11900,7 +12065,7 @@ var _utils = __webpack_require__(4);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcButton = __webpack_require__(28);
+var _wxcButton = __webpack_require__(27);
 
 var _wxcButton2 = _interopRequireDefault(_wxcButton);
 
@@ -11916,7 +12081,7 @@ var _utils3 = __webpack_require__(12);
 
 var _http = __webpack_require__(5);
 
-var _shop = __webpack_require__(73);
+var _shop = __webpack_require__(84);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12093,7 +12258,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 176:
+/***/ 194:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12206,154 +12371,6 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-dc75c858", module.exports)
   }
 }
-
-/***/ }),
-
-/***/ 18:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.container[data-v-29859cfc] {\n  flex-direction: row;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  width: 750;\n}\n.right-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  right: 32;\n  text-align: right;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  left: 32;\n  text-align: left;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 25;\n  left: 172;\n  right: 172;\n  text-align: center;\n  font-size: 36;\n  font-weight: bold;\n}\n.left-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  left: 28;\n  width: 50;\n  height: 50;\n}\n.right-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  right: 28;\n  width: 50;\n  height: 50;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 19:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-  props: {
-    dataRole: { default: 'navbar' },
-    //导航条背景色
-    backgroundColor: { default: 'black' },
-    //导航条高度
-    height: { default: 88 },
-    //导航条标题
-    title: { default: '' },
-    //导航条标题颜色
-    titleColor: { default: 'black' },
-    //右侧按钮图片
-    rightItemSrc: { default: '' },
-    //右侧按钮标题
-    rightItemTitle: { default: '' },
-    //右侧按钮标题颜色
-    rightItemColor: { default: 'black' },
-    //左侧按钮图片
-    leftItemSrc: { default: '' },
-    //左侧按钮标题
-    leftItemTitle: { default: '' },
-    //左侧按钮颜色
-    leftItemColor: { default: 'black' }
-  },
-  methods: {
-    onclickrightitem: function onclickrightitem(e) {
-      this.$emit('naviBarRightItemClick');
-    },
-    onclickleftitem: function onclickleftitem(e) {
-      this.$emit('naviBarLeftItemClick');
-    }
-  },
-  beforeCreated: function beforeCreated() {
-    this.show = weex.config.env.platform.toLowerCase() === 'ios';
-  }
-};
 
 /***/ }),
 
@@ -13055,7 +13072,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 28:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13065,7 +13082,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(28);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -13078,19 +13095,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 29:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(30)
+  __webpack_require__(29)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(32),
+  __webpack_require__(31),
   /* template */
-  __webpack_require__(34),
+  __webpack_require__(33),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -13120,6 +13137,33 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(30);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("1bd113e6", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../css-loader/index.js!../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-691fbff0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../vue-loader/lib/selector.js?type=styles&index=0!./index.vue", function() {
+     var newContent = require("!!../../../css-loader/index.js!../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-691fbff0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../vue-loader/lib/selector.js?type=styles&index=0!./index.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
@@ -13224,33 +13268,6 @@ module.exports = function normalizeComponent (
 /***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(31);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("1bd113e6", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../css-loader/index.js!../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-691fbff0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../vue-loader/lib/selector.js?type=styles&index=0!./index.vue", function() {
-     var newContent = require("!!../../../css-loader/index.js!../../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-691fbff0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../vue-loader/lib/selector.js?type=styles&index=0!./index.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, exports, __webpack_require__) {
-
 exports = module.exports = __webpack_require__(1)(false);
 // imports
 
@@ -13263,7 +13280,7 @@ exports.push([module.i, "\n.wxc-btn[data-v-691fbff0] {\n  width: 9.36rem;\n  hei
 
 /***/ }),
 
-/***/ 32:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13287,7 +13304,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
-var _type = __webpack_require__(33);
+var _type = __webpack_require__(32);
 
 exports.default = {
   props: {
@@ -13353,7 +13370,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 33:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13436,7 +13453,7 @@ var TEXT_FONTSIZE_STYLE_MAP = exports.TEXT_FONTSIZE_STYLE_MAP = {
 
 /***/ }),
 
-/***/ 34:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -22049,50 +22066,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ 73:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.shopFollow = shopFollow;
-exports.cancelFollow = cancelFollow;
-exports.getShopDetail = getShopDetail;
-
-var _http = __webpack_require__(5);
-
-function shopFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow",
-    headers: headers,
-    body: params
-  });
-}
-
-function cancelFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow/cancel",
-    headers: headers,
-    body: params
-  });
-}
-
-function getShopDetail(params, headers) {
-  return (0, _http.http)({
-    method: 'POST',
-    url: '/shop/detail',
-    headers: headers,
-    body: params
-  });
-}
-
-/***/ }),
-
 /***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22284,6 +22257,50 @@ function getShopDetail(params, headers) {
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(9)))
+
+/***/ }),
+
+/***/ 84:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.shopFollow = shopFollow;
+exports.cancelFollow = cancelFollow;
+exports.getShopDetail = getShopDetail;
+
+var _http = __webpack_require__(5);
+
+function shopFollow(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/shop/follow",
+    headers: headers,
+    body: params
+  });
+}
+
+function cancelFollow(params, headers) {
+  return (0, _http.http)({
+    method: "POST",
+    url: "/shop/follow/cancel",
+    headers: headers,
+    body: params
+  });
+}
+
+function getShopDetail(params, headers) {
+  return (0, _http.http)({
+    method: 'POST',
+    url: '/shop/detail',
+    headers: headers,
+    body: params
+  });
+}
 
 /***/ }),
 

@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 165);
+/******/ 	return __webpack_require__(__webpack_require__.s = 183);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10953,6 +10953,7 @@ exports.whichPlatform = whichPlatform;
 exports.getStorageValue = getStorageValue;
 exports.setStorageVal = setStorageVal;
 exports.getStorageVal = getStorageVal;
+exports.removeStorage = removeStorage;
 exports.setStorageValue = setStorageValue;
 exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
@@ -11073,6 +11074,22 @@ function getStorageVal(key) {
     var storage = weex.requireModule('storage');
     var storageVal = '';
     storage.getItem(key, function (e) {
+      console.log('getStorageVal', e);
+      if (e.result == 'success') {
+        storageVal = e.data;
+        resolve(storageVal);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
+function removeStorage(key) {
+  return new Promise(function (resolve, reject) {
+    var storage = weex.requireModule('storage');
+    var storageVal = '';
+    storage.removeItem(key, function (e) {
       console.log('getStorageVal', e);
       if (e.result == 'success') {
         storageVal = e.data;
@@ -11749,7 +11766,49 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 165:
+/***/ 17:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(18);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("07cbb0b6", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29859cfc\",\"scoped\":true,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./navbar.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29859cfc\",\"scoped\":true,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./navbar.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.container[data-v-29859cfc] {\n  flex-direction: row;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  width: 750;\n}\n.right-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  right: 32;\n  text-align: right;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  left: 32;\n  text-align: left;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 25;\n  left: 172;\n  right: 172;\n  text-align: center;\n  font-size: 36;\n  font-weight: bold;\n}\n.left-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  left: 28;\n  width: 50;\n  height: 50;\n}\n.right-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  right: 28;\n  width: 50;\n  height: 50;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 183:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11767,24 +11826,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _weexVueRender2.default.init(_vue2.default);
 
-var App = __webpack_require__(166);
+var App = __webpack_require__(184);
 new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ }),
 
-/***/ 166:
+/***/ 184:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(167)
+  __webpack_require__(185)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(169),
+  __webpack_require__(187),
   /* template */
-  __webpack_require__(170),
+  __webpack_require__(188),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -11817,13 +11876,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 167:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(168);
+var content = __webpack_require__(186);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -11844,7 +11903,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 168:
+/***/ 186:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -11859,7 +11918,7 @@ exports.push([module.i, "\n.wrapper[data-v-6c110b80] {\n  flex-direction: column
 
 /***/ }),
 
-/***/ 169:
+/***/ 187:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11934,34 +11993,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 17:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(18);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("07cbb0b6", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29859cfc\",\"scoped\":true,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./navbar.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-29859cfc\",\"scoped\":true,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./navbar.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 170:
+/***/ 188:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11990,21 +12022,6 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-6c110b80", module.exports)
   }
 }
-
-/***/ }),
-
-/***/ 18:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.container[data-v-29859cfc] {\n  flex-direction: row;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  width: 750;\n}\n.right-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  right: 32;\n  text-align: right;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.left-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 28;\n  left: 32;\n  text-align: left;\n  font-size: 32;\n  font-family: 'Open Sans', sans-serif;\n}\n.center-text[data-v-29859cfc] {\n  position: absolute;\n  bottom: 25;\n  left: 172;\n  right: 172;\n  text-align: center;\n  font-size: 36;\n  font-weight: bold;\n}\n.left-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  left: 28;\n  width: 50;\n  height: 50;\n}\n.right-image[data-v-29859cfc] {\n  position: absolute;\n  bottom: 20;\n  right: 28;\n  width: 50;\n  height: 50;\n}\n", ""]);
-
-// exports
-
 
 /***/ }),
 

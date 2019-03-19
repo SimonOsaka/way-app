@@ -1,12 +1,18 @@
 <template>
   <div>
-    <navbar title="选择城市" backgroundColor="#45b5f0" height="88"></navbar>
+    <navbar title="选择地址" backgroundColor="#45b5f0" height="88"></navbar>
     <scroller class="scroller" :style="scrollerStyle">
       <wxc-searchbar ref="wxc-searchbar" placeholder="请输入您所在的位置（例如：xx市xx区xx街）" :always-show-cancel="alwaysShowCancel" :return-key-type="returnKeyType" @wxcSearchbarInputReturned="wxcSearchbarInputOnInput"></wxc-searchbar>
       <div v-if="currentAddress != ''">
         <category title="当前地址"></category>
         <wxc-cell :title="currentAddress" :has-arrow="false" :has-top-border="true">
         </wxc-cell>
+      </div>
+      <div>
+        <category title="我的地址">
+          <text slot="right" @click="toMyAddressClicked" style="text-align: right; width: 375px; padding-top: 20px; padding-right: 24px; font-weight: 600; font-size: 28px; color: #38f;">操作</text>
+        </category>
+        <wxc-cell title="新增地址" :has-arrow="true" @wxcCellClicked="toCreateUserAddressClicked"></wxc-cell>
       </div>
       <div v-if="searchList.length > 0">
         <category title="搜索地址"></category>
@@ -151,6 +157,25 @@ export default {
           console.error('failure', error)
         }
       )
+    },
+    toCreateUserAddressClicked() {
+      navigator.push({
+        url: getEntryUrl('views/address/edit'),
+        animated: 'true'
+      })
+    },
+    toMyAddressClicked() {
+      getStorageVal('way:user').then((data) => {
+        navigator.push({
+          url: getEntryUrl('views/address/list'),
+          animated: 'true'
+        })
+      }, (error) => {
+        navigator.push({
+          url: getEntryUrl('views/user/login'),
+          animated: 'true'
+        })
+      })
     }
   },
   created() {

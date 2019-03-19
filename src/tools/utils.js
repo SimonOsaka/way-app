@@ -128,6 +128,22 @@ export function getStorageVal(key) {
   })
 }
 
+export function removeStorage(key) {
+  return new Promise(function(resolve, reject) {
+    const storage = weex.requireModule('storage')
+    let storageVal = ''
+    storage.removeItem(key, e => {
+      console.log('getStorageVal', e)
+      if (e.result == 'success') {
+        storageVal = e.data
+        resolve(storageVal)
+      } else {
+        reject(e)
+      }
+    })
+  })
+}
+
 export function setStorageValue(key, val) {
   const storage = weex.requireModule('storage')
   storage.setItem(key, val, e => {

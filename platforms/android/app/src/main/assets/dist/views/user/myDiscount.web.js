@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 189);
+/******/ 	return __webpack_require__(__webpack_require__.s = 207);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10953,6 +10953,7 @@ exports.whichPlatform = whichPlatform;
 exports.getStorageValue = getStorageValue;
 exports.setStorageVal = setStorageVal;
 exports.getStorageVal = getStorageVal;
+exports.removeStorage = removeStorage;
 exports.setStorageValue = setStorageValue;
 exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
@@ -11073,6 +11074,22 @@ function getStorageVal(key) {
     var storage = weex.requireModule('storage');
     var storageVal = '';
     storage.getItem(key, function (e) {
+      console.log('getStorageVal', e);
+      if (e.result == 'success') {
+        storageVal = e.data;
+        resolve(storageVal);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
+function removeStorage(key) {
+  return new Promise(function (resolve, reject) {
+    var storage = weex.requireModule('storage');
+    var storageVal = '';
+    storage.removeItem(key, function (e) {
       console.log('getStorageVal', e);
       if (e.result == 'success') {
         storageVal = e.data;
@@ -11791,29 +11808,6 @@ exports.push([module.i, "\n.container[data-v-29859cfc] {\n  flex-direction: row;
 
 /***/ }),
 
-/***/ 189:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(6);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _weexVueRender = __webpack_require__(10);
-
-var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_weexVueRender2.default.init(_vue2.default);
-
-var App = __webpack_require__(190);
-new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
-
-/***/ }),
-
 /***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11944,417 +11938,6 @@ module.exports = {
     this.show = weex.config.env.platform.toLowerCase() === 'ios';
   }
 };
-
-/***/ }),
-
-/***/ 190:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(191)
-}
-var Component = __webpack_require__(3)(
-  /* script */
-  __webpack_require__(193),
-  /* template */
-  __webpack_require__(194),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  "data-v-d1ccc4ca",
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Volumes/code/way/way-app-ios/src/views/user/myDiscount.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] myDiscount.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d1ccc4ca", Component.options)
-  } else {
-    hotAPI.reload("data-v-d1ccc4ca", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 191:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(192);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("a6243680", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d1ccc4ca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./myDiscount.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d1ccc4ca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./myDiscount.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 192:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.iconfont[data-v-d1ccc4ca] {\n  font-family: iconfont;\n  font-size: 0.42667rem;\n  font-style: normal;\n}\n.image[data-v-d1ccc4ca] {\n  width: 1.86667rem;\n  height: 1.86667rem;\n  margin-right: 0.13333rem;\n  border-radius: 0.13333rem;\n}\n.c_name[data-v-d1ccc4ca] {\n  padding-left: 0.26667rem;\n}\n.c_money[data-v-d1ccc4ca] {\n  color: red;\n}\n.red[data-v-d1ccc4ca] {\n  color: red;\n}\n.c_real[data-v-d1ccc4ca] {\n  font-size: 0.32rem;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 193:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _utils = __webpack_require__(4);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _wxcCell = __webpack_require__(21);
-
-var _wxcCell2 = _interopRequireDefault(_wxcCell);
-
-var _utils3 = __webpack_require__(12);
-
-var _http = __webpack_require__(5);
-
-var _navbar = __webpack_require__(16);
-
-var _navbar2 = _interopRequireDefault(_navbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var navigator = weex.requireModule('navigator');
-
-exports.default = {
-  components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
-  data: function data() {
-    return {
-      discount: {
-        list: [],
-        pageNum: 1,
-        pageSize: 10
-      },
-      my: {
-        userLoginId: 0,
-        userToken: ''
-      },
-      noData: false,
-      scrollerStyle: {
-        width: '750px'
-      }
-    };
-  },
-  created: function created() {
-    var _this2 = this;
-
-    (0, _utils3.initIconfont)();
-    (0, _utils3.titlebar)('已发布优惠');
-    var pageHeight = _utils2.default.env.getPageHeight();
-    var screenHeight = _utils2.default.env.getScreenHeight();
-    this.scrollerStyle = {
-      height: pageHeight + 'px'
-    };
-    (0, _utils3.getStorageVal)('way:user').then(function (data) {
-      var user = JSON.parse(data);
-      _this2.my.userLoginId = user.userLoginId;
-      _this2.my.userToken = user.userToken;
-      _this2.getDiscountList();
-    }, function (error) {
-      _this2.my.userLoginId = 0;
-      navigator.pop();
-    });
-  },
-
-  methods: {
-    loadMore: function loadMore(event) {
-      this.getDiscountList();
-    },
-    discountScrollHandler: function discountScrollHandler(e) {
-      console.log(e.contentOffset.y);
-    },
-    getDiscountList: function getDiscountList() {
-      console.log('加载优惠信息列表');
-      var _this = this;
-      (0, _http.http)({
-        method: 'POST',
-        url: '/discount/user',
-        headers: {
-          token: this.my.userToken
-        },
-        body: {
-          userLoginId: this.my.userLoginId,
-          pageNum: this.discount.pageNum++,
-          pageSize: this.discount.pageSize
-        }
-      }).then(function (data) {
-        if (data.code != 200) {
-          return;
-        }
-
-        if (data.data.length !== 0) {
-          data.data.forEach(function (discount) {
-            _this.discount.list.push(discount);
-          });
-        }
-        _this.noData = _this.discount.list.length === 0;
-      });
-    }
-  }
-};
-
-/***/ }),
-
-/***/ 194:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: " weex-ct weex-div",
-    attrs: {
-      "weex-type": "div"
-    }
-  }, [_c('navbar', {
-    attrs: {
-      "title": "已发布优惠",
-      "backgroundColor": "#45b5f0",
-      "height": "88"
-    }
-  }), _vm._v(" "), (!_vm.noData) ? _c('scroller', {
-    style: (_vm._px2rem(_vm.scrollerStyle, 75)),
-    attrs: {
-      "loadmoreoffset": "10",
-      "data-evt-loadmore": "",
-      "data-evt-scroll": ""
-    },
-    nativeOn: {
-      "loadmore": _vm.loadMore,
-      "weex$scroll": function($event) {
-        $event.stopPropagation();
-        return _vm.discountScrollHandler($event)
-      }
-    }
-  }, _vm._l((_vm.discount.list), function(discountObj, i) {
-    return _c('div', {
-      key: i,
-      ref: 'cell' + i,
-      refInFor: true,
-      staticClass: "m_cell weex-ct weex-div",
-      attrs: {
-        "weex-type": "div"
-      }
-    }, [(i != 0) ? _c('div', {
-      staticClass: "m_cell_split weex-ct weex-div",
-      attrs: {
-        "weex-type": "div"
-      }
-    }) : _vm._e(), _vm._v(" "), _c('wxc-cell', {
-      attrs: {
-        "has-arrow": false,
-        "has-top-border": false,
-        "has-bottom-border": true,
-        "has-margin": false,
-        "auto-accessible": false
-      }
-    }, [_c('figure', {
-      directives: [{
-        name: "weex-resize",
-        rawName: "v-weex-resize",
-        value: ("cover"),
-        expression: "\"cover\""
-      }],
-      staticClass: "image weex-el weex-image",
-      attrs: {
-        "slot": "label",
-        "resize": "cover",
-        "src": discountObj.commodityImageUrl,
-        "data-img-src": discountObj.commodityImageUrl,
-        "weex-type": "image"
-      },
-      slot: "label"
-    }), _vm._v(" "), _c('div', {
-      staticClass: " weex-ct weex-div",
-      attrs: {
-        "slot": "title",
-        "weex-type": "div"
-      },
-      slot: "title"
-    }, [_c('div', {
-      staticClass: " weex-ct weex-div",
-      staticStyle: {
-        "-webkit-box-orient": "horizontal",
-        "-webkit-box-direction": "normal",
-        "-webkit-flex-direction": "row",
-        "flex-direction": "row"
-      },
-      attrs: {
-        "weex-type": "div"
-      }
-    }, [_c('p', {
-      staticClass: "c_name weex-el weex-text",
-      staticStyle: {
-        "width": "6.4rem"
-      },
-      attrs: {
-        "weex-type": "text"
-      }
-    }, [_vm._v(_vm._s(discountObj.commodityName))])]), _vm._v(" "), _c('div', {
-      staticClass: " weex-ct weex-div",
-      staticStyle: {
-        "-webkit-box-orient": "horizontal",
-        "-webkit-box-direction": "normal",
-        "-webkit-flex-direction": "row",
-        "flex-direction": "row"
-      },
-      attrs: {
-        "weex-type": "div"
-      }
-    }, [_c('p', {
-      staticClass: "c_name c_money weex-el weex-text",
-      staticStyle: {
-        "padding-top": "0.05333rem"
-      },
-      attrs: {
-        "weex-type": "text"
-      }
-    }, [_vm._v("¥" + _vm._s(discountObj.commodityPrice))])]), _vm._v(" "), _c('div', {
-      key: i,
-      staticClass: " weex-ct weex-div",
-      staticStyle: {
-        "-webkit-box-orient": "horizontal",
-        "-webkit-box-direction": "normal",
-        "-webkit-flex-direction": "row",
-        "flex-direction": "row",
-        "padding-left": "0.26667rem",
-        "margin-top": "0.13333rem"
-      },
-      attrs: {
-        "index": i,
-        "weex-type": "div"
-      }
-    }, [_c('p', {
-      staticClass: "iconfont red weex-el weex-text",
-      staticStyle: {
-        "font-size": "0.32rem"
-      },
-      attrs: {
-        "weex-type": "text"
-      }
-    }, [_vm._v("")]), _vm._v(" "), _c('p', {
-      staticClass: "c_real weex-el weex-text",
-      staticStyle: {
-        "color": "#ccc",
-        "width": "6.66667rem"
-      },
-      attrs: {
-        "weex-type": "text"
-      }
-    }, [_vm._v(_vm._s(discountObj.shopPosition))])])])])], 1)
-  })) : _c('div', {
-    staticClass: "m_cell weex-ct weex-div",
-    attrs: {
-      "weex-type": "div"
-    }
-  }, [_c('p', {
-    staticClass: "iconfont weex-el weex-text",
-    staticStyle: {
-      "font-size": "1.70667rem",
-      "margin-top": "3.09333rem",
-      "text-align": "center",
-      "color": "#cccccc"
-    },
-    attrs: {
-      "weex-type": "text"
-    }
-  }, [_vm._v("")]), _vm._v(" "), _c('p', {
-    staticClass: " weex-el weex-text",
-    staticStyle: {
-      "font-size": "0.42667rem",
-      "margin-top": "0.26667rem",
-      "text-align": "center",
-      "color": "#cccccc"
-    },
-    attrs: {
-      "weex-type": "text"
-    }
-  }, [_vm._v(" 未发布优惠信息 ")])])], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-d1ccc4ca", module.exports)
-  }
-}
 
 /***/ }),
 
@@ -12689,6 +12272,101 @@ if (false) {
 
 /***/ }),
 
+/***/ 207:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(6);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _weexVueRender = __webpack_require__(10);
+
+var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_weexVueRender2.default.init(_vue2.default);
+
+var App = __webpack_require__(208);
+new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
+
+/***/ }),
+
+/***/ 208:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(209)
+}
+var Component = __webpack_require__(3)(
+  /* script */
+  __webpack_require__(211),
+  /* template */
+  __webpack_require__(212),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  "data-v-d1ccc4ca",
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Volumes/code/way/way-app-ios/src/views/user/myDiscount.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] myDiscount.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d1ccc4ca", Component.options)
+  } else {
+    hotAPI.reload("data-v-d1ccc4ca", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 209:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(210);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("a6243680", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d1ccc4ca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./myDiscount.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d1ccc4ca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./myDiscount.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
 /***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12709,6 +12387,345 @@ Object.defineProperty(exports, 'default', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ 210:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.iconfont[data-v-d1ccc4ca] {\n  font-family: iconfont;\n  font-size: 0.42667rem;\n  font-style: normal;\n}\n.image[data-v-d1ccc4ca] {\n  width: 1.86667rem;\n  height: 1.86667rem;\n  margin-right: 0.13333rem;\n  border-radius: 0.13333rem;\n}\n.c_name[data-v-d1ccc4ca] {\n  padding-left: 0.26667rem;\n}\n.c_money[data-v-d1ccc4ca] {\n  color: red;\n}\n.red[data-v-d1ccc4ca] {\n  color: red;\n}\n.c_real[data-v-d1ccc4ca] {\n  font-size: 0.32rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 211:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _utils = __webpack_require__(4);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _wxcCell = __webpack_require__(21);
+
+var _wxcCell2 = _interopRequireDefault(_wxcCell);
+
+var _utils3 = __webpack_require__(12);
+
+var _http = __webpack_require__(5);
+
+var _navbar = __webpack_require__(16);
+
+var _navbar2 = _interopRequireDefault(_navbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var navigator = weex.requireModule('navigator');
+
+exports.default = {
+  components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
+  data: function data() {
+    return {
+      discount: {
+        list: [],
+        pageNum: 1,
+        pageSize: 10
+      },
+      my: {
+        userLoginId: 0,
+        userToken: ''
+      },
+      noData: false,
+      scrollerStyle: {
+        width: '750px'
+      }
+    };
+  },
+  created: function created() {
+    var _this2 = this;
+
+    (0, _utils3.initIconfont)();
+    (0, _utils3.titlebar)('已发布优惠');
+    var pageHeight = _utils2.default.env.getPageHeight();
+    var screenHeight = _utils2.default.env.getScreenHeight();
+    this.scrollerStyle = {
+      height: pageHeight + 'px'
+    };
+    (0, _utils3.getStorageVal)('way:user').then(function (data) {
+      var user = JSON.parse(data);
+      _this2.my.userLoginId = user.userLoginId;
+      _this2.my.userToken = user.userToken;
+      _this2.getDiscountList();
+    }, function (error) {
+      _this2.my.userLoginId = 0;
+      navigator.pop();
+    });
+  },
+
+  methods: {
+    loadMore: function loadMore(event) {
+      this.getDiscountList();
+    },
+    discountScrollHandler: function discountScrollHandler(e) {
+      console.log(e.contentOffset.y);
+    },
+    getDiscountList: function getDiscountList() {
+      console.log('加载优惠信息列表');
+      var _this = this;
+      (0, _http.http)({
+        method: 'POST',
+        url: '/discount/user',
+        headers: {
+          token: this.my.userToken
+        },
+        body: {
+          userLoginId: this.my.userLoginId,
+          pageNum: this.discount.pageNum++,
+          pageSize: this.discount.pageSize
+        }
+      }).then(function (data) {
+        if (data.code != 200) {
+          return;
+        }
+
+        if (data.data.length !== 0) {
+          data.data.forEach(function (discount) {
+            _this.discount.list.push(discount);
+          });
+        }
+        _this.noData = _this.discount.list.length === 0;
+      });
+    }
+  }
+};
+
+/***/ }),
+
+/***/ 212:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: " weex-ct weex-div",
+    attrs: {
+      "weex-type": "div"
+    }
+  }, [_c('navbar', {
+    attrs: {
+      "title": "已发布优惠",
+      "backgroundColor": "#45b5f0",
+      "height": "88"
+    }
+  }), _vm._v(" "), (!_vm.noData) ? _c('scroller', {
+    style: (_vm._px2rem(_vm.scrollerStyle, 75)),
+    attrs: {
+      "loadmoreoffset": "10",
+      "data-evt-loadmore": "",
+      "data-evt-scroll": ""
+    },
+    nativeOn: {
+      "loadmore": _vm.loadMore,
+      "weex$scroll": function($event) {
+        $event.stopPropagation();
+        return _vm.discountScrollHandler($event)
+      }
+    }
+  }, _vm._l((_vm.discount.list), function(discountObj, i) {
+    return _c('div', {
+      key: i,
+      ref: 'cell' + i,
+      refInFor: true,
+      staticClass: "m_cell weex-ct weex-div",
+      attrs: {
+        "weex-type": "div"
+      }
+    }, [(i != 0) ? _c('div', {
+      staticClass: "m_cell_split weex-ct weex-div",
+      attrs: {
+        "weex-type": "div"
+      }
+    }) : _vm._e(), _vm._v(" "), _c('wxc-cell', {
+      attrs: {
+        "has-arrow": false,
+        "has-top-border": false,
+        "has-bottom-border": true,
+        "has-margin": false,
+        "auto-accessible": false
+      }
+    }, [_c('figure', {
+      directives: [{
+        name: "weex-resize",
+        rawName: "v-weex-resize",
+        value: ("cover"),
+        expression: "\"cover\""
+      }],
+      staticClass: "image weex-el weex-image",
+      attrs: {
+        "slot": "label",
+        "resize": "cover",
+        "src": discountObj.commodityImageUrl,
+        "data-img-src": discountObj.commodityImageUrl,
+        "weex-type": "image"
+      },
+      slot: "label"
+    }), _vm._v(" "), _c('div', {
+      staticClass: " weex-ct weex-div",
+      attrs: {
+        "slot": "title",
+        "weex-type": "div"
+      },
+      slot: "title"
+    }, [_c('div', {
+      staticClass: " weex-ct weex-div",
+      staticStyle: {
+        "-webkit-box-orient": "horizontal",
+        "-webkit-box-direction": "normal",
+        "-webkit-flex-direction": "row",
+        "flex-direction": "row"
+      },
+      attrs: {
+        "weex-type": "div"
+      }
+    }, [_c('p', {
+      staticClass: "c_name weex-el weex-text",
+      staticStyle: {
+        "width": "6.4rem"
+      },
+      attrs: {
+        "weex-type": "text"
+      }
+    }, [_vm._v(_vm._s(discountObj.commodityName))])]), _vm._v(" "), _c('div', {
+      staticClass: " weex-ct weex-div",
+      staticStyle: {
+        "-webkit-box-orient": "horizontal",
+        "-webkit-box-direction": "normal",
+        "-webkit-flex-direction": "row",
+        "flex-direction": "row"
+      },
+      attrs: {
+        "weex-type": "div"
+      }
+    }, [_c('p', {
+      staticClass: "c_name c_money weex-el weex-text",
+      staticStyle: {
+        "padding-top": "0.05333rem"
+      },
+      attrs: {
+        "weex-type": "text"
+      }
+    }, [_vm._v("¥" + _vm._s(discountObj.commodityPrice))])]), _vm._v(" "), _c('div', {
+      key: i,
+      staticClass: " weex-ct weex-div",
+      staticStyle: {
+        "-webkit-box-orient": "horizontal",
+        "-webkit-box-direction": "normal",
+        "-webkit-flex-direction": "row",
+        "flex-direction": "row",
+        "padding-left": "0.26667rem",
+        "margin-top": "0.13333rem"
+      },
+      attrs: {
+        "index": i,
+        "weex-type": "div"
+      }
+    }, [_c('p', {
+      staticClass: "iconfont red weex-el weex-text",
+      staticStyle: {
+        "font-size": "0.32rem"
+      },
+      attrs: {
+        "weex-type": "text"
+      }
+    }, [_vm._v("")]), _vm._v(" "), _c('p', {
+      staticClass: "c_real weex-el weex-text",
+      staticStyle: {
+        "color": "#ccc",
+        "width": "6.66667rem"
+      },
+      attrs: {
+        "weex-type": "text"
+      }
+    }, [_vm._v(_vm._s(discountObj.shopPosition))])])])])], 1)
+  })) : _c('div', {
+    staticClass: "m_cell weex-ct weex-div",
+    attrs: {
+      "weex-type": "div"
+    }
+  }, [_c('p', {
+    staticClass: "iconfont weex-el weex-text",
+    staticStyle: {
+      "font-size": "1.70667rem",
+      "margin-top": "3.09333rem",
+      "text-align": "center",
+      "color": "#cccccc"
+    },
+    attrs: {
+      "weex-type": "text"
+    }
+  }, [_vm._v("")]), _vm._v(" "), _c('p', {
+    staticClass: " weex-el weex-text",
+    staticStyle: {
+      "font-size": "0.42667rem",
+      "margin-top": "0.26667rem",
+      "text-align": "center",
+      "color": "#cccccc"
+    },
+    attrs: {
+      "weex-type": "text"
+    }
+  }, [_vm._v(" 未发布优惠信息 ")])])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-d1ccc4ca", module.exports)
+  }
+}
 
 /***/ }),
 

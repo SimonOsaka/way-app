@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 87);
+/******/ 	return __webpack_require__(__webpack_require__.s = 98);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -11261,19 +11261,19 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 40:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(41)
+  __webpack_require__(37)
 }
 var Component = __webpack_require__(3)(
   /* script */
-  __webpack_require__(43),
+  __webpack_require__(39),
   /* template */
-  __webpack_require__(44),
+  __webpack_require__(40),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -11306,13 +11306,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 41:
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(42);
+var content = __webpack_require__(38);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -11333,7 +11333,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 42:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -11341,14 +11341,14 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.category[data-v-da633efc] {\n  margin-top: 0.26667rem;\n  padding-left: 0.32rem;\n  width: 10rem;\n  height: 0.90667rem;\n  background-color: #f2f3f4;\n  justify-content: center;\n}\n.category-text[data-v-da633efc] {\n  color: #000000;\n  font-weight: 600;\n  font-size: 0.37333rem;\n}\n", ""]);
+exports.push([module.i, "\n.category[data-v-da633efc] {\n  margin-top: 0.26667rem;\n  width: 10rem;\n  height: 0.90667rem;\n  background-color: #f2f3f4;\n  flex-direction: row;\n}\n.category-text[data-v-da633efc] {\n  padding-top: 0.26667rem;\n  padding-left: 0.32rem;\n  color: #000000;\n  font-weight: 600;\n  font-size: 0.37333rem;\n  width: 5rem;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 43:
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11379,16 +11379,23 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
 
 exports.default = {
   props: {
-    title: String
+    title: {
+      type: String,
+      default: ''
+    }
   }
 };
 
 /***/ }),
 
-/***/ 44:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11402,7 +11409,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "weex-type": "text"
     }
-  }, [_vm._v(_vm._s(_vm.title))])])
+  }, [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _vm._t("right", null, {}), _vm._v(" "), _vm._t("default", null, {})], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -19719,29 +19726,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ 87:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(6);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _weexVueRender = __webpack_require__(10);
-
-var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_weexVueRender2.default.init(_vue2.default);
-
-var App = __webpack_require__(40);
-new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
-
-/***/ }),
-
 /***/ 9:
 /***/ (function(module, exports) {
 
@@ -19930,6 +19914,29 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(6);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _weexVueRender = __webpack_require__(10);
+
+var _weexVueRender2 = _interopRequireDefault(_weexVueRender);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_weexVueRender2.default.init(_vue2.default);
+
+var App = __webpack_require__(36);
+new _vue2.default(_vue2.default.util.extend({ el: '#root' }, App));
 
 /***/ })
 

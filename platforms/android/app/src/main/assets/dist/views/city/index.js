@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 81);
+/******/ 	return __webpack_require__(__webpack_require__.s = 103);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -547,6 +547,7 @@ exports.whichPlatform = whichPlatform;
 exports.getStorageValue = getStorageValue;
 exports.setStorageVal = setStorageVal;
 exports.getStorageVal = getStorageVal;
+exports.removeStorage = removeStorage;
 exports.setStorageValue = setStorageValue;
 exports.postMessage = postMessage;
 exports.receiveMessage = receiveMessage;
@@ -667,6 +668,22 @@ function getStorageVal(key) {
     var storage = weex.requireModule('storage');
     var storageVal = '';
     storage.getItem(key, function (e) {
+      console.log('getStorageVal', e);
+      if (e.result == 'success') {
+        storageVal = e.data;
+        resolve(storageVal);
+      } else {
+        reject(e);
+      }
+    });
+  });
+}
+
+function removeStorage(key) {
+  return new Promise(function (resolve, reject) {
+    var storage = weex.requireModule('storage');
+    var storageVal = '';
+    storage.removeItem(key, function (e) {
       console.log('getStorageVal', e);
       if (e.result == 'success') {
         storageVal = e.data;
@@ -1938,89 +1955,7 @@ module.exports.render._withStripped = true
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "category": {
-    "marginTop": "20",
-    "paddingLeft": "24",
-    "width": "750",
-    "height": "68",
-    "backgroundColor": "#f2f3f4",
-    "justifyContent": "center"
-  },
-  "category-text": {
-    "color": "#000000",
-    "fontWeight": "600",
-    "fontSize": "28"
-  }
-}
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  props: {
-    title: String
-  }
-};
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["category"]
-  }, [_c('text', {
-    staticClass: ["category-text"]
-  }, [_vm._v(_vm._s(_vm.title))])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2103,6 +2038,97 @@ function deleteUserAddress(params, headers) {
 }
 
 /***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "category": {
+    "marginTop": "20",
+    "width": "750",
+    "height": "68",
+    "backgroundColor": "#f2f3f4",
+    "flexDirection": "row"
+  },
+  "category-text": {
+    "paddingTop": "20",
+    "paddingLeft": "24",
+    "color": "#000000",
+    "fontWeight": "600",
+    "fontSize": "28",
+    "width": "375"
+  }
+}
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  props: {
+    title: {
+      type: String,
+      default: ''
+    }
+  }
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["category"]
+  }, [_c('text', {
+    staticClass: ["category-text"]
+  }, [_vm._v(_vm._s(_vm.title))]), _vm._t("right"), _vm._t("default")], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2110,14 +2136,14 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(26)
+__vue_styles__.push(__webpack_require__(23)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(27)
+__vue_exports__ = __webpack_require__(24)
 
 /* template */
-var __vue_template__ = __webpack_require__(28)
+var __vue_template__ = __webpack_require__(25)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2834,21 +2860,43 @@ module.exports.render._withStripped = true
 /* 78 */,
 /* 79 */,
 /* 80 */,
-/* 81 */
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(82)
+__vue_styles__.push(__webpack_require__(104)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(83)
+__vue_exports__ = __webpack_require__(105)
 
 /* template */
-var __vue_template__ = __webpack_require__(84)
+var __vue_template__ = __webpack_require__(106)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -2880,7 +2928,7 @@ new Vue(module.exports)
 
 
 /***/ }),
-/* 82 */
+/* 104 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2890,7 +2938,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 83 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2920,7 +2968,7 @@ var _utils3 = __webpack_require__(2);
 
 var _http = __webpack_require__(1);
 
-var _user = __webpack_require__(35);
+var _user = __webpack_require__(22);
 
 var _category = __webpack_require__(36);
 
@@ -2928,6 +2976,12 @@ var _category2 = _interopRequireDefault(_category);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3063,6 +3117,25 @@ exports.default = {
       }, function (error) {
         console.error('failure', error);
       });
+    },
+    toCreateUserAddressClicked: function toCreateUserAddressClicked() {
+      navigator.push({
+        url: (0, _utils3.getEntryUrl)('views/address/edit'),
+        animated: 'true'
+      });
+    },
+    toMyAddressClicked: function toMyAddressClicked() {
+      (0, _utils3.getStorageVal)('way:user').then(function (data) {
+        navigator.push({
+          url: (0, _utils3.getEntryUrl)('views/address/list'),
+          animated: 'true'
+        });
+      }, function (error) {
+        navigator.push({
+          url: (0, _utils3.getEntryUrl)('views/user/login'),
+          animated: 'true'
+        });
+      });
     }
   },
   created: function created() {
@@ -3079,13 +3152,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 84 */
+/* 106 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('navbar', {
     attrs: {
-      "title": "选择城市",
+      "title": "选择地址",
       "backgroundColor": "#45b5f0",
       "height": "88"
     }
@@ -3112,7 +3185,36 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "hasArrow": false,
       "hasTopBorder": true
     }
-  })], 1) : _vm._e(), (_vm.searchList.length > 0) ? _c('div', [_c('category', {
+  })], 1) : _vm._e(), _c('div', [_c('category', {
+    attrs: {
+      "title": "我的地址"
+    }
+  }, [_c('text', {
+    staticStyle: {
+      textAlign: "right",
+      width: "375px",
+      paddingTop: "20px",
+      paddingRight: "24px",
+      fontWeight: "600",
+      fontSize: "28px",
+      color: "#38f"
+    },
+    attrs: {
+      "slot": "right"
+    },
+    on: {
+      "click": _vm.toMyAddressClicked
+    },
+    slot: "right"
+  }, [_vm._v("操作")])]), _c('wxc-cell', {
+    attrs: {
+      "title": "新增地址",
+      "hasArrow": true
+    },
+    on: {
+      "wxcCellClicked": _vm.toCreateUserAddressClicked
+    }
+  })], 1), (_vm.searchList.length > 0) ? _c('div', [_c('category', {
     attrs: {
       "title": "搜索地址"
     }
