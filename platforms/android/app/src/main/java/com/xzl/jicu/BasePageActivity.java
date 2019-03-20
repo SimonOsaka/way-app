@@ -136,13 +136,13 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
     AMapLocationListener locationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation location) {
-//            if (null != location) {
+            if (null != location) {
 //
 //                StringBuffer sb = new StringBuffer();
 //                //errCode等于0代表定位成功，其他的为定位失败，具体的可以参照官网定位错误码说明
-//                if (location.getErrorCode() == 0) {
-//                    SpUtils.apply("longitude", String.valueOf(location.getLongitude()));
-//                    SpUtils.apply("latitude", String.valueOf(location.getLatitude()));
+                if (location.getErrorCode() == 0) {
+                    SpUtils.apply("longitude", String.valueOf(location.getLongitude()));
+                    SpUtils.apply("latitude", String.valueOf(location.getLatitude()));
 //
 //                    sb.append("定位成功" + "\n");
 //                    sb.append("定位类型: " + location.getLocationType() + "\n");
@@ -171,7 +171,7 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
 //                    sb.append("错误码:" + location.getErrorCode() + "\n");
 //                    sb.append("错误信息:" + location.getErrorInfo() + "\n");
 //                    sb.append("错误描述:" + location.getLocationDetail() + "\n");
-//                }
+                }
 //                sb.append("***定位质量报告***").append("\n");
 //                sb.append("* WIFI开关：").append(location.getLocationQualityReport().isWifiAble() ? "开启" : "关闭").append("\n");
 //                sb.append("* GPS状态：").append(getGPSStatusString(location.getLocationQualityReport().getGPSStatus())).append("\n");
@@ -185,7 +185,7 @@ public class BasePageActivity extends AbsWeexActivity implements NetBroadcastRec
 //                //解析定位结果，
 //                String result = sb.toString();
 //                Log.d(TAG, "经纬度详情：" + result);
-//            }
+            }
         }
     };
 

@@ -13,7 +13,7 @@
 
 <script>
 import { Utils, WxcButton } from "weex-ui";
-import { setPageTitle, setStorageVal } from "./tools/utils.js";
+import { setStorageVal, postMessage } from "./tools/utils.js";
 import { guide1, guide2, guide3 } from "./tools/guide.js";
 const navigator = weex.requireModule("navigator");
 

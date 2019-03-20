@@ -34,7 +34,7 @@ public final class SpUtils {
     public static void apply(String key, String String) {
         getEditor().putString(key, String).apply();
 
-        Log.d("print sp",getAll().size() +" : "+ getAll());
+//        Log.d("print sp",getAll().size() +" : "+ getAll());
     }
 
     public static String get(String key, String defaultString) {

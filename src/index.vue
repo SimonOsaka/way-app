@@ -25,11 +25,11 @@
           </wxc-cell>
           <wxc-cell v-if="commodityObj.moreList.length > 0" :has-arrow="false" :has-top-border="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false">
             <text slot="title" class="iconfont" style="text-align: center;" v-if="commodityObj.isMore == true" @click="moreCommodityClicked(commodityObj.shopIndex)"> 查看更多{{commodityObj.moreList.length}}个 &#xe661 </text>
-            <text slot="title" class="iconfont" style="text-align: center;" v-else @click="unMoreCommodityClicked(commodityObj.shopIndex)"> 收起 &#xe6de </text>
+            <text slot="title" class="iconfont" style="text-align: center;" v-else @click="unMoreCommodityClicked(commodityObj.shopIndex)"> 收起 &#xe6de; </text>
           </wxc-cell>
         </div>
       </scroller>
-      <div class="m_cell" v-else>
+      <div class="m_cell flex_column_center" v-else>
         <text v-if="main.needLocation == false" class="iconfont" style="font-size:128px; margin-top: 232px; text-align: center; color: #cccccc;">&#xe66f;</text>
         <text v-if="main.needLocation == true" class="iconfont" style="font-size:128px; margin-top: 232px; text-align: center; color: #cccccc;">&#xe651;</text>
         <text style="font-size:32px; margin-top: 20px; text-align: center; color: #cccccc;">{{main.noDataTip}}</text>
@@ -134,8 +134,6 @@ import {
   getEntryUrl,
   postMessage,
   receiveMessage,
-  setStorageValue,
-  getStorageValue,
   initIconfont,
   setPageTitle,
   modalDebug,
@@ -146,6 +144,7 @@ import {
 import tabbarConfig from './entry/tabbar/config.js'
 import { http } from './tools/http.js'
 import { syncUserDevice } from './api/user.js'
+import { coordinateConvert, regeo } from './api/amap.js'
 const navigator = weex.requireModule('navigator')
 const storage = weex.requireModule('storage')
 const modal = weex.requireModule('modal')
@@ -247,8 +246,6 @@ export default {
   created() {
     titlebar('首页')
 
-    this.initMainTab()
-
     receiveMessage('m:way:city', data => {
       console.log('接收城市设置完成消息, m:way:city')
       //重新加载main
@@ -320,6 +317,14 @@ export default {
       this.addDiscountStyle,
       this.discountTopStyle
     )
+
+    getStorageVal('way:first').then((data) => {
+      //非首次进入
+      this.initMainTab()
+    }, (error) => {
+      //首次进入，进行自动定位
+      this.firstAutoLocation()
+    })
   },
   methods: {
     initMainTab() {
@@ -843,6 +848,60 @@ export default {
         console.log('首页-syncUserDevice', syncParams)
         syncUserDevice(syncParams)
       })
+    },
+    firstAutoLocation() {
+      let gpsLocation = ''
+      this.city = '定位中...'
+      const isIOS = weex.config.env.platform.toLowerCase() === 'ios'
+      if (isIOS) {
+        dictionary.getDict('longitude', function(resp) {
+          console.log('获取iOS native经度', resp)
+        })
+        dictionary.getDict('latitude', function(resp) {
+          console.log('获取iOS native纬度', resp)
+        })
+      } else {
+        let lng = dictionary.getDict('longitude')
+        let lat = dictionary.getDict('latitude')
+        console.log('获取android native经纬度', lng, lat)
+        if (lng && lng > 0 && lat && lat > 0) {
+          gpsLocation = [lng, ',', lat].join('')
+        } else {
+          //未打开定位
+          this.initMainTab()
+          return
+        }
+      }
+
+      coordinateConvert({ locationList: [gpsLocation] }).then((data) => {
+        let locations = data.data
+        if (locations && locations.length === 1) {
+          locations.forEach(element => {
+            let amapLocation = [element.longitude, ',', element.latitude].join('')
+            regeo({location: amapLocation, extensions: 'all'}).then((data) => {
+              if (data.code !== 200) {
+                return
+              }
+              let regeoData = data.data
+              let regeoName = regeoData.neighborhoodName
+              let regeoLocation = regeoData.neighborhoodLocation
+              let regeoCityCode = regeoData.cityCode
+              let cityData = {
+                name: regeoName,
+                lng: regeoLocation.split(',')[0],
+                lat: regeoLocation.split(',')[1],
+                cityCode: regeoCityCode
+              }
+              this.city = regeoName
+              console.log('首页自动定位结果', JSON.stringify(cityData))
+              setStorageVal('way:city', JSON.stringify(cityData)).then(data => {
+                console.log('设置cityData')
+                postMessage('m:way:city')
+              })
+            })
+          });
+        }
+      })
     }
   }
 }
@@ -879,6 +938,11 @@ export default {
 .m_cell {
   padding-bottom: 2px;
   margin-bottom: 6px;
+}
+.flex_column_center {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .m_cell_split {
   height: 10px;

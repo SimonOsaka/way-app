@@ -3,14 +3,17 @@
     <navbar title="我的地址" backgroundColor="#45b5f0" height="88"></navbar>
     <scroller class="scroller" :style="scrollerStyle">
       <div>
+        <wxc-cell title="新增地址" :has-arrow="true" @wxcCellClicked="toCreateUserAddressClicked"></wxc-cell>
+      </div>
+      <div>
         <wxc-cell value="item.addressTagName"  v-for="(item, i) in userAddressList" :key="i" :has-arrow="false">
           <div slot="title" style="flex-direction: row;">
-            <text>{{item.addressName}}</text>
-            <wxc-tag v-if="item.addressTagName" type="solid" tag-color="#38f" font-color="#ffffff" style="margin-left: 8px;" :value="item.addressTagName"></wxc-tag>
+            <text style="color: #333333; font-size: 30px; line-height: 40px;">{{item.addressName}}</text>
+            <wxc-tag v-if="item.addressTagName" type="solid" tag-color="#38f" font-color="#ffffff" style="margin-left: 8px; margin-top: 8px;" :value="item.addressTagName"></wxc-tag>
           </div>
           <div slot="value" style="flex-direction: row;">
-            <text class="iconfont" style="font-size: 24px;" @click="toUpdateUserAddressClicked(i)">&#xe7e9;</text>
-            <text class="iconfont" style="font-size: 24px; margin-left: 10px;" @click="deleteUserAddressClicked(i)">&#xe80b;</text>
+            <text class="iconfont" style="font-size: 30px;" @click="toUpdateUserAddressClicked(i)">&#xe7e9;</text>
+            <text class="iconfont" style="font-size: 30px; margin-left: 20px;" @click="deleteUserAddressClicked(i)">&#xe80b;</text>
           </div>
         </wxc-cell>
       </div>
@@ -31,14 +34,11 @@ import {
   titlebar,
   initIconfont
 } from '../../tools/utils.js'
-import { http } from '../../tools/http.js'
 import { deleteUserAddress, queryUserAddressList } from '../../api/user.js'
-import category from '../../components/category.vue'
 const navigator = weex.requireModule('navigator')
-const dictionary = weex.requireModule('dictionary')
 
 export default {
-  components: { WxcCell, category, navbar, WxcTag },
+  components: { WxcCell, navbar, WxcTag },
   data: () => ({
     userAddressList: [],
     tagMap: {
@@ -62,6 +62,9 @@ export default {
     })
     
     this.initData()
+  },
+  beforeDestroy() {
+    postMessage('user:address:city:part', 'refresh')
   },
   methods: {
     initData() {
@@ -100,7 +103,17 @@ export default {
       })
     },
     deleteUserAddressClicked(i) {
-      this.requestDeleteUserAddress(i)
+      var modal = weex.requireModule('modal')
+      modal.confirm({
+          message: '删除地址吗？',
+          okTitle: '删除',
+          cancelTitle: '取消',
+          duration: 0.3
+      }, (value) => {
+          if (value === '删除') {
+            this.requestDeleteUserAddress(i)
+          }
+      })
     },
     requestDeleteUserAddress(i) {
       getStorageVal('way:user').then((data) => {
@@ -118,7 +131,13 @@ export default {
           }
         })
       })
-    }
+    },
+    toCreateUserAddressClicked() {
+      navigator.push({
+        url: getEntryUrl('views/address/edit'),
+        animated: 'true'
+      })
+    },
   }
 }
 </script>

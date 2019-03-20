@@ -38,6 +38,7 @@ import {
   getEntryUrl,
   setStorageVal,
   titlebar,
+  receiveMessage,
   removeStorage
 } from "../../tools/utils.js";
 import { createUserAddress, updateUserAddress } from '../../api/user.js'
@@ -96,6 +97,16 @@ export default {
     const pageHeight = Utils.env.getPageHeight();
     const screenHeight = Utils.env.getScreenHeight();
     this.scrollerStyle = { height: pageHeight + "px" };
+
+    //接收消息，来源：queryForAddress.vue
+    receiveMessage('user:address:city', (data) => {
+      if (data.status === 0 && data.val) {
+        let city = JSON.parse(data.val)
+        this.params.addressName = city.addressTitle
+        this.params.addressLongitude = city.addressLongitude
+        this.params.addressLatitude = city.addressLatitude
+      }
+    })
 
     getStorageVal('user:address:edit').then((data) => {
       console.log('修改地址', data)
@@ -182,6 +193,10 @@ export default {
     },
     toSelectCityAddressClicked() {
       console.log('跳转到选择城市地址')
+      navigator.push({
+        url: getEntryUrl('views/city/queryForAddress'),
+        animated: 'true'
+      })
     }
   }
 };
