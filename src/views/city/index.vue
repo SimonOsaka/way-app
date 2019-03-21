@@ -5,12 +5,12 @@
       <wxc-searchbar ref="wxc-searchbar" placeholder="请输入您所在的位置（例如：xx市xx区xx街）" :always-show-cancel="alwaysShowCancel" :return-key-type="returnKeyType" @wxcSearchbarInputReturned="wxcSearchbarInputOnInput"></wxc-searchbar>
       <div v-if="currentAddress != ''">
         <category title="定位地址"></category>
-        <wxc-cell :has-arrow="false" :has-top-border="true" @wxcCellClicked="autoLocationCellClicked">
-          <div slot="title">
+        <wxc-cell :has-arrow="false" :has-top-border="true">
+          <div slot="title" @click="autoLocationCellClicked">
             <text class="iconfont" style="color: #333333; font-size: 30px; line-height: 40px;">&#xe650; {{currentAddress}}</text>
           </div>
-          <div slot="value">
-            <text class="iconfont" @click="reAutoLocation">&#xe6a4; 重新定位</text>
+          <div slot="value" @click="reAutoLocation">
+            <text class="iconfont">&#xe6a4; 重新定位</text>
           </div>
         </wxc-cell>
       </div>
@@ -83,6 +83,12 @@ export default {
     this.reAutoLocation()
 
     receiveMessage('user:address:city:part', (data) => {
+      if (data.status === 0) {
+        this.requestUserAddressList()
+      }
+    })
+
+    receiveMessage('m:way:login', (data) => {
       if (data.status === 0) {
         this.requestUserAddressList()
       }
@@ -177,21 +183,8 @@ export default {
           this.city.lng = loc[0]
           this.city.lat = loc[1]
           this.city.cityCode = cityCode
-          getStorageVal('way:user').then(
-            data => {
-              let user = JSON.parse(data)
-              updateUserProfileAddress({
-                userLoginId: user.userLoginId,
-                addressName: this.city.name,
-                addressLongitude: this.city.lng,
-                addressLatitude: this.city.lat
-              }, {
-                token: user.userToken
-              })
-            },
-            error => {
-            }
-          )
+          
+          this.requestUpdateUserProfileAddress()
 
           this.storeLocalWayCity()
         },
@@ -248,6 +241,7 @@ export default {
       })
     },
     autoLocationCellClicked() {
+      this.requestUpdateUserProfileAddress()
       this.storeLocalWayCity()
     },
     reAutoLocation() {
@@ -270,6 +264,23 @@ export default {
           this.currentAddress = ''
         }
       }
+    },
+    requestUpdateUserProfileAddress() {
+      getStorageVal('way:user').then(
+        data => {
+          let user = JSON.parse(data)
+          updateUserProfileAddress({
+            userLoginId: user.userLoginId,
+            addressName: this.city.name,
+            addressLongitude: this.city.lng,
+            addressLatitude: this.city.lat
+          }, {
+            token: user.userToken
+          })
+        },
+        error => {
+        }
+      )
     }
   }
 }

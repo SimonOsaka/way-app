@@ -3,9 +3,9 @@
     <navbar :title="navbarTitle" backgroundColor="#45b5f0" height="88"></navbar>
     <scroller class="scroller" :style="scrollerStyle">
       <div>
-        <wxc-cell label="地址" :has-arrow="true" @wxcCellClicked="toSelectCityAddressClicked">
+        <wxc-cell label="地址" :has-arrow="true">
           <div slot="title">
-            <input ref="widgetUserAddressInput" type="text" placeholder="固定的地址" class="input" :value="params.addressName" @focus="userAddressOnfocus"/>
+            <input ref="widgetUserAddressInput" type="text" placeholder="固定的地址" autofocus="false" class="input" :value="params.addressName" @focus="userAddressOnfocus"/>
           </div>
         </wxc-cell>
       </div>

@@ -19,10 +19,8 @@ export function http(OPTIONS = {}) {
   // 正式环境域名
   let apiRoot = 'http://api.jicu.vip' //'http://your.prod.domain.com'
   const isProduction = process.env.NODE_ENV === 'production'
-  console.log('环境显示', isProduction, platform)
-  if (!isProduction && platform === 'android') {
-    apiRoot = 'http://10.0.2.2'
-  }
+  console.log('环境显示', isProduction, platform, process.env.NODE_ENV)
+  apiRoot = (platform === 'android' && !isProduction) ? 'http://10.0.2.2' : apiRoot
 
   let options = Object.assign(DEFAULT_OPTION, OPTIONS)
   options.url = apiRoot + options.url

@@ -17,7 +17,7 @@
     "dev": "webpack --env.NODE_ENV=common --progress --watch",
     "serve": "webpack-dev-server --env.NODE_ENV=development --progress",
     "copy:ios": "npm run build:prod && rm -rf ./platforms/ios/bundlejs && sed -i '' 's/isAlipay/isAp/g' `grep isAlipay -rl ./dist` && cp -r ./dist/ ./platforms/ios/bundlejs/",
-    "android:prod": "npm run build:prod && rm -rf ./platforms/android/app/src/main/assets/dist && rm -rf -r ./dist/*.web.js && cp -r ./dist/ ./platforms/android/app/src/main/assets/dist/",
+    "android:prod": "npm run build:prod && rm -rf ./platforms/android/app/src/main/assets/dist && cp -r ./dist/ ./platforms/android/app/src/main/assets/dist/",
     "android:dev": "npm run build && rm -rf ./platforms/android/app/src/main/assets/dist && cp -r ./dist/ ./platforms/android/app/src/main/assets/dist/",
     "ios": "weex run ios",
     "web": "npm run serve",

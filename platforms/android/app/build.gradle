@@ -44,7 +44,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all {
             //println "输出apk地址:" + outputFile.parentFile.absolutePath + java.io.File.separator
-            def fileName = "jicu_${variant.productFlavors[0].name}-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
+            def fileName = "jicu_${variant.productFlavors[0].name}-${defaultConfig.versionName}.${defaultConfig.versionCode}.${releaseTime()}.apk"
             println "输出apk的名字:" + outputFileName
             outputFileName = fileName
         }

@@ -64,7 +64,7 @@
           </wxc-cell>
         </div>
       </scroller>
-      <div class="m_cell" v-else>
+      <div class="m_cell flex_column_center" v-else>
         <text class="iconfont" style="font-size:128px; margin-top: 232px; text-align: center; color: #cccccc;">&#xe66f;</text>
         <text style="font-size:32px; margin-top: 20px; text-align: center; color: #cccccc;"> 没有查询到结果 </text>
       </div>

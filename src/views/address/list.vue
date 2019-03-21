@@ -3,7 +3,11 @@
     <navbar title="我的地址" backgroundColor="#45b5f0" height="88"></navbar>
     <scroller class="scroller" :style="scrollerStyle">
       <div>
-        <wxc-cell title="新增地址" :has-arrow="true" @wxcCellClicked="toCreateUserAddressClicked"></wxc-cell>
+        <wxc-cell :has-arrow="true" @wxcCellClicked="toCreateUserAddressClicked">
+          <div slot="title">
+            <text style="color: #38f; font-size: 30px; line-height: 40px;">新增地址</text>
+          </div>
+        </wxc-cell>
       </div>
       <div>
         <wxc-cell value="item.addressTagName"  v-for="(item, i) in userAddressList" :key="i" :has-arrow="false">

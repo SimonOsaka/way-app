@@ -1,11 +1,19 @@
 const commonConfig = require('./webpack.common.conf');
-const webpackMerge = require('webpack-merge'); // used to merge webpack configs
+const merge = require('webpack-merge'); // used to merge webpack configs
 const os = require('os');
 const webpack = require('webpack');
 
 const config = require('./config');
 const helper = require('./helper');
 
+/**
+ * webpack在合并时没有覆盖变成NODE_ENV=production，修改此问题
+ * 2019-03-21 
+ * @author xuzhongliang
+ */
+let webpackMerge = merge.strategy({
+  plugins: 'replace'
+})
 /**
  * Webpack Plugins
  */
@@ -38,7 +46,12 @@ const weexConfig = webpackMerge(commonConfig[1], {
         }
       }),
       // Need to run uglify first, then pipe other webpack plugins
-      ...commonConfig[1].plugins
+      commonConfig[1].plugins[0],
+      new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': config.prod.env
+        }
+      })
     ]
 })
 
@@ -116,4 +129,4 @@ const webConfig = webpackMerge(commonConfig[0], {
   ]
 });
 
-module.exports = [weexConfig, webConfig]
+module.exports = [weexConfig/* , webConfig */]
