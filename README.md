@@ -36,3 +36,7 @@ Packaging html5 project into `web/build` folder.
 ### npm run test
 
 Starts the test runner.
+
+### 迭代删除
+
+find ./dist -name '*.web.js' | xargs rm -rf
