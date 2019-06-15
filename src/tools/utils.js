@@ -13,9 +13,9 @@ export function setPageTitle(title) {
 }
 
 export function setOgImage(imgUrl) {
-  document
-    .querySelector('meta[property="og:image"]')
-    .setAttribute('content', imgUrl || '')
+  // document
+    // .querySelector('meta[property="og:image"]')
+    // .setAttribute('content', imgUrl || '')
 }
 
 export function getEntryUrl(filename, parameters) {

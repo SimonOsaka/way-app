@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 185);
+/******/ 	return __webpack_require__(__webpack_require__.s = 181);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1067,21 +1067,21 @@ exports.default = {
 
 /***/ }),
 
-/***/ 185:
+/***/ 181:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(186)
+__vue_styles__.push(__webpack_require__(182)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(187)
+__vue_exports__ = __webpack_require__(183)
 
 /* template */
-var __vue_template__ = __webpack_require__(188)
+var __vue_template__ = __webpack_require__(184)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -1093,10 +1093,10 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/myFollow.vue"
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/myFeedback.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-3172ce17"
+__vue_options__._scopeId = "data-v-0660986b"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -1114,7 +1114,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 186:
+/***/ 182:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1123,32 +1123,18 @@ module.exports = {
     "fontSize": "32",
     "fontStyle": "normal"
   },
-  "image": {
-    "width": "140",
-    "height": "140",
-    "marginRight": "10",
-    "borderRadius": "10"
-  },
-  "c_name": {
-    "paddingLeft": "20"
-  },
-  "c_money": {
-    "color": "#FF0000"
+  "cell_split": {
+    "height": "10",
+    "backgroundColor": "#f2f3f4"
   },
   "red": {
     "color": "#FF0000"
-  },
-  "c_real": {
-    "fontSize": "24"
-  },
-  "c_cancel_text": {
-    "fontSize": "28"
   }
 }
 
 /***/ }),
 
-/***/ 187:
+/***/ 183:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1172,27 +1158,14 @@ var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
 var _utils3 = __webpack_require__(2);
 
-var _http = __webpack_require__(1);
-
 var _navbar = __webpack_require__(6);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
 var _user = __webpack_require__(21);
 
-var _shop = __webpack_require__(69);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1222,11 +1195,12 @@ exports.default = {
   components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default, WxcButton: _wxcButton2.default },
   data: function data() {
     return {
-      follow: {
+      feedback: {
         list: [],
         pageNum: 1,
         pageSize: 10
       },
+      feedbackTypeMap: {},
       my: {
         userLoginId: 0,
         userToken: ''
@@ -1238,10 +1212,10 @@ exports.default = {
     };
   },
   created: function created() {
-    var _this2 = this;
+    var _this = this;
 
     (0, _utils3.initIconfont)();
-    (0, _utils3.titlebar)('我的关注');
+    (0, _utils3.titlebar)('我的反馈建议');
     var pageHeight = _utils2.default.env.getPageHeight();
     var screenHeight = _utils2.default.env.getScreenHeight();
     this.scrollerStyle = {
@@ -1249,56 +1223,58 @@ exports.default = {
     };
     (0, _utils3.getStorageVal)('way:user').then(function (data) {
       var user = JSON.parse(data);
-      _this2.my.userLoginId = user.userLoginId;
-      _this2.my.userToken = user.userToken;
-      _this2.requestGetFollowList();
+      _this.my.userLoginId = user.userLoginId;
+      _this.my.userToken = user.userToken;
+      _this.requestFeedbackTypeMap();
     }, function (error) {
-      _this2.my.userLoginId = 0;
+      _this.my.userLoginId = 0;
       navigator.pop();
     });
   },
 
   methods: {
     loadMore: function loadMore(event) {
-      this.requestGetFollowList();
+      this.requestQueryUserFeedbackList();
     },
-    followScrollHandler: function followScrollHandler(e) {
+    feebackScrollHandler: function feebackScrollHandler(e) {
       console.log(e.contentOffset.y);
     },
-    requestGetFollowList: function requestGetFollowList() {
-      console.log('加载我的关注列表');
-      var _this = this;
-      (0, _user.userShopFollows)({
-        userLoginId: this.my.userLoginId,
-        pageNum: this.follow.pageNum++,
-        pageSize: this.follow.pageSize
-      }, {
-        token: this.my.userToken
-      }).then(function (data) {
-        if (data.code != 200) {
-          return;
-        }
+    requestFeedbackTypeMap: function requestFeedbackTypeMap() {
+      var _this2 = this;
 
-        var list = data.data.shopFollowList;
-        if (list.length !== 0) {
-          list.forEach(function (follow) {
-            _this.follow.list.push(follow);
-          });
-        }
-        _this.noData = _this.follow.list.length === 0;
-      });
-    },
-    btnCancelFollowClicked: function btnCancelFollowClicked(i) {
-      var _this3 = this;
-
-      (0, _shop.cancelFollow)({
-        shopId: this.follow.list[i].shopId,
+      (0, _user.feedbackTypeMap)({
         userLoginId: this.my.userLoginId
       }, {
         token: this.my.userToken
-      }).then(function () {
-        var item = _this3.follow.list[i];
-        item.hasFollowed = 1;
+      }).then(function (response) {
+        if (response.code != 200) {
+          return;
+        }
+        _this2.feedbackTypeMap = response.data.feedbackTypeMap;
+        _this2.requestQueryUserFeedbackList();
+      });
+    },
+    requestQueryUserFeedbackList: function requestQueryUserFeedbackList() {
+      var _this3 = this;
+
+      (0, _user.queryUserFeedbackList)({
+        userLoginId: this.my.userLoginId,
+        pageNum: this.feedback.pageNum++,
+        pageSize: this.feedback.pageSize
+      }, {
+        token: this.my.userToken
+      }).then(function (response) {
+        if (response.code != 200) {
+          return;
+        }
+
+        var list = response.data.userFeedbackBoList;
+        if (list.length !== 0) {
+          list.forEach(function (feedback) {
+            _this3.feedback.list.push(feedback);
+          });
+        }
+        _this3.noData = _this3.feedback.list.length === 0;
       });
     }
   }
@@ -1306,13 +1282,13 @@ exports.default = {
 
 /***/ }),
 
-/***/ 188:
+/***/ 184:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('navbar', {
     attrs: {
-      "title": "我的关注",
+      "title": "我的反馈建议",
       "backgroundColor": "#45b5f0",
       "height": "88"
     }
@@ -1323,16 +1299,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "loadmore": _vm.loadMore,
-      "scroll": _vm.followScrollHandler
+      "scroll": _vm.feebackScrollHandler
     }
-  }, _vm._l((_vm.follow.list), function(item, i) {
+  }, _vm._l((_vm.feedback.list), function(item, i) {
     return _c('div', {
       key: i,
       ref: 'cell' + i,
-      refInFor: true,
-      staticClass: ["m_cell"]
+      refInFor: true
     }, [(i != 0) ? _c('div', {
-      staticClass: ["m_cell_split"]
+      staticClass: ["cell_split"]
     }) : _vm._e(), _c('wxc-cell', {
       attrs: {
         "hasArrow": false,
@@ -1341,71 +1316,31 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "hasMargin": false,
         "autoAccessible": false
       }
-    }, [_c('image', {
-      staticClass: ["image"],
+    }, [_c('text', {
       attrs: {
-        "slot": "label",
-        "resize": "cover",
-        "src": item.shop.shopLogoUrl
+        "slot": "label"
       },
       slot: "label"
-    }), _c('div', {
-      attrs: {
-        "slot": "title"
-      },
-      slot: "title"
-    }, [_c('div', {
-      staticStyle: {
-        flexDirection: "row"
-      }
-    }, [_c('text', {
-      staticClass: ["c_name"],
-      staticStyle: {
-        width: "480px"
-      }
-    }, [_vm._v(_vm._s(item.shop.shopName))])]), _c('div', {
-      key: i,
-      staticStyle: {
-        flexDirection: "row",
-        paddingLeft: "20px",
-        marginTop: "40px"
-      },
-      attrs: {
-        "index": i
-      }
-    }, [_c('text', {
-      staticClass: ["iconfont", "red"],
-      staticStyle: {
-        fontSize: "24px"
-      }
-    }, [_vm._v("")]), _c('text', {
-      staticClass: ["c_real"],
-      staticStyle: {
-        color: "#ccc",
-        width: "480px"
-      }
-    }, [_vm._v(_vm._s(item.shop.shopAddress))])])]), _c('div', {
+    }, [_vm._v(_vm._s(_vm.feedbackTypeMap[item.feedbackType]))]), _c('text', {
       attrs: {
         "slot": "value"
       },
       slot: "value"
-    }, [(item.hasFollowed === 0) ? _c('wxc-button', {
+    }, [_vm._v(_vm._s(item.feedbackTime))])]), _c('wxc-cell', {
       attrs: {
-        "type": "red",
-        "size": "small",
-        "text": "取消关注"
-      },
-      on: {
-        "wxcButtonClicked": function($event) {
-          _vm.btnCancelFollowClicked(i)
-        }
+        "hasArrow": false,
+        "hasTopBorder": false,
+        "hasBottomBorder": false,
+        "hasMargin": false,
+        "autoAccessible": false
       }
-    }) : _c('text', {
-      staticClass: ["c_cancel_text"]
-    }, [_vm._v("已取消")])], 1)])], 1)
-  })) : _c('div', {
-    staticClass: ["m_cell"]
-  }, [_c('text', {
+    }, [_c('text', {
+      attrs: {
+        "slot": "title"
+      },
+      slot: "title"
+    }, [_vm._v(_vm._s(item.feedbackContent))])])], 1)
+  })) : _c('div', [_c('text', {
     staticClass: ["iconfont"],
     staticStyle: {
       fontSize: "128px",
@@ -1420,7 +1355,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       textAlign: "center",
       color: "#cccccc"
     }
-  }, [_vm._v(" 还没有关注 ")])])], 1)
+  }, [_vm._v(" 还没有反馈建议 ")])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -2552,50 +2487,6 @@ if (typeof __register_static_styles__ === "function") {
 
 module.exports = __vue_exports__
 
-
-/***/ }),
-
-/***/ 69:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.shopFollow = shopFollow;
-exports.cancelFollow = cancelFollow;
-exports.getShopDetail = getShopDetail;
-
-var _http = __webpack_require__(1);
-
-function shopFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow",
-    headers: headers,
-    body: params
-  });
-}
-
-function cancelFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow/cancel",
-    headers: headers,
-    body: params
-  });
-}
-
-function getShopDetail(params, headers) {
-  return (0, _http.http)({
-    method: 'POST',
-    url: '/shop/detail',
-    headers: headers,
-    body: params
-  });
-}
 
 /***/ }),
 

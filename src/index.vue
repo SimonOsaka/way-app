@@ -84,20 +84,27 @@
           </div>
         </wxc-cell>
 
+        <div v-if="my.userLoginId != 0" class="m_cell_split"></div>
         <wxc-cell v-if="my.userLoginId != 0" title="我发布的优惠信息"
                   @wxcCellClicked="userDiscountClick"
-                  :has-top-border="true" :has-arrow="true"></wxc-cell>
+                  :has-bottom-border="true" :has-arrow="true"></wxc-cell>
 
         <wxc-cell v-if="my.userLoginId != 0" title="我的关注"
                   @wxcCellClicked="userFollowClick"
-                  :has-top-border="true" :has-arrow="true"></wxc-cell>
+                  :has-bottom-border="true" :has-arrow="true"></wxc-cell>
 
-        <wxc-cell v-else :has-arrow="false" :cell-style="cellStyle" :has-top-border="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false">
+        <div class="m_cell_split"></div>
+        <wxc-cell v-if="my.userLoginId != 0" title="反馈建议" @wxcCellClicked="feedbackClick" :has-top-border="false" :has-arrow="true"/>
+        <wxc-cell title="关于" @wxcCellClicked="aboutClick" :has-top-border="false" :has-arrow="true"/>
+
+        <div v-if="my.userLoginId == 0" class="m_cell_split"></div>
+        <wxc-cell v-if="my.userLoginId == 0" :has-arrow="false" :cell-style="cellStyle" :has-top-border="false" :has-bottom-border="false" :has-margin="false" :auto-accessible="false">
           <div slot="title">
             <wxc-button type="blue" text="登录" @wxcButtonClicked="loginClicked"></wxc-button>
           </div>
         </wxc-cell>
 
+        <div v-if="my.userLoginId != 0" class="m_cell_split"></div>
         <wxc-cell v-if="my.userLoginId != 0" :has-arrow="false" :cell-style="cellStyle" :has-top-border="false" :has-bottom-border="false" :has-margin="false" :auto-accessible="false">
           <div slot="title">
             <wxc-button type="red" text="退出登录" @wxcButtonClicked="logoutClicked"></wxc-button>
@@ -901,6 +908,18 @@ export default {
             })
           });
         }
+      })
+    },
+    aboutClick() {
+      navigator.push({
+        url: getEntryUrl('views/user/about'),
+        animated: 'true'
+      })
+    },
+    feedbackClick() {
+      navigator.push({
+        url: getEntryUrl('views/user/feedback'),
+        animated: 'true'
       })
     }
   }

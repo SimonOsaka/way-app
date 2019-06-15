@@ -40,6 +40,20 @@
           <text slot="title" style="margin-left: 10px;">{{commodityObj.shopName}}</text>
         </wxc-cell>
       </div>
+      <div>
+        <wxc-cell v-for="(relationItem, index) in relationCommodityList" :key="'relation' + index" :has-arrow="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false" @wxcCellClicked="relationCommodityCellClicked(index)">
+          <image slot="label" resize="cover" class="commodity_image" :src="relationItem.imgUrl"></image>
+          <div slot="title">
+              <text class="c_name">{{relationItem.name}}</text>
+              <!--
+              <div style="flex-direction:row;">
+                <text class="c_name c_money" style="font-size:20px; padding-top: 3px;">¥</text>
+                <text class="c_money">{{cItem.cPrice}}</text>
+              </div>
+              -->
+            </div>
+        </wxc-cell>
+      </div>
     </scroller>
 
     <wxc-popup height="160" :show="isAutoShow" pos="bottom" @wxcPopupOverlayClicked="popupOverlayAutoClick">
@@ -76,7 +90,7 @@ import {
 import { loadCateImageUrl } from '../../tools/image.js'
 import { http } from '../../tools/http.js'
 import navbar from '../../include/navbar.vue'
-import { getWeixinShareWebpage } from '../../api/commodity.js'
+import { getWeixinShareWebpage, queryRelationCommodity } from '../../api/commodity.js'
 const navigator = weex.requireModule('navigator')
 const modal = weex.requireModule('modal')
 const weixin = weex.requireModule('weixin')
@@ -99,7 +113,8 @@ export default {
       shopName: '',
       shopLogoUrl: ''
     },
-    isAutoShow: false
+    isAutoShow: false,
+    relationCommodityList: []
   }),
   created() {
     initIconfont()
@@ -167,6 +182,8 @@ export default {
 
           setPageTitle(commodityDetail.name)
           setOgImage(_this.commodityObj.cPicUrl)
+
+          _this.requestQueryRelationCommodity()
         },
         function(error) {
           console.error('failure', error)
@@ -200,6 +217,26 @@ export default {
         url: getEntryUrl('views/shop/detail'),
         animated: 'true'
       })
+    },
+    requestQueryRelationCommodity() {
+      const commodityId = this.commodityObj.id
+      queryRelationCommodity({ commodityId: commodityId }).then(response => {
+        if (response.code !== 200) {
+          return
+        }
+        this.relationCommodityList = response.data
+      })
+    },
+    relationCommodityCellClicked(i) {
+      const clickedCommodity = this.relationCommodityList[i]
+      if (clickedCommodity) {
+        console.log('跳转到商品详情页面', clickedCommodity.id)
+        setStorageVal('way:commodity:id', clickedCommodity.id)
+        navigator.push({
+          url: getEntryUrl('views/commodity/detail'),
+          animated: 'true'
+        })
+      }
     }
   },
   destroyed() {
@@ -229,5 +266,11 @@ export default {
 }
 .c_real {
   font-size: 24px;
+}
+.commodity_image {
+  width: 140px;
+  height: 140px;
+  margin-right: 10px;
+  border-radius: 10px;
 }
 </style>

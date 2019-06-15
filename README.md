@@ -1,4 +1,7 @@
 ## Commands
+### sudo npm install --unsafe-perm
+install node_modules
+
 IOS
 ### npm start
 

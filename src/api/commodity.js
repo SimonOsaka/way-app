@@ -7,3 +7,12 @@ export function getWeixinShareWebpage(params) {
     body: params
   });
 }
+
+export function queryRelationCommodity(params) {
+  return http({
+    method: "POST",
+    url: "/commodity/queryRelationCommodity",
+    headers: {},
+    body: params
+  });
+}

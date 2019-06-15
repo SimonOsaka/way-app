@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 185);
+/******/ 	return __webpack_require__(__webpack_require__.s = 151);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -422,113 +422,6 @@ exports.default = Utils;
 
 /***/ }),
 
-/***/ 1:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.http = http;
-var referer = 'ios.jicu.vip';
-function http() {
-  var OPTIONS = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  if (!checkNetworkStatus()) {
-    console.log('终止网络请求');
-    return new Promise(function (resolve, reject) {
-      reject({ statusText: '网络无连接' });
-    });
-  }
-  var DEFAULT_OPTION = {
-    method: 'GET',
-    type: 'json', // json、text、jsonp
-    headers: {}
-  };
-
-  var modal = weex.requireModule('modal');
-  var stream = weex.requireModule('stream');
-  var platform = weex.config.env.platform.toLowerCase();
-
-  // 正式环境域名
-  var apiRoot = 'http://api.jicu.vip'; //'http://your.prod.domain.com'
-  var isProduction = "common" === 'production';
-  console.log('环境显示', isProduction, platform, "common");
-  apiRoot = platform === 'android' && !isProduction ? 'http://192.168.3.4' : apiRoot;
-
-  var options = Object.assign(DEFAULT_OPTION, OPTIONS);
-  options.url = apiRoot + options.url;
-  options.headers['referer'] = referer;
-  if (options.method === 'GET') {
-    if (options.params) {
-      var paramStr = Object.keys(options.params).reduce(function (acc, key) {
-        return '' + acc + key + '=' + options.params[key] + '&';
-      }, '?appVersion=' + getAppVersion() + '&');
-      options.url = options.url.concat(paramStr).slice(0, -1);
-    }
-  } else if (options.method === 'POST') {
-    if (options.body) {
-      options.body = JSON.stringify(Object.assign(options.body, { appVerion: getAppVersion() }));
-      options.headers['Content-Type'] = 'application/json';
-    }
-  }
-  console.log('请求选项', options);
-  return new Promise(function (resolve, reject) {
-    stream.fetch(options, function (response) {
-      if (response.ok) {
-        console.log('stream response', response);
-        resolve(response.data);
-      } else {
-        modal.toast({
-          message: '\u7F51\u7EDC\u65E0\u8FDE\u63A5',
-          duration: 1
-        });
-        console.log('stream reject', response);
-        reject(response);
-      }
-    });
-  });
-}
-
-function checkNetworkStatus() {
-  var network = weex.requireModule('network');
-  var ok = true;
-  network.getNetworkStatus(function (statusText) {
-    if (statusText === 'NONE') {
-      console.log('checkNetworkStatus', '当前没有网络');
-      weex.requireModule('modal').toast({
-        message: '网络无连接',
-        duration: 1
-      });
-      ok = false;
-    } else {
-      console.log('网络连接正常');
-    }
-  });
-  return ok;
-}
-
-function getAppVersion() {
-  var appVertionText = '';
-  console.log('http.js', '获取appVersion', '开始', appVertionText);
-  var isIOS = weex.config.env.platform.toLowerCase() === 'ios';
-  if (!isIOS) {
-    appVertionText = weex.requireModule('version').getAppVersion();
-    console.log('http.js', 'app版本，appVertionText=', appVertionText);
-  } else {
-    weex.requireModule('version').getAppVersion(function (versionText) {
-      console.log('http.js', 'app版本', versionText);
-      appVertionText = versionText;
-    });
-  }
-  console.log('http.js', '获取appVersion', '结束', appVertionText);
-  return appVertionText;
-}
-
-/***/ }),
-
 /***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -883,44 +776,21 @@ module.exports.render._withStripped = true
 
 /***/ }),
 
-/***/ 15:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _index = __webpack_require__(16);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_index).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-
-/***/ 16:
+/***/ 151:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(17)
+__vue_styles__.push(__webpack_require__(152)
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(18)
+__vue_exports__ = __webpack_require__(153)
 
 /* template */
-var __vue_template__ = __webpack_require__(20)
+var __vue_template__ = __webpack_require__(154)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -932,171 +802,10 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-button/index.vue"
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/about.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-6273a8fc"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
-
-/***/ }),
-
-/***/ 17:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "wxc-btn": {
-    "alignItems": "center",
-    "justifyContent": "center",
-    "borderRadius": "12",
-    "opacity": 1
-  },
-  "wxc-btn-highlight": {
-    "opacity:active": 0.8
-  },
-  "btn-text": {
-    "textOverflow": "ellipsis",
-    "lines": 1,
-    "color": "#ffffff"
-  }
-}
-
-/***/ }),
-
-/***/ 18:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var _type = __webpack_require__(19);
-
-exports.default = {
-  props: {
-    text: {
-      type: String,
-      default: '确认'
-    },
-    size: {
-      type: String,
-      default: 'full'
-    },
-    type: {
-      type: String,
-      default: 'red'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    isHighlight: {
-      type: Boolean,
-      default: false
-    },
-    btnStyle: Object,
-    textStyle: Object,
-    disabledStyle: Object
-  },
-  computed: {
-    mrBtnStyle: function mrBtnStyle() {
-      var type = this.type,
-          disabled = this.disabled,
-          btnStyle = this.btnStyle,
-          size = this.size,
-          disabledStyle = this.disabledStyle;
-
-
-      var mrBtnStyle = _extends({}, _type.STYLE_MAP[type], _type.BUTTON_STYLE_MAP[size], btnStyle);
-
-      var disabledInStyle = { opacity: 0.2 };
-      if (type === 'white') {
-        disabledInStyle = { backgroundColor: 'rgba(0, 0, 0, 0.1)' };
-      }
-
-      return disabled ? _extends({}, mrBtnStyle, disabledInStyle, disabledStyle, {
-        borderWidth: 0
-      }) : mrBtnStyle;
-    },
-    mrTextStyle: function mrTextStyle() {
-      var type = this.type,
-          disabled = this.disabled,
-          textStyle = this.textStyle,
-          size = this.size;
-
-      var mrTextStyle = _extends({}, _type.TEXT_STYLE_MAP[type], textStyle, _type.TEXT_FONTSIZE_STYLE_MAP[size]);
-      return disabled ? _extends({}, mrTextStyle, { color: '#FFFFFF' }) : mrTextStyle;
-    }
-  },
-  methods: {
-    onClicked: function onClicked(e) {
-      var type = this.type,
-          disabled = this.disabled;
-
-      this.$emit('wxcButtonClicked', { e: e, type: type, disabled: disabled });
-    }
-  }
-};
-
-/***/ }),
-
-/***/ 185:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(186)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(187)
-
-/* template */
-var __vue_template__ = __webpack_require__(188)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/myFollow.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-3172ce17"
+__vue_options__._scopeId = "data-v-8408ad3a"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -1114,7 +823,7 @@ new Vue(module.exports)
 
 /***/ }),
 
-/***/ 186:
+/***/ 152:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1123,32 +832,20 @@ module.exports = {
     "fontSize": "32",
     "fontStyle": "normal"
   },
-  "image": {
-    "width": "140",
-    "height": "140",
-    "marginRight": "10",
-    "borderRadius": "10"
+  "flex_column_center": {
+    "flexDirection": "column",
+    "alignItems": "center",
+    "justifyContent": "center"
   },
-  "c_name": {
-    "paddingLeft": "20"
-  },
-  "c_money": {
-    "color": "#FF0000"
-  },
-  "red": {
-    "color": "#FF0000"
-  },
-  "c_real": {
-    "fontSize": "24"
-  },
-  "c_cancel_text": {
-    "fontSize": "28"
+  "cell_split": {
+    "height": "10",
+    "backgroundColor": "#f2f3f4"
   }
 }
 
 /***/ }),
 
-/***/ 187:
+/***/ 153:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1162,48 +859,19 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcButton = __webpack_require__(15);
-
-var _wxcButton2 = _interopRequireDefault(_wxcButton);
-
 var _wxcCell = __webpack_require__(10);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
 var _utils3 = __webpack_require__(2);
 
-var _http = __webpack_require__(1);
-
 var _navbar = __webpack_require__(6);
 
 var _navbar2 = _interopRequireDefault(_navbar);
 
-var _user = __webpack_require__(21);
-
-var _shop = __webpack_require__(69);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var navigator = weex.requireModule('navigator'); //
 //
 //
 //
@@ -1216,296 +884,78 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-var navigator = weex.requireModule('navigator');
+var version = weex.requireModule('version');
 
 exports.default = {
-  components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default, WxcButton: _wxcButton2.default },
+  components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default },
   data: function data() {
     return {
-      follow: {
-        list: [],
-        pageNum: 1,
-        pageSize: 10
+      about: {
+        appVersion: '-'
       },
-      my: {
-        userLoginId: 0,
-        userToken: ''
-      },
-      noData: false,
       scrollerStyle: {
         width: '750px'
       }
     };
   },
   created: function created() {
-    var _this2 = this;
-
     (0, _utils3.initIconfont)();
-    (0, _utils3.titlebar)('我的关注');
+    (0, _utils3.titlebar)('关于');
     var pageHeight = _utils2.default.env.getPageHeight();
-    var screenHeight = _utils2.default.env.getScreenHeight();
     this.scrollerStyle = {
       height: pageHeight + 'px'
     };
-    (0, _utils3.getStorageVal)('way:user').then(function (data) {
-      var user = JSON.parse(data);
-      _this2.my.userLoginId = user.userLoginId;
-      _this2.my.userToken = user.userToken;
-      _this2.requestGetFollowList();
-    }, function (error) {
-      _this2.my.userLoginId = 0;
-      navigator.pop();
-    });
-  },
 
-  methods: {
-    loadMore: function loadMore(event) {
-      this.requestGetFollowList();
-    },
-    followScrollHandler: function followScrollHandler(e) {
-      console.log(e.contentOffset.y);
-    },
-    requestGetFollowList: function requestGetFollowList() {
-      console.log('加载我的关注列表');
-      var _this = this;
-      (0, _user.userShopFollows)({
-        userLoginId: this.my.userLoginId,
-        pageNum: this.follow.pageNum++,
-        pageSize: this.follow.pageSize
-      }, {
-        token: this.my.userToken
-      }).then(function (data) {
-        if (data.code != 200) {
-          return;
-        }
-
-        var list = data.data.shopFollowList;
-        if (list.length !== 0) {
-          list.forEach(function (follow) {
-            _this.follow.list.push(follow);
-          });
-        }
-        _this.noData = _this.follow.list.length === 0;
-      });
-    },
-    btnCancelFollowClicked: function btnCancelFollowClicked(i) {
-      var _this3 = this;
-
-      (0, _shop.cancelFollow)({
-        shopId: this.follow.list[i].shopId,
-        userLoginId: this.my.userLoginId
-      }, {
-        token: this.my.userToken
-      }).then(function () {
-        var item = _this3.follow.list[i];
-        item.hasFollowed = 1;
+    var appVertionText = '';
+    var isIOS = weex.config.env.platform.toLowerCase() === 'ios';
+    if (!isIOS) {
+      appVertionText = version.getAppVersion();
+      console.log('about', 'app版本，appVertionText=', appVertionText);
+    } else {
+      version.getAppVersion(function (versionText) {
+        console.log('about', 'app版本', versionText);
+        appVertionText = versionText;
       });
     }
-  }
+    this.about.appVersion = appVertionText;
+  },
+
+  methods: {}
 };
 
 /***/ }),
 
-/***/ 188:
+/***/ 154:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('navbar', {
     attrs: {
-      "title": "我的关注",
+      "title": "关于",
       "backgroundColor": "#45b5f0",
       "height": "88"
     }
-  }), (!_vm.noData) ? _c('scroller', {
-    style: _vm.scrollerStyle,
+  }), _c('div', [_c('wxc-cell', {
     attrs: {
-      "loadmoreoffset": "10"
-    },
-    on: {
-      "loadmore": _vm.loadMore,
-      "scroll": _vm.followScrollHandler
+      "hasArrow": false,
+      "hasTopBorder": false,
+      "hasBottomBorder": false,
+      "hasMargin": false,
+      "autoAccessible": false
     }
-  }, _vm._l((_vm.follow.list), function(item, i) {
-    return _c('div', {
-      key: i,
-      ref: 'cell' + i,
-      refInFor: true,
-      staticClass: ["m_cell"]
-    }, [(i != 0) ? _c('div', {
-      staticClass: ["m_cell_split"]
-    }) : _vm._e(), _c('wxc-cell', {
-      attrs: {
-        "hasArrow": false,
-        "hasTopBorder": false,
-        "hasBottomBorder": true,
-        "hasMargin": false,
-        "autoAccessible": false
-      }
-    }, [_c('image', {
-      staticClass: ["image"],
-      attrs: {
-        "slot": "label",
-        "resize": "cover",
-        "src": item.shop.shopLogoUrl
-      },
-      slot: "label"
-    }), _c('div', {
-      attrs: {
-        "slot": "title"
-      },
-      slot: "title"
-    }, [_c('div', {
-      staticStyle: {
-        flexDirection: "row"
-      }
-    }, [_c('text', {
-      staticClass: ["c_name"],
-      staticStyle: {
-        width: "480px"
-      }
-    }, [_vm._v(_vm._s(item.shop.shopName))])]), _c('div', {
-      key: i,
-      staticStyle: {
-        flexDirection: "row",
-        paddingLeft: "20px",
-        marginTop: "40px"
-      },
-      attrs: {
-        "index": i
-      }
-    }, [_c('text', {
-      staticClass: ["iconfont", "red"],
-      staticStyle: {
-        fontSize: "24px"
-      }
-    }, [_vm._v("")]), _c('text', {
-      staticClass: ["c_real"],
-      staticStyle: {
-        color: "#ccc",
-        width: "480px"
-      }
-    }, [_vm._v(_vm._s(item.shop.shopAddress))])])]), _c('div', {
-      attrs: {
-        "slot": "value"
-      },
-      slot: "value"
-    }, [(item.hasFollowed === 0) ? _c('wxc-button', {
-      attrs: {
-        "type": "red",
-        "size": "small",
-        "text": "取消关注"
-      },
-      on: {
-        "wxcButtonClicked": function($event) {
-          _vm.btnCancelFollowClicked(i)
-        }
-      }
-    }) : _c('text', {
-      staticClass: ["c_cancel_text"]
-    }, [_vm._v("已取消")])], 1)])], 1)
-  })) : _c('div', {
-    staticClass: ["m_cell"]
   }, [_c('text', {
-    staticClass: ["iconfont"],
-    staticStyle: {
-      fontSize: "128px",
-      marginTop: "232px",
-      textAlign: "center",
-      color: "#cccccc"
-    }
-  }, [_vm._v("")]), _c('text', {
-    staticStyle: {
-      fontSize: "32px",
-      marginTop: "20px",
-      textAlign: "center",
-      color: "#cccccc"
-    }
-  }, [_vm._v(" 还没有关注 ")])])], 1)
+    attrs: {
+      "slot": "label"
+    },
+    slot: "label"
+  }, [_vm._v("当前版本")]), _c('text', {
+    attrs: {
+      "slot": "value"
+    },
+    slot: "value"
+  }, [_vm._v(_vm._s(_vm.about.appVersion))])])], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 19:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var STYLE_MAP = exports.STYLE_MAP = {
-  red: {
-    backgroundColor: '#FF5000'
-  },
-  yellow: {
-    backgroundColor: '#FFC900'
-  },
-  white: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#A5A5A5',
-    borderWidth: '1px'
-  },
-  blue: {
-    backgroundColor: '#0F8DE8'
-  },
-  green: {
-    backgroundColor: '#19be6b'
-  }
-};
-
-var TEXT_STYLE_MAP = exports.TEXT_STYLE_MAP = {
-  red: {
-    color: '#FFFFFF'
-  },
-  yellow: {
-    color: '#FFFFFF'
-  },
-  blue: {
-    color: '#FFFFFF'
-  },
-  white: {
-    color: '#3D3D3D'
-  },
-  green: {
-    color: '#FFFFFF'
-  }
-};
-
-var BUTTON_STYLE_MAP = exports.BUTTON_STYLE_MAP = {
-  full: {
-    width: '702px',
-    height: '88px'
-  },
-  big: {
-    width: '339px',
-    height: '70px'
-  },
-  medium: {
-    width: '218px',
-    height: '60px'
-  },
-  small: {
-    width: '157px',
-    height: '44px'
-  }
-};
-
-var TEXT_FONTSIZE_STYLE_MAP = exports.TEXT_FONTSIZE_STYLE_MAP = {
-  full: {
-    fontSize: '36px'
-  },
-  big: {
-    fontSize: '32px'
-  },
-  medium: {
-    fontSize: '28px'
-  },
-  small: {
-    fontSize: '24px'
-  }
-};
 
 /***/ }),
 
@@ -1747,143 +1197,6 @@ function titlebar(title) {
   // if (isIOS) {
   weex.requireModule('titlebar').setTitle(title);
   // }
-}
-
-/***/ }),
-
-/***/ 20:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    class: ['wxc-btn', _vm.isHighlight && !_vm.disabled && 'wxc-btn-highlight'],
-    style: _vm.mrBtnStyle,
-    attrs: {
-      "accessible": true,
-      "ariaLabel": _vm.text
-    },
-    on: {
-      "click": _vm.onClicked
-    }
-  }, [_c('text', {
-    staticClass: ["btn-text"],
-    style: _vm.mrTextStyle
-  }, [_vm._v(_vm._s(_vm.text))])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-
-/***/ }),
-
-/***/ 21:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.syncUserDevice = syncUserDevice;
-exports.userShopFollows = userShopFollows;
-exports.updateUserProfileAddress = updateUserProfileAddress;
-exports.queryUserAddressList = queryUserAddressList;
-exports.createUserAddress = createUserAddress;
-exports.updateUserAddress = updateUserAddress;
-exports.deleteUserAddress = deleteUserAddress;
-exports.addFeedback = addFeedback;
-exports.queryUserFeedbackList = queryUserFeedbackList;
-exports.feedbackTypeMap = feedbackTypeMap;
-
-var _http = __webpack_require__(1);
-
-function syncUserDevice(params) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/device/sync",
-    headers: {},
-    body: params
-  });
-}
-
-function userShopFollows(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/user/follows",
-    headers: headers,
-    body: params
-  });
-}
-
-function updateUserProfileAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/profile/address/update",
-    headers: headers,
-    body: params
-  });
-}
-
-function queryUserAddressList(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/list",
-    headers: headers,
-    body: params
-  });
-}
-
-function createUserAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/create",
-    headers: headers,
-    body: params
-  });
-}
-
-function updateUserAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/update",
-    headers: headers,
-    body: params
-  });
-}
-
-function deleteUserAddress(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/address/delete",
-    headers: headers,
-    body: params
-  });
-}
-
-function addFeedback(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/feedback/add",
-    headers: headers,
-    body: params
-  });
-}
-
-function queryUserFeedbackList(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/feedback/list",
-    headers: headers,
-    body: params
-  });
-}
-
-function feedbackTypeMap(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/user/feedback/typeMap",
-    headers: headers,
-    body: params
-  });
 }
 
 /***/ }),
@@ -2552,50 +1865,6 @@ if (typeof __register_static_styles__ === "function") {
 
 module.exports = __vue_exports__
 
-
-/***/ }),
-
-/***/ 69:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.shopFollow = shopFollow;
-exports.cancelFollow = cancelFollow;
-exports.getShopDetail = getShopDetail;
-
-var _http = __webpack_require__(1);
-
-function shopFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow",
-    headers: headers,
-    body: params
-  });
-}
-
-function cancelFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow/cancel",
-    headers: headers,
-    body: params
-  });
-}
-
-function getShopDetail(params, headers) {
-  return (0, _http.http)({
-    method: 'POST',
-    url: '/shop/detail',
-    headers: headers,
-    body: params
-  });
-}
 
 /***/ }),
 

@@ -62,7 +62,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 185);
+/******/ 	return __webpack_require__(__webpack_require__.s = 159);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -906,6 +906,53 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
+/***/ 159:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(160)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(161)
+
+/* template */
+var __vue_template__ = __webpack_require__(172)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/feedback.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-25d9b11f"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+module.exports.el = 'true'
+new Vue(module.exports)
+
+
+/***/ }),
+
 /***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -951,6 +998,613 @@ module.exports = __vue_exports__
 
 /***/ }),
 
+/***/ 160:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "iconfont": {
+    "fontFamily": "iconfont",
+    "fontSize": "32",
+    "fontStyle": "normal"
+  },
+  "scroller": {
+    "flex": 1
+  },
+  "flex_column_center": {
+    "flexDirection": "column",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "cell_split": {
+    "height": "10",
+    "backgroundColor": "#f2f3f4"
+  },
+  "title": {
+    "fontSize": "32",
+    "color": "#FF6666",
+    "fontWeight": "bold"
+  },
+  "textarea": {
+    "width": "650",
+    "color": "#666666",
+    "borderWidth": "1",
+    "borderStyle": "solid",
+    "borderColor": "#cccccc"
+  }
+}
+
+/***/ }),
+
+/***/ 161:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _utils = __webpack_require__(0);
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _wxcRadio = __webpack_require__(162);
+
+var _wxcRadio2 = _interopRequireDefault(_wxcRadio);
+
+var _wxcButton = __webpack_require__(15);
+
+var _wxcButton2 = _interopRequireDefault(_wxcButton);
+
+var _wxcCell = __webpack_require__(10);
+
+var _wxcCell2 = _interopRequireDefault(_wxcCell);
+
+var _utils3 = __webpack_require__(2);
+
+var _user = __webpack_require__(21);
+
+var _navbar = __webpack_require__(6);
+
+var _navbar2 = _interopRequireDefault(_navbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var navigator = weex.requireModule('navigator');
+var version = weex.requireModule('version');
+var modal = weex.requireModule('modal');
+
+exports.default = {
+  components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default, WxcButton: _wxcButton2.default, WxcRadio: _wxcRadio2.default },
+  data: function data() {
+    return {
+      feedback: {
+        userLoginId: 0,
+        feedbackOsType: 0,
+        feedbackType: 0,
+        feedbackAppVersion: '',
+        feedbackContent: ''
+      },
+      userToken: '',
+      scrollerStyle: {
+        width: '750px'
+      },
+      feedbackTypeRadioList: [{ title: '    商家反馈', value: 1 }, { title: '    商品反馈', value: 2 }, { title: '    优惠反馈', value: 3 }, { title: '    账号反馈', value: 4 }, { title: '    投诉建议', value: 99 }],
+      radioConfig: {
+        checkedColor: '#0099CC'
+      }
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    (0, _utils3.initIconfont)();
+    (0, _utils3.titlebar)('反馈建议');
+    var pageHeight = _utils2.default.env.getPageHeight();
+    this.scrollerStyle = {
+      height: pageHeight + 'px'
+    };
+
+    (0, _utils3.getStorageVal)('way:user').then(function (data) {
+      var user = JSON.parse(data);
+      _this.feedback.userLoginId = user.userLoginId;
+      _this.userToken = user.userToken;
+    }, function (error) {
+      _this.feedback.userLoginId = 0;
+      navigator.pop();
+    });
+
+    var appVertionText = '';
+    var isIOS = weex.config.env.platform.toLowerCase() === 'ios';
+    if (!isIOS) {
+      appVertionText = version.getAppVersion();
+      this.feedback.feedbackOsType = 1;
+      console.log('feedback', 'app版本，appVertionText=', appVertionText);
+    } else {
+      version.getAppVersion(function (versionText) {
+        console.log('feedback', 'app版本', versionText);
+        appVertionText = versionText;
+      });
+      this.feedback.feedbackOsType = 2;
+    }
+    this.feedback.feedbackAppVersion = appVertionText;
+  },
+
+  methods: {
+    wxcRadioListChecked: function wxcRadioListChecked(event) {
+      this.feedback.feedbackType = event.value;
+    },
+    wxcButtonClicked: function wxcButtonClicked() {
+      if (!this.check()) {
+        return;
+      }
+      (0, _user.addFeedback)(this.feedback, {
+        token: this.userToken
+      }).then(function (data) {
+        if (data.code != 200) {
+          return;
+        }
+
+        modal.toast({
+          message: '感谢您的反馈！',
+          duration: 1
+        });
+
+        navigator.pop({ animated: "true" });
+      });
+    },
+    oninput: function oninput(event) {
+      console.log('oninput:', event.value);
+      this.feedback.feedbackContent = event.value;
+    },
+    check: function check() {
+      if (this.feedback.userLoginId === 0) {
+        return false;
+      } else if (this.feedback.feedbackOsType === 0) {
+        return false;
+      } else if (this.feedback.feedbackType === 0) {
+        modal.toast({
+          message: '请选择反馈建议类型！',
+          duration: 1
+        });
+        return false;
+      } else if (this.feedback.feedbackAppVersion === '') {
+        return false;
+      } else if (this.feedback.feedbackContent.split('\n').join('').replace(/ /g, '') === '') {
+        modal.toast({
+          message: '请输入反馈建议内容！',
+          duration: 1
+        });
+        return false;
+      } else if (this.feedback.feedbackContent.length > 100) {
+        modal.toast({
+          message: '反馈建议内容请控制在100字以内！',
+          duration: 1
+        });
+        return false;
+      }
+
+      return true;
+    },
+    myFeedbackClicked: function myFeedbackClicked() {
+      navigator.push({
+        url: (0, _utils3.getEntryUrl)('views/user/myFeedback'),
+        animated: 'true'
+      });
+    }
+  }
+};
+
+/***/ }),
+
+/***/ 162:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _index = __webpack_require__(163);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ 163:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(164)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(165)
+
+/* template */
+var __vue_template__ = __webpack_require__(171)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-radio/index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-62bfaa47"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 164:
+/***/ (function(module, exports) {
+
+module.exports = {}
+
+/***/ }),
+
+/***/ 165:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _item = __webpack_require__(166);
+
+var _item2 = _interopRequireDefault(_item);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  components: { wxcRadio: _item2.default },
+  props: {
+    list: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    config: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    }
+  },
+  data: function data() {
+    return {
+      checkedIndex: -1
+    };
+  },
+  computed: {
+    updateList: function updateList() {
+      var checkedIndex = this.checkedIndex,
+          list = this.list;
+
+      var updateList = [];
+      list && list.forEach(function (item, i) {
+        item.checked = i === checkedIndex;
+        updateList.push(item);
+      });
+      return updateList;
+    }
+  },
+  watch: {
+    list: function list(newList) {
+      this.setListChecked(newList);
+    }
+  },
+  created: function created() {
+    this.setListChecked(this.list);
+  },
+
+  methods: {
+    setListChecked: function setListChecked(list) {
+      var _this = this;
+
+      if (list && list.length > 0) {
+        list.forEach(function (item, i) {
+          item.checked && (_this.checkedIndex = i);
+        });
+      }
+    },
+    wxcRadioItemChecked: function wxcRadioItemChecked(i, e) {
+      var oldIndex = this.checkedIndex;
+      var _list$i = this.list[i],
+          value = _list$i.value,
+          title = _list$i.title;
+
+      this.checkedIndex = i;
+      this.$emit('wxcRadioListChecked', { value: value, title: title, oldIndex: oldIndex, index: i });
+    }
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ 166:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(167)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(168)
+
+/* template */
+var __vue_template__ = __webpack_require__(170)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Volumes/code/way/way-app-ios/node_modules/weex-ui/packages/wxc-radio/item.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-620616a4"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 167:
+/***/ (function(module, exports) {
+
+module.exports = {
+  "radio": {
+    "width": "36",
+    "height": "36"
+  },
+  "title-text": {
+    "fontSize": "30",
+    "height": "40",
+    "lineHeight": "40"
+  }
+}
+
+/***/ }),
+
+/***/ 168:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _wxcCell = __webpack_require__(10);
+
+var _wxcCell2 = _interopRequireDefault(_wxcCell);
+
+var _type = __webpack_require__(169);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  components: { WxcCell: _wxcCell2.default },
+  props: {
+    hasTopBorder: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      require: true
+    },
+    value: {
+      type: [String, Number, Object],
+      require: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    checked: {
+      type: Boolean,
+      default: false
+    },
+    config: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    }
+  },
+  data: function data() {
+    return {
+      icon: [_type.CHECKED, _type.DISABLED]
+    };
+  },
+  computed: {
+    radioIcon: function radioIcon() {
+      var icon = this.icon,
+          disabled = this.disabled,
+          checked = this.checked,
+          config = this.config;
+
+      var mergeIcon = icon;
+      config.checkedIcon && (mergeIcon[0] = config.checkedIcon);
+      config.disabledIcon && (mergeIcon[1] = config.disabledIcon);
+      return checked ? mergeIcon[disabled ? 1 : 0] : '';
+    },
+    backgroundColor: function backgroundColor() {
+      var disabled = this.disabled;
+
+      return disabled ? '#F2F3F4' : '#FFFFFF';
+    },
+    color: function color() {
+      var disabled = this.disabled,
+          checked = this.checked,
+          config = this.config;
+
+      var checkedColor = '#EE9900';
+      config.checkedColor && (checkedColor = config.checkedColor);
+      return checked && !disabled ? checkedColor : '#3D3D3D';
+    }
+  },
+  methods: {
+    wxcCellClicked: function wxcCellClicked() {
+      var disabled = this.disabled,
+          value = this.value;
+
+      if (!disabled) {
+        this.$emit('wxcRadioItemChecked', { value: value, disabled: disabled });
+      }
+    }
+  }
+};
+
+/***/ }),
+
+/***/ 169:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var CHECKED = exports.CHECKED = 'https://gw.alicdn.com/tfs/TB1Y9vlpwMPMeJjy1XcXXXpppXa-72-72.png';
+var DISABLED = exports.DISABLED = 'https://gw.alicdn.com/tfs/TB1PtN3pwMPMeJjy1XdXXasrXXa-72-72.png';
+
+/***/ }),
+
 /***/ 17:
 /***/ (function(module, exports) {
 
@@ -970,6 +1624,178 @@ module.exports = {
     "color": "#ffffff"
   }
 }
+
+/***/ }),
+
+/***/ 170:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('wxc-cell', {
+    attrs: {
+      "hasTopBorder": _vm.hasTopBorder,
+      "cellStyle": {
+        backgroundColor: _vm.backgroundColor
+      },
+      "accessible": true,
+      "ariaLabel": (_vm.title + ",状态为" + (_vm.checked?'已选中':'未选中') + "," + (_vm.disabled?'不可更改':''))
+    },
+    on: {
+      "wxcCellClicked": _vm.wxcCellClicked
+    }
+  }, [_c('text', {
+    staticClass: ["title-text"],
+    style: {
+      color: _vm.color
+    },
+    attrs: {
+      "slot": "title"
+    },
+    slot: "title"
+  }, [_vm._v(_vm._s(_vm.title))]), (_vm.radioIcon) ? _c('image', {
+    staticClass: ["radio"],
+    attrs: {
+      "slot": "value",
+      "src": _vm.radioIcon
+    },
+    slot: "value"
+  }) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', _vm._l((_vm.updateList), function(item, i) {
+    return _c('wxc-radio', _vm._b({
+      key: i,
+      attrs: {
+        "config": _vm.config
+      },
+      on: {
+        "wxcRadioItemChecked": function($event) {
+          _vm.wxcRadioItemChecked(i, $event)
+        }
+      }
+    }, 'wxc-radio', item, false))
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+
+/***/ 172:
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('navbar', {
+    attrs: {
+      "title": "反馈建议",
+      "backgroundColor": "#45b5f0",
+      "height": "88"
+    }
+  }), _c('scroller', {
+    staticClass: ["scroller"],
+    style: _vm.scrollerStyle
+  }, [_c('wxc-cell', {
+    attrs: {
+      "title": "我的反馈建议",
+      "hasTopBorder": false,
+      "hasArrow": true
+    },
+    on: {
+      "wxcCellClicked": _vm.myFeedbackClicked
+    }
+  }), _c('div', {
+    staticClass: ["cell_split"]
+  }), _c('wxc-cell', {
+    attrs: {
+      "hasArrow": false,
+      "hasTopBorder": false,
+      "hasBottomBorder": false,
+      "hasMargin": false,
+      "autoAccessible": false
+    }
+  }, [_c('text', {
+    staticClass: ["title"],
+    attrs: {
+      "slot": "label"
+    },
+    slot: "label"
+  }, [_vm._v("反馈建议类型")])]), _c('wxc-radio', {
+    attrs: {
+      "list": _vm.feedbackTypeRadioList,
+      "config": _vm.radioConfig
+    },
+    on: {
+      "wxcRadioListChecked": _vm.wxcRadioListChecked
+    }
+  }), _c('wxc-cell', {
+    attrs: {
+      "hasArrow": false,
+      "hasTopBorder": false,
+      "hasBottomBorder": false,
+      "hasMargin": false,
+      "autoAccessible": false
+    }
+  }, [_c('text', {
+    staticClass: ["title"],
+    attrs: {
+      "slot": "label"
+    },
+    slot: "label"
+  }, [_vm._v("反馈建议内容")])]), _c('wxc-cell', {
+    attrs: {
+      "hasArrow": false,
+      "hasTopBorder": false,
+      "hasBottomBorder": false,
+      "hasMargin": false,
+      "autoAccessible": false
+    }
+  }, [_c('div', {
+    staticClass: ["flex_column_center"],
+    attrs: {
+      "slot": "title"
+    },
+    slot: "title"
+  }, [_c('textarea', {
+    staticClass: ["textarea"],
+    attrs: {
+      "rows": 3
+    },
+    on: {
+      "input": _vm.oninput
+    }
+  })])]), _c('div', {
+    staticClass: ["cell_split"]
+  }), _c('wxc-cell', {
+    attrs: {
+      "hasArrow": false,
+      "hasTopBorder": false,
+      "hasBottomBorder": false,
+      "hasMargin": false,
+      "autoAccessible": false
+    }
+  }, [_c('div', {
+    staticClass: ["flex_column_center"],
+    attrs: {
+      "slot": "title"
+    },
+    slot: "title"
+  }, [_c('wxc-button', {
+    attrs: {
+      "text": "确定",
+      "type": "blue"
+    },
+    on: {
+      "wxcButtonClicked": _vm.wxcButtonClicked
+    }
+  })], 1)])], 1)], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -1064,365 +1890,6 @@ exports.default = {
     }
   }
 };
-
-/***/ }),
-
-/***/ 185:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(186)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(187)
-
-/* template */
-var __vue_template__ = __webpack_require__(188)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/Volumes/code/way/way-app-ios/src/views/user/myFollow.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-3172ce17"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-module.exports.el = 'true'
-new Vue(module.exports)
-
-
-/***/ }),
-
-/***/ 186:
-/***/ (function(module, exports) {
-
-module.exports = {
-  "iconfont": {
-    "fontFamily": "iconfont",
-    "fontSize": "32",
-    "fontStyle": "normal"
-  },
-  "image": {
-    "width": "140",
-    "height": "140",
-    "marginRight": "10",
-    "borderRadius": "10"
-  },
-  "c_name": {
-    "paddingLeft": "20"
-  },
-  "c_money": {
-    "color": "#FF0000"
-  },
-  "red": {
-    "color": "#FF0000"
-  },
-  "c_real": {
-    "fontSize": "24"
-  },
-  "c_cancel_text": {
-    "fontSize": "28"
-  }
-}
-
-/***/ }),
-
-/***/ 187:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _utils = __webpack_require__(0);
-
-var _utils2 = _interopRequireDefault(_utils);
-
-var _wxcButton = __webpack_require__(15);
-
-var _wxcButton2 = _interopRequireDefault(_wxcButton);
-
-var _wxcCell = __webpack_require__(10);
-
-var _wxcCell2 = _interopRequireDefault(_wxcCell);
-
-var _utils3 = __webpack_require__(2);
-
-var _http = __webpack_require__(1);
-
-var _navbar = __webpack_require__(6);
-
-var _navbar2 = _interopRequireDefault(_navbar);
-
-var _user = __webpack_require__(21);
-
-var _shop = __webpack_require__(69);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var navigator = weex.requireModule('navigator');
-
-exports.default = {
-  components: { WxcCell: _wxcCell2.default, navbar: _navbar2.default, WxcButton: _wxcButton2.default },
-  data: function data() {
-    return {
-      follow: {
-        list: [],
-        pageNum: 1,
-        pageSize: 10
-      },
-      my: {
-        userLoginId: 0,
-        userToken: ''
-      },
-      noData: false,
-      scrollerStyle: {
-        width: '750px'
-      }
-    };
-  },
-  created: function created() {
-    var _this2 = this;
-
-    (0, _utils3.initIconfont)();
-    (0, _utils3.titlebar)('我的关注');
-    var pageHeight = _utils2.default.env.getPageHeight();
-    var screenHeight = _utils2.default.env.getScreenHeight();
-    this.scrollerStyle = {
-      height: pageHeight + 'px'
-    };
-    (0, _utils3.getStorageVal)('way:user').then(function (data) {
-      var user = JSON.parse(data);
-      _this2.my.userLoginId = user.userLoginId;
-      _this2.my.userToken = user.userToken;
-      _this2.requestGetFollowList();
-    }, function (error) {
-      _this2.my.userLoginId = 0;
-      navigator.pop();
-    });
-  },
-
-  methods: {
-    loadMore: function loadMore(event) {
-      this.requestGetFollowList();
-    },
-    followScrollHandler: function followScrollHandler(e) {
-      console.log(e.contentOffset.y);
-    },
-    requestGetFollowList: function requestGetFollowList() {
-      console.log('加载我的关注列表');
-      var _this = this;
-      (0, _user.userShopFollows)({
-        userLoginId: this.my.userLoginId,
-        pageNum: this.follow.pageNum++,
-        pageSize: this.follow.pageSize
-      }, {
-        token: this.my.userToken
-      }).then(function (data) {
-        if (data.code != 200) {
-          return;
-        }
-
-        var list = data.data.shopFollowList;
-        if (list.length !== 0) {
-          list.forEach(function (follow) {
-            _this.follow.list.push(follow);
-          });
-        }
-        _this.noData = _this.follow.list.length === 0;
-      });
-    },
-    btnCancelFollowClicked: function btnCancelFollowClicked(i) {
-      var _this3 = this;
-
-      (0, _shop.cancelFollow)({
-        shopId: this.follow.list[i].shopId,
-        userLoginId: this.my.userLoginId
-      }, {
-        token: this.my.userToken
-      }).then(function () {
-        var item = _this3.follow.list[i];
-        item.hasFollowed = 1;
-      });
-    }
-  }
-};
-
-/***/ }),
-
-/***/ 188:
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('navbar', {
-    attrs: {
-      "title": "我的关注",
-      "backgroundColor": "#45b5f0",
-      "height": "88"
-    }
-  }), (!_vm.noData) ? _c('scroller', {
-    style: _vm.scrollerStyle,
-    attrs: {
-      "loadmoreoffset": "10"
-    },
-    on: {
-      "loadmore": _vm.loadMore,
-      "scroll": _vm.followScrollHandler
-    }
-  }, _vm._l((_vm.follow.list), function(item, i) {
-    return _c('div', {
-      key: i,
-      ref: 'cell' + i,
-      refInFor: true,
-      staticClass: ["m_cell"]
-    }, [(i != 0) ? _c('div', {
-      staticClass: ["m_cell_split"]
-    }) : _vm._e(), _c('wxc-cell', {
-      attrs: {
-        "hasArrow": false,
-        "hasTopBorder": false,
-        "hasBottomBorder": true,
-        "hasMargin": false,
-        "autoAccessible": false
-      }
-    }, [_c('image', {
-      staticClass: ["image"],
-      attrs: {
-        "slot": "label",
-        "resize": "cover",
-        "src": item.shop.shopLogoUrl
-      },
-      slot: "label"
-    }), _c('div', {
-      attrs: {
-        "slot": "title"
-      },
-      slot: "title"
-    }, [_c('div', {
-      staticStyle: {
-        flexDirection: "row"
-      }
-    }, [_c('text', {
-      staticClass: ["c_name"],
-      staticStyle: {
-        width: "480px"
-      }
-    }, [_vm._v(_vm._s(item.shop.shopName))])]), _c('div', {
-      key: i,
-      staticStyle: {
-        flexDirection: "row",
-        paddingLeft: "20px",
-        marginTop: "40px"
-      },
-      attrs: {
-        "index": i
-      }
-    }, [_c('text', {
-      staticClass: ["iconfont", "red"],
-      staticStyle: {
-        fontSize: "24px"
-      }
-    }, [_vm._v("")]), _c('text', {
-      staticClass: ["c_real"],
-      staticStyle: {
-        color: "#ccc",
-        width: "480px"
-      }
-    }, [_vm._v(_vm._s(item.shop.shopAddress))])])]), _c('div', {
-      attrs: {
-        "slot": "value"
-      },
-      slot: "value"
-    }, [(item.hasFollowed === 0) ? _c('wxc-button', {
-      attrs: {
-        "type": "red",
-        "size": "small",
-        "text": "取消关注"
-      },
-      on: {
-        "wxcButtonClicked": function($event) {
-          _vm.btnCancelFollowClicked(i)
-        }
-      }
-    }) : _c('text', {
-      staticClass: ["c_cancel_text"]
-    }, [_vm._v("已取消")])], 1)])], 1)
-  })) : _c('div', {
-    staticClass: ["m_cell"]
-  }, [_c('text', {
-    staticClass: ["iconfont"],
-    staticStyle: {
-      fontSize: "128px",
-      marginTop: "232px",
-      textAlign: "center",
-      color: "#cccccc"
-    }
-  }, [_vm._v("")]), _c('text', {
-    staticStyle: {
-      fontSize: "32px",
-      marginTop: "20px",
-      textAlign: "center",
-      color: "#cccccc"
-    }
-  }, [_vm._v(" 还没有关注 ")])])], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
 
 /***/ }),
 
@@ -2552,50 +3019,6 @@ if (typeof __register_static_styles__ === "function") {
 
 module.exports = __vue_exports__
 
-
-/***/ }),
-
-/***/ 69:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.shopFollow = shopFollow;
-exports.cancelFollow = cancelFollow;
-exports.getShopDetail = getShopDetail;
-
-var _http = __webpack_require__(1);
-
-function shopFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow",
-    headers: headers,
-    body: params
-  });
-}
-
-function cancelFollow(params, headers) {
-  return (0, _http.http)({
-    method: "POST",
-    url: "/shop/follow/cancel",
-    headers: headers,
-    body: params
-  });
-}
-
-function getShopDetail(params, headers) {
-  return (0, _http.http)({
-    method: 'POST',
-    url: '/shop/detail',
-    headers: headers,
-    body: params
-  });
-}
 
 /***/ }),
 
