@@ -61,3 +61,30 @@ export function deleteUserAddress(params, headers) {
     body: params
   });
 }
+
+export function addFeedback(params, headers) {
+  return http({
+    method: "POST",
+    url: "/user/feedback/add",
+    headers: headers,
+    body: params
+  });
+}
+
+export function queryUserFeedbackList(params, headers) {
+  return http({
+    method: "POST",
+    url: "/user/feedback/list",
+    headers: headers,
+    body: params
+  });
+}
+
+export function feedbackTypeMap(params, headers) {
+  return http({
+    method: "POST",
+    url: "/user/feedback/typeMap",
+    headers: headers,
+    body: params
+  });
+}
