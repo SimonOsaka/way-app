@@ -3,7 +3,14 @@
     <navbar title="商品详情" backgroundColor="#45b5f0" height="88"></navbar>
     <scroller class="scroller" :style="scrollerStyle">
       <div>
-        <image class="image" resize="cover" :src="commodityObj.cPicUrl"></image>
+        <slider class="slider" interval="3000" auto-play="false" @change="changeHandler">
+          <div class="slider-pages" v-for="(item, index) in commodityObj.cPicUrlList" :key="'banner_' + index">
+            <image class="image" resize="cover" :src="item.cPicUrl"></image>
+          </div>
+        </slider>
+        <div class="banner_indicator">
+          <text style="color: #ffffff; font-size: 24px;">{{ currentBannerIndex }} / {{ bannerLength }}</text>
+        </div>
       </div>
       <div style="margin-top: 10px;">
         <wxc-cell :has-arrow="false" :has-bottom-border="true" :cell-style="cellStyle">
@@ -28,8 +35,8 @@
       </div>
       <div>
         <wxc-cell :has-arrow="false" :has-bottom-border="true" :cell-style="cellStyle">
-          <div slot="label" style="flex-direction:row;">
-            <text class="iconfont" style="margin-top:6px; color: red;">&#xe651;</text>
+          <div slot="label" style="flex-direction:row; justify-content: flex-start;">
+            <text class="iconfont" style="color: red;">&#xe651;</text>
             <text style="width: 700px;">{{commodityObj.cPosition}}</text>
           </div>
         </wxc-cell>
@@ -44,14 +51,14 @@
         <wxc-cell v-for="(relationItem, index) in relationCommodityList" :key="'relation' + index" :has-arrow="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false" @wxcCellClicked="relationCommodityCellClicked(index)">
           <image slot="label" resize="cover" class="commodity_image" :src="relationItem.imgUrl"></image>
           <div slot="title">
+            <div style="flex-direction: row; justify-content: space-between;">
               <text class="c_name">{{relationItem.name}}</text>
-              <!--
-              <div style="flex-direction:row;">
-                <text class="c_name c_money" style="font-size:20px; padding-top: 3px;">¥</text>
-                <text class="c_money">{{cItem.cPrice}}</text>
-              </div>
-              -->
+              <text style="font-size: 24px;">{{ relationItem.wayShop.shopDistance }}</text>
             </div>
+            <div style="flex-direction: row; justify-content: space-between; margin-top: 64px; margin-left: 24px;">
+              <text class="iconfont" style="font-size: 24px; color: #CCCCCC;">&#xe676; {{ relationItem.wayShop.shopName }}</text>
+            </div>
+          </div>
         </wxc-cell>
       </div>
     </scroller>
@@ -98,24 +105,28 @@ const globalEvent = weex.requireModule('globalEvent')
 
 export default {
   components: { WxcCell, WxcPopup, WxcDialog, WxcMask, navbar },
-  data: () => ({
-    cellStyle: {},
-    weixinStyle: {
-      fontSize: '64px'
-    },
-    commodityObj: {
-      id: 0,
-      cPicUrl: '',
-      cName: '',
-      cPrice: '',
-      cPosition: '',
-      shopId: 0,
-      shopName: '',
-      shopLogoUrl: ''
-    },
-    isAutoShow: false,
-    relationCommodityList: []
-  }),
+  data() {
+    return {
+      cellStyle: {},
+      weixinStyle: {
+        fontSize: '64px'
+      },
+      commodityObj: {
+        id: 0,
+        cName: '',
+        cPrice: '',
+        cPosition: '',
+        shopId: 0,
+        shopName: '',
+        shopLogoUrl: '',
+        cPicUrlList: []
+      },
+      currentBannerIndex: 1,
+      bannerLength: 0,
+      isAutoShow: false,
+      relationCommodityList: []
+    }
+  },
   created() {
     initIconfont()
     titlebar('商品详情')
@@ -175,14 +186,30 @@ export default {
           _this.commodityObj.cName = commodityDetail.name
           // _this.commodityObj.cPrice = commodityDetail.price
           _this.commodityObj.cPosition = commodityDetail.shopAddress
-          _this.commodityObj.cPicUrl = commodityDetail.imgUrl
+          let bannerImgUrlList = []
+          if (commodityDetail['imgUrl'] && commodityDetail['imgUrl'] !== '') {
+            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl })
+          }
+          if (commodityDetail['imgUrl1'] && commodityDetail['imgUrl1'] !== '') {
+            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl1 })
+          }
+          if (commodityDetail['imgUrl2'] && commodityDetail['imgUrl2'] !== '') {
+            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl2 })
+          }
+          if (commodityDetail['imgUrl3'] && commodityDetail['imgUrl3'] !== '') {
+            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl3 })
+          }
+          if (commodityDetail['imgUrl4'] && commodityDetail['imgUrl4'] !== '') {
+            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl4 })
+          }
           _this.commodityObj.shopId = commodityDetail.shopId
           _this.commodityObj.shopName = commodityDetail.shopName
           _this.commodityObj.shopLogoUrl = commodityDetail.shopLogoUrl
 
-          setPageTitle(commodityDetail.name)
-          setOgImage(_this.commodityObj.cPicUrl)
-
+          console.log('商品图片集合', JSON.stringify(bannerImgUrlList))
+          _this.commodityObj.cPicUrlList = _this.commodityObj.cPicUrlList.concat(bannerImgUrlList)
+          _this.bannerLength = _this.commodityObj.cPicUrlList.length
+          console.log('商品图片集合', _this.bannerLength)
           _this.requestQueryRelationCommodity()
         },
         function(error) {
@@ -219,13 +246,23 @@ export default {
       })
     },
     requestQueryRelationCommodity() {
-      const commodityId = this.commodityObj.id
-      queryRelationCommodity({ commodityId: commodityId }).then(response => {
-        if (response.code !== 200) {
-          return
+      getStorageVal('way:city').then(
+        data => {
+          console.log('way:city', data)
+          const cityObj = JSON.parse(data)
+          const clientLng = cityObj.lng
+          const clientLat = cityObj.lat
+          const commodityId = this.commodityObj.id
+          queryRelationCommodity({ commodityId: commodityId, clientLng: clientLng, clientlat: clientLat }).then(response => {
+            if (response.code !== 200) {
+              return
+            }
+            this.relationCommodityList = response.data
+          })
+        },
+        err => {
         }
-        this.relationCommodityList = response.data
-      })
+      )
     },
     relationCommodityCellClicked(i) {
       const clickedCommodity = this.relationCommodityList[i]
@@ -237,6 +274,9 @@ export default {
           animated: 'true'
         })
       }
+    },
+    changeHandler(e) {
+      this.currentBannerIndex = e.index + 1
     }
   },
   destroyed() {
@@ -272,5 +312,28 @@ export default {
   height: 140px;
   margin-right: 10px;
   border-radius: 10px;
+}
+.slider {
+  flex-direction: row;
+  width: 750px;
+  height: 500px;
+}
+.slider-pages {
+  flex-direction: row;
+  width: 750px;
+  height: 500px;
+}
+.banner_indicator {
+  flex-direction: row;
+  justify-content: center;
+  width: 80px;
+  height: 34px;
+  position: absolute;
+  bottom: 18px;
+  right:18px;
+  background-color: black;
+  opacity: .5;
+  border-radius: 10px;
+  padding-top: 4px;
 }
 </style>
