@@ -15,18 +15,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xzl.jicu.hotreload.HotReloadManager;
-import com.xzl.jicu.util.AppConfig;
-import com.xzl.jicu.util.Constants;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.taobao.weex.WXEnvironment;
-import com.taobao.weex.WXRenderErrorCode;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.WXSDKInstance;
+import com.taobao.weex.common.WXErrorCode;
 import com.taobao.weex.ui.component.NestedContainer;
 import com.taobao.weex.utils.WXLogUtils;
 import com.taobao.weex.utils.WXSoInstallMgrSdk;
+import com.xzl.jicu.hotreload.HotReloadManager;
+import com.xzl.jicu.util.AppConfig;
+import com.xzl.jicu.util.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -161,7 +161,7 @@ public class WXPageActivity extends BasePageActivity implements
     public void onException(WXSDKInstance instance, String errCode, String msg) {
         mProgressBar.setVisibility(View.GONE);
         mTipView.setVisibility(View.VISIBLE);
-        if (TextUtils.equals(errCode, WXRenderErrorCode.WX_NETWORK_ERROR)) {
+        if (TextUtils.equals(errCode, WXErrorCode.WX_DEGRAD_ERR_NETWORK_CHECK_CONTENT_LENGTH_FAILED.getErrorCode())) {
             mTipView.setText(R.string.index_tip);
         } else {
             mTipView.setText("render error:" + errCode);
@@ -177,21 +177,21 @@ public class WXPageActivity extends BasePageActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_refresh:
-                createWeexInstance();
-                renderPage();
-                break;
-            case R.id.action_scan:
-                IntentIntegrator integrator = new IntentIntegrator(this);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("Scan a barcode");
-                //integrator.setCameraId(0);  // Use a specific camera of the device
-                integrator.setBeepEnabled(true);
-                integrator.setOrientationLocked(false);
-                integrator.setBarcodeImageEnabled(true);
-                integrator.setPrompt(getString(R.string.capture_qrcode_prompt));
-                integrator.initiateScan();
-                break;
+//            case R.id.action_refresh:
+//                createWeexInstance();
+//                renderPage();
+//                break;
+//            case R.id.action_scan:
+//                IntentIntegrator integrator = new IntentIntegrator(this);
+//                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+//                integrator.setPrompt("Scan a barcode");
+//                //integrator.setCameraId(0);  // Use a specific camera of the device
+//                integrator.setBeepEnabled(true);
+//                integrator.setOrientationLocked(false);
+//                integrator.setBarcodeImageEnabled(true);
+//                integrator.setPrompt(getString(R.string.capture_qrcode_prompt));
+//                integrator.initiateScan();
+//                break;
             case android.R.id.home:
                 finish();
             default:
@@ -219,24 +219,18 @@ public class WXPageActivity extends BasePageActivity implements
 
         if (!TextUtils.isEmpty(code)) {
             Uri uri = Uri.parse(code);
-            if (uri.getQueryParameterNames().contains("bundle")) {
-                WXEnvironment.sDynamicMode = uri.getBooleanQueryParameter("debug", false);
-                WXEnvironment.sDynamicUrl = uri.getQueryParameter("bundle");
-                String tip = WXEnvironment.sDynamicMode ? "Has switched to Dynamic Mode" : "Has switched to Normal Mode";
-                Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
+            if (uri.getPath().contains("dynamic/replace")) {
+                Intent intent = new Intent("weex.intent.action.dynamic", uri);
+                intent.addCategory("weex.intent.category.dynamic");
+                startActivity(intent);
                 finish();
-                return;
             } else if (uri.getQueryParameterNames().contains("_wx_devtool")) {
                 WXEnvironment.sRemoteDebugProxyUrl = uri.getQueryParameter("_wx_devtool");
                 WXEnvironment.sDebugServerConnectable = true;
                 WXSDKEngine.reload();
                 Toast.makeText(this, "devtool", Toast.LENGTH_SHORT).show();
-                return;
-            } else if (code.contains("_wx_debug")) {
-                uri = Uri.parse(code);
-                String debug_url = uri.getQueryParameter("_wx_debug");
-                WXSDKEngine.switchDebugModel(true, debug_url);
                 finish();
+                return;
             } else {
                 JSONObject data = new JSONObject();
                 try {

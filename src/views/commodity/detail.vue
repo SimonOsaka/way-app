@@ -3,48 +3,43 @@
     <navbar title="商品详情" backgroundColor="#45b5f0" height="88"></navbar>
     <scroller class="scroller" :style="scrollerStyle">
       <div>
-        <slider class="slider" interval="3000" auto-play="false" @change="changeHandler">
-          <div class="slider-pages" v-for="(item, index) in commodityObj.cPicUrlList" :key="'banner_' + index">
-            <image class="image" resize="cover" :src="item.cPicUrl"></image>
-          </div>
-        </slider>
-        <div class="banner_indicator">
-          <text style="color: #ffffff; font-size: 24px;">{{ currentBannerIndex }} / {{ bannerLength }}</text>
-        </div>
+        <wxc-cell :has-arrow="false" :has-bottom-border="false">
+          <image slot="label" resize="cover" style="width: 64px; height: 64px;" :src="commodityObj.shopLogoUrl" @click="shopCellClicked"></image>
+          <text slot="title" style="margin-left: 10px;" @click="shopCellClicked">{{commodityObj.shopName}}</text>
+          <wxc-button slot="value" :type="follow.btnType" size="small" :text="follow.btnText" @wxcButtonClicked="btnFollowClicked"></wxc-button>
+        </wxc-cell>
       </div>
-      <div style="margin-top: 10px;">
-        <wxc-cell :has-arrow="false" :has-bottom-border="true" :cell-style="cellStyle">
-          <div slot="label">
-            <div style="flex-direction: row;">
-              <text style="width: 660px;">{{commodityObj.cName}}</text>
-            </div>
-            <!--
-            <div style="flex-direction:row; margin-top: 10px;">
-              <text class="c_money" style="font-size:20px; padding-top:10px;">¥</text>
-              <text class="c_money">{{commodityObj.cPrice}}</text>
-            </div>
-            -->
+      <div>
+        <wxc-cell :has-arrow="false" :has-bottom-border="false" :cell-style="cellStyle">
+          <div slot="title" style="width: 680px; flex-direction: row; flex-wrap: wrap; padding: 10px;">
+            <text>{{commodityObj.cName}}</text>
           </div>
+        </wxc-cell>
+      </div>
+      <!-- 图片 -->
+      <div>
+        <wxc-cell :has-arrow="false" :has-bottom-border="false" class="flex_column_center" :cell-style="cellStyle">
+          <div slot="title" style="width: 680px; flex-direction: row; flex-wrap: wrap; padding: 10px;">
+            <image v-for="(item, index) in commodityObj.cPicUrlList" @click="commodityImgClicked(index)" resize="cover" style="width: 200px; height: 200px; margin: 10px;" :src="item.cPicUrl" :key="'pic_list_' + index"></image>
+          </div>
+        </wxc-cell>
+      </div>
+      <!-- 地址 -->
+      <div>
+        <wxc-cell :has-arrow="false" :has-bottom-border="false" :cell-style="cellStyle">
+          <div slot="title" class="address">
+            <text class="iconfont address_icon">&#xe651;</text>
+            <text class="address_text">{{ commodityObj.cPosition }}</text>
+          </div>
+        </wxc-cell>
+      </div>
+      <div>
+        <wxc-cell :has-arrow="false" :has-top-border="true" :has-bottom-border="true">
           <div slot="value">
-            <div @click="popupOverlayClicked" style="flex-direction: column;">
+            <div @click="popupOverlayClicked" style="flex-direction: row; flex-align: end;">
               <text class="iconfont" style="font-size: 42px;">&#xe6f3;</text>
-              <text style="font-size: 22px;">分享</text>
             </div>
           </div>
-        </wxc-cell>
-      </div>
-      <div>
-        <wxc-cell :has-arrow="false" :has-bottom-border="true" :cell-style="cellStyle">
-          <div slot="label" style="flex-direction:row; justify-content: flex-start;">
-            <text class="iconfont" style="color: red;">&#xe651;</text>
-            <text style="width: 700px;">{{commodityObj.cPosition}}</text>
-          </div>
-        </wxc-cell>
-      </div>
-      <div>
-        <wxc-cell :has-arrow="false" :has-bottom-border="true" @wxcCellClicked="shopCellClicked">
-          <image slot="label" resize="cover" style="width: 64px; height: 64px;" :src="commodityObj.shopLogoUrl"></image>
-          <text slot="title" style="margin-left: 10px;">{{commodityObj.shopName}}</text>
         </wxc-cell>
       </div>
       <div>
@@ -75,39 +70,46 @@
         </div>
       </div>
     </wxc-popup>
+
+    <wxc-lightbox
+      ref="wxc-lightbox"
+      :height="lightBox.height"
+      :show="lightBox.show"
+      :index="lightBox.index"
+      :image-list="lightBox.imageList"
+      @wxcLightboxOverlayClicked="wxcLightboxOverlayClicked">
+    </wxc-lightbox>
   </div>
 </template>
 
 <script>
-import { Utils, WxcCell, WxcPopup, WxcDialog, WxcMask } from 'weex-ui'
+import { Utils, WxcCell, WxcPopup, WxcDialog, WxcMask, WxcButton, WxcLightbox } from 'weex-ui'
 import {
   getEntryUrl,
-  receiveMessage,
-  postMessage,
-  setStorageValue,
-  getStorageValue,
   initIconfont,
   getStorageVal,
-  setPageTitle,
-  setOgImage,
-  getUrlKey,
   setStorageVal,
   titlebar
 } from '../../tools/utils.js'
 import { loadCateImageUrl } from '../../tools/image.js'
 import { http } from '../../tools/http.js'
 import navbar from '../../include/navbar.vue'
-import { getWeixinShareWebpage, queryRelationCommodity } from '../../api/commodity.js'
+import { getCommodityDetail, getWeixinShareWebpage, queryRelationCommodity } from '../../api/commodity.js'
+import { shopFollow, cancelFollow } from '../../api/shop.js'
+
 const navigator = weex.requireModule('navigator')
 const modal = weex.requireModule('modal')
 const weixin = weex.requireModule('weixin')
 const globalEvent = weex.requireModule('globalEvent')
 
 export default {
-  components: { WxcCell, WxcPopup, WxcDialog, WxcMask, navbar },
+  components: { WxcCell, WxcPopup, WxcDialog, WxcMask, navbar, WxcButton, WxcLightbox },
   data() {
     return {
-      cellStyle: {},
+      cellStyle: {
+        paddingTop: 0,
+        paddingBottom: 0
+      },
       weixinStyle: {
         fontSize: '64px'
       },
@@ -121,19 +123,33 @@ export default {
         shopLogoUrl: '',
         cPicUrlList: []
       },
-      currentBannerIndex: 1,
-      bannerLength: 0,
+      follow: {
+        btnText: '+ 关注',
+        btnType: 'blue'
+      },
+      user: {
+        userLoginId: 0,
+        token: ''
+      },
+      shop: {
+        hasFollowed: -1
+      },
       isAutoShow: false,
-      relationCommodityList: []
+      relationCommodityList: [],
+      lightBox: {
+        show: false,
+        height: 750,
+        imageList: [],
+        index: 0
+      }
     }
   },
   created() {
     initIconfont()
     titlebar('商品详情')
     const pageHeight = Utils.env.getPageHeight()
-    const screenHeight = Utils.env.getScreenHeight()
-    // this.scrollerStyle = { marginTop: screenHeight - pageHeight + 'px' }
     this.scrollerStyle = { height: pageHeight + 'px' }
+    // this.lightBox.height = pageHeight 
 
     let _this = this
     // _this.commodityObj.id = getUrlKey('cid')
@@ -146,7 +162,7 @@ export default {
         return
       }
 
-      this.getCommodityData()
+      this.localUser()
     })
 
     globalEvent.addEventListener('weixinCallback', function(data) {
@@ -165,57 +181,66 @@ export default {
     console.log('商品详情id', _this.commodityObj.id)
   },
   methods: {
+    localUser() {
+      getStorageVal('way:user').then(data=> {
+        let user = JSON.parse(data)
+        this.user.userLoginId = user.userLoginId
+        this.user.token = user.userToken
+        this.getCommodityData()
+      }, e => {
+        this.getCommodityData()
+      })
+    },
     getCommodityData() {
-      let _this = this
-      http({
-        method: 'POST',
-        url: '/commodity/detail',
-        headers: {},
-        body: {
-          commodityId: this.commodityObj.id
-        }
-      }).then(
-        function(data) {
+      getCommodityDetail({ 
+          commodityId: this.commodityObj.id, 
+          userLoginId: this.user.userLoginId === 0 ? undefined : this.user.userLoginId 
+        }).then(data => {
           console.log('success', data)
           if (data.code != 200) {
-            _this.dialogContent = data.msg
-            _this.dialogShow = true
+            this.dialogContent = data.msg
+            this.dialogShow = true
           }
           let commodityDetail = data.data
-          _this.commodityObj.id = commodityDetail.id
-          _this.commodityObj.cName = commodityDetail.name
-          // _this.commodityObj.cPrice = commodityDetail.price
-          _this.commodityObj.cPosition = commodityDetail.shopAddress
-          let bannerImgUrlList = []
+          this.commodityObj.id = commodityDetail.id
+          this.shop.hasFollowed = commodityDetail.hasFollowed
+            if (commodityDetail.hasFollowed === 0) {
+              this.follow.btnText = '已关注'
+              this.follow.btnType = 'white'
+            } else {
+              this.follow.btnText = '+ 关注'
+              this.follow.btnType = 'blue'
+            }
+
+          this.commodityObj.cName = commodityDetail.name
+          // this.commodityObj.cPrice = commodityDetail.price
+          this.commodityObj.cPosition = commodityDetail.shopAddress
           if (commodityDetail['imgUrl'] && commodityDetail['imgUrl'] !== '') {
-            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl })
+            this.commodityObj.cPicUrlList.push({ cPicUrl: commodityDetail.imgUrl })
+            this.lightBox.imageList.push({ src: commodityDetail.imgUrl })
           }
           if (commodityDetail['imgUrl1'] && commodityDetail['imgUrl1'] !== '') {
-            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl1 })
+            this.commodityObj.cPicUrlList.push({ cPicUrl: commodityDetail.imgUrl1 })
+            this.lightBox.imageList.push({ src: commodityDetail.imgUrl1 })
           }
           if (commodityDetail['imgUrl2'] && commodityDetail['imgUrl2'] !== '') {
-            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl2 })
+            this.commodityObj.cPicUrlList.push({ cPicUrl: commodityDetail.imgUrl2 })
+            this.lightBox.imageList.push({ src: commodityDetail.imgUrl2 })
           }
           if (commodityDetail['imgUrl3'] && commodityDetail['imgUrl3'] !== '') {
-            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl3 })
+            this.commodityObj.cPicUrlList.push({ cPicUrl: commodityDetail.imgUrl3 })
+            this.lightBox.imageList.push({ src: commodityDetail.imgUrl3 })
           }
           if (commodityDetail['imgUrl4'] && commodityDetail['imgUrl4'] !== '') {
-            bannerImgUrlList.push({ cPicUrl: commodityDetail.imgUrl4 })
+            this.commodityObj.cPicUrlList.push({ cPicUrl: commodityDetail.imgUrl4 })
+            this.lightBox.imageList.push({ src: commodityDetail.imgUrl4 })
           }
-          _this.commodityObj.shopId = commodityDetail.shopId
-          _this.commodityObj.shopName = commodityDetail.shopName
-          _this.commodityObj.shopLogoUrl = commodityDetail.shopLogoUrl
+          this.commodityObj.shopId = commodityDetail.shopId
+          this.commodityObj.shopName = commodityDetail.shopName
+          this.commodityObj.shopLogoUrl = commodityDetail.shopLogoUrl
 
-          console.log('商品图片集合', JSON.stringify(bannerImgUrlList))
-          _this.commodityObj.cPicUrlList = _this.commodityObj.cPicUrlList.concat(bannerImgUrlList)
-          _this.bannerLength = _this.commodityObj.cPicUrlList.length
-          console.log('商品图片集合', _this.bannerLength)
-          _this.requestQueryRelationCommodity()
-        },
-        function(error) {
-          console.error('failure', error)
-        }
-      )
+          this.requestQueryRelationCommodity()
+      })
     },
     popupOverlayAutoClick() {
       this.isAutoShow = false
@@ -275,8 +300,68 @@ export default {
         })
       }
     },
-    changeHandler(e) {
-      this.currentBannerIndex = e.index + 1
+    btnFollowClicked() {
+      getStorageVal('way:user').then(
+        data => {
+          let user = JSON.parse(data)
+          this.user.userLoginId = user.userLoginId
+          this.user.token = user.userToken
+          
+          if (this.shop.hasFollowed === 1) {
+            this.requestFollow()
+          } else {
+            this.requestCancelFollow()
+          }
+        },
+        error => {
+          this.user.userLoginId = 0
+          this.user.token = ''
+          navigator.push({
+            url: getEntryUrl('views/user/login', { tabIndex: 0 }),
+            animated: 'true'
+          })
+        }
+      )
+    },
+    requestFollow() {
+      shopFollow({
+        shopId: this.commodityObj.shopId,
+        userLoginId: this.user.userLoginId
+      }, {
+        token: this.user.token
+      }).then((data)=>{
+        if (data.code != 200) {
+          return
+        }
+        this.shop.hasFollowed = 0
+        this.follow.btnText = '已关注'
+        this.follow.btnType = 'white'
+      })
+    },
+    requestCancelFollow() {
+      cancelFollow({
+        shopId: this.commodityObj.shopId,
+        userLoginId: this.user.userLoginId
+      }, {
+        token: this.user.token
+      }).then((data)=>{
+        if (data.code != 200) {
+          return
+        }
+        this.shop.hasFollowed = 1
+        this.follow.btnText = '+ 关注'
+        this.follow.btnType = 'blue'
+      })
+    },
+    wxcLightboxOverlayClicked() {
+      this.lightBox.show = false
+    },
+    commodityImgClicked(i) {
+      console.log('点击图片', JSON.stringify(this.lightBox.imageList))
+      console.log('点击图片', i)
+      this.lightBox.index = i 
+      this.$set(this.lightBox, 'index', i)
+      this.lightBox.show = true
     }
   },
   destroyed() {
@@ -313,27 +398,31 @@ export default {
   margin-right: 10px;
   border-radius: 10px;
 }
-.slider {
-  flex-direction: row;
-  width: 750px;
-  height: 500px;
+.address {
+  flex-direction:row;
+  justify-content: flex-start;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.slider-pages {
-  flex-direction: row;
-  width: 750px;
-  height: 500px;
+.address_icon {
+  color: red;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 4px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
-.banner_indicator {
-  flex-direction: row;
+.address_text {
+  width: 600px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 4px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.flex_column_center {
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 34px;
-  position: absolute;
-  bottom: 18px;
-  right:18px;
-  background-color: black;
-  opacity: .5;
-  border-radius: 10px;
-  padding-top: 4px;
 }
 </style>

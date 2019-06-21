@@ -2,6 +2,9 @@
 
 buildscript {
     repositories {
+        flatDir {
+            dirs 'libs'
+        }
         mavenLocal()
 //        jcenter()
         maven {
@@ -22,6 +25,9 @@ buildscript {
 
 allprojects {
     repositories {
+        flatDir {
+            dirs 'libs'
+        }
 //        jcenter() { url 'http://jcenter.bintray.com/' }
         maven {
             url 'https://maven.aliyun.com/repository/public'

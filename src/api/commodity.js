@@ -1,4 +1,13 @@
 import { http } from "../tools/http.js";
+export function getCommodityDetail(params) {
+  return http({
+    method: "POST",
+    url: "/commodity/detail",
+    headers: {},
+    body: params
+  });
+}
+
 export function getWeixinShareWebpage(params) {
   return http({
     method: "POST",

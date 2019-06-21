@@ -24,7 +24,7 @@
             </div>
           </wxc-cell>
           <wxc-cell v-if="commodityObj.moreList.length > 0" :has-arrow="false" :has-top-border="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false">
-            <text slot="title" class="iconfont" style="text-align: center;" v-if="commodityObj.isMore == true" @click="moreCommodityClicked(commodityObj.shopIndex)"> 查看更多{{commodityObj.moreList.length}}个 &#xe661 </text>
+            <text slot="title" class="iconfont" style="text-align: center;" v-if="commodityObj.isMore == true" @click="moreCommodityClicked(commodityObj.shopIndex)"> 查看更多{{commodityObj.moreList.length}}个 &#xe661; </text>
             <text slot="title" class="iconfont" style="text-align: center;" v-else @click="unMoreCommodityClicked(commodityObj.shopIndex)"> 收起 &#xe6de; </text>
           </wxc-cell>
         </div>
@@ -69,7 +69,9 @@
         <text style="font-size:32px; margin-top: 20px; text-align: center; color: #cccccc;"> 没有查询到结果 </text>
       </div>
       <div style="flex-direction: column; position: absolute; right: 16px; bottom: 16px;">
+        <!--
         <text class="iconfont" :style="addDiscountStyle" @click="discountCreate">&#xe649;</text>
+        -->
         <text class="iconfont" :style="discountTopStyle" @click="discountScrollToTop">&#xe69e;</text>
       </div>
     </div>
