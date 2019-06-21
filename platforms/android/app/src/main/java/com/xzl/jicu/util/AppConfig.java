@@ -22,7 +22,7 @@ public class AppConfig {
   }
 
   public static Boolean isLaunchLocally() {
-    return sPreferences.getBoolean("launch_locally", false);
+    return sPreferences.getBoolean("launch_locally", true);
   }
 
   private static void loadAppSetting(Context context) {
