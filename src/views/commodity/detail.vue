@@ -18,9 +18,11 @@
       </div>
       <!-- 图片 -->
       <div>
-        <wxc-cell :has-arrow="false" :has-bottom-border="false" class="flex_column_center" :cell-style="cellStyle">
-          <div slot="title" style="width: 680px; flex-direction: row; flex-wrap: wrap; padding: 10px;">
-            <image v-for="(item, index) in commodityObj.cPicUrlList" @click="commodityImgClicked(index)" resize="cover" style="width: 200px; height: 200px; margin: 10px;" :src="item.cPicUrl" :key="'pic_list_' + index"></image>
+        <wxc-cell :has-arrow="false" :has-bottom-border="false" :cell-style="cellStyle">
+          <div slot="title" class="flex_column_center">
+            <div style="width: 680px; flex-direction: row; flex-wrap: wrap; padding: 10px;">
+              <image v-for="(item, index) in commodityObj.cPicUrlList" @click="commodityImgClicked(index)" resize="cover" style="width: 200px; height: 200px; margin: 10px;" :src="item.cPicUrl" :key="'pic_list_' + index"></image>
+            </div>
           </div>
         </wxc-cell>
       </div>
@@ -77,6 +79,8 @@
       :show="lightBox.show"
       :index="lightBox.index"
       :image-list="lightBox.imageList"
+      :opacity="1"
+      :indicator-color="{'item-color': '#cccccc','item-selected-color': '#ffffff','item-size': '20px'}"
       @wxcLightboxOverlayClicked="wxcLightboxOverlayClicked">
     </wxc-lightbox>
   </div>
@@ -413,6 +417,7 @@ export default {
   border-bottom-left-radius: 10px;
 }
 .address_text {
+  font-size: 24px;
   width: 600px;
   padding-top: 6px;
   padding-bottom: 6px;
