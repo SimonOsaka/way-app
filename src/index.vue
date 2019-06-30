@@ -78,7 +78,7 @@
     <div class="item-container" :style="contentStyle">
       <scroller :style="myScrollerStyle">
         <wxc-cell v-if="my.userLoginId != 0" :has-arrow="false" :cell-style="cellStyle" :has-top-border="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false">
-          <image slot="label" class="image avatar" src="http://static.duozouzou.top/user.png"></image>
+          <image slot="label" class="image avatar" src="http://static.jicu.vip/user.png"></image>
           <div slot="title">
             <div style="flex-direction: row;">
               <text class="c_name">{{my.nickname}}</text>
