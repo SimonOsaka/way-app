@@ -1,0 +1,9 @@
+echo "*****************************************************************************"
+echo "*                          android.dev                                      *"
+echo "*****************************************************************************"
+
+
+    rm -rf ./dist
+    npm run build
+    rm -rf ./platforms/android/app/src/main/assets/dist
+    cp -r ./dist/ ./platforms/android/app/src/main/assets/dist/
