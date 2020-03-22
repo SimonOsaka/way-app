@@ -17,7 +17,7 @@ export function http(OPTIONS = {}) {
   const platform = weex.config.env.platform.toLowerCase()
 
   // 正式环境域名
-  let apiRoot = 'http://api.jicu.vip' //'http://your.prod.domain.com'
+  let apiRoot = 'https://api.jicu.vip' //'http://your.prod.domain.com'
   const isProduction = process.env.NODE_ENV === 'production'
   console.log('环境显示', isProduction, platform, process.env.NODE_ENV)
   apiRoot = (platform === 'android' && !isProduction) ? 'http://192.168.3.4' : apiRoot
@@ -49,7 +49,7 @@ export function http(OPTIONS = {}) {
         resolve(response.data)
       } else {
         modal.toast({
-          message: `网络无连接`,
+          message: `网络请求失败`,
           duration: 1
         })
         console.log('stream reject', response)

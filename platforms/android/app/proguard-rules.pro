@@ -32,6 +32,13 @@
 -keep public class * extends com.taobao.weex.common.WXModule{*;}
 -keep public class com.taobao.weex.WXDebugTool{*;}
 
+# apache
+-keep class org.apache.weex.bridge.** { *; }
+-keep class org.apache.weex.layout.** { *; }
+-keep class org.apache.weex.WXSDKEngine { *; }
+-keep class org.apache.weex.base.SystemMessageHandler { *; }
+-dontwarn org.apache.weex.bridge.**
+
 # jpush
 -dontoptimize
 -dontpreverify
