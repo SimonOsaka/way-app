@@ -16,8 +16,10 @@ import com.taobao.weex.common.WXException;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xzl.jicu.extend.FrescoImageAdapter;
+import com.xzl.jicu.extend.WXBrowserModule;
 import com.xzl.jicu.extend.WXDictionaryModule;
 import com.xzl.jicu.extend.WXEventModule;
+import com.xzl.jicu.extend.WXHtmlModule;
 import com.xzl.jicu.extend.WXNetworkModule;
 import com.xzl.jicu.extend.WXTitleBarModule;
 import com.xzl.jicu.extend.WXVersionModule;
@@ -62,6 +64,8 @@ public class WXApplication extends Application {
             WXSDKEngine.registerModule("dictionary", WXDictionaryModule.class);
             WXSDKEngine.registerModule("titlebar", WXTitleBarModule.class);
             WXSDKEngine.registerModule("weixin", WXWeixinModule.class);
+            WXSDKEngine.registerModule("html", WXHtmlModule.class);
+            WXSDKEngine.registerModule("browser", WXBrowserModule.class);
         } catch (WXException e) {
             Log.d(TAG, "Module register exception: ", e);
         }

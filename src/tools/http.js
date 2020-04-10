@@ -20,12 +20,12 @@ export function http(OPTIONS = {}) {
   let apiRoot = 'https://api.jicu.vip' //'http://your.prod.domain.com'
   const isProduction = process.env.NODE_ENV === 'production'
   console.log('环境显示', isProduction, platform, process.env.NODE_ENV)
-  apiRoot = (platform === 'android' && !isProduction) ? 'http://192.168.3.4' : apiRoot
+  apiRoot = (platform === 'android' && !isProduction) ? 'http://192.168.3.4:8080' : apiRoot
 
   let options = Object.assign(DEFAULT_OPTION, OPTIONS)
   options.url = apiRoot + options.url
   options.headers['referer'] = referer
-  if (options.method === 'GET') {
+  if (options.method === 'GET' || options.method === 'get') {
     if (options.params) {
       let paramStr = Object.keys(options.params).reduce(
         (acc, key) => `${acc}${key}=${options.params[key]}&`,
@@ -33,7 +33,7 @@ export function http(OPTIONS = {}) {
       )
       options.url = options.url.concat(paramStr).slice(0, -1)
     }
-  } else if (options.method === 'POST') {
+  } else if (options.method === 'POST' || options.method === 'post') {
     if (options.body) {
       options.body = JSON.stringify(
         Object.assign(options.body, { appVerion: getAppVersion() })
@@ -41,9 +41,10 @@ export function http(OPTIONS = {}) {
       options.headers['Content-Type'] = 'application/json'
     }
   }
-  console.log('请求选项', options)
+  console.log('请求选项: ' + JSON.stringify(options))
   return new Promise((resolve, reject) => {
     stream.fetch(options, response => {
+      console.info('请求结果: ' + JSON.stringify(response))
       if (response.ok) {
         console.log('stream response', response)
         resolve(response.data)

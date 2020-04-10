@@ -104,7 +104,9 @@ dependencies {
     implementation 'com.squareup.okhttp:okhttp:2.3.0'
     implementation 'com.squareup.okhttp:okhttp-ws:2.3.0'
     implementation 'com.squareup.okio:okio:1.14.0'
+    implementation 'org.jsoup:jsoup:1.8.3'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.github.stfalcon:frescoimageviewer:0.5.0'
     implementation "com.alibaba:fastjson:${project.fastjsonLibVersion}"
     implementation "com.android.support:design:${project.supportLibVersion}"
     implementation "com.android.support:support-annotations:${project.supportLibVersion}"
