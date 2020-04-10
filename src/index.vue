@@ -75,6 +75,7 @@
         <text class="iconfont" :style="discountTopStyle" @click="discountScrollToTop">&#xe69e;</text>
       </div>
     </div>
+    <!-- my -->
     <div class="item-container" :style="contentStyle">
       <scroller :style="myScrollerStyle">
         <wxc-cell v-if="my.userLoginId != 0" :has-arrow="false" :cell-style="cellStyle" :has-top-border="false" :has-bottom-border="true" :has-margin="false" :auto-accessible="false">
@@ -94,6 +95,10 @@
         <wxc-cell v-if="my.userLoginId != 0" title="我的关注"
                   @wxcCellClicked="userFollowClick"
                   :has-bottom-border="true" :has-arrow="true"></wxc-cell>
+
+        <div class="m_cell_split"></div>          
+        <category v-if="my.userLoginId != 0" title="试验功能"></category>
+        <wxc-cell v-if="my.userLoginId != 0" title="文章" @wxcCellClicked="articlePostClick" :has-top-border="false" :has-arrow="true"/>
 
         <div class="m_cell_split"></div>
         <wxc-cell v-if="my.userLoginId != 0" title="反馈建议" @wxcCellClicked="feedbackClick" :has-top-border="false" :has-arrow="true"/>
@@ -154,6 +159,7 @@ import tabbarConfig from './entry/tabbar/config.js'
 import { http } from './tools/http.js'
 import { syncUserDevice } from './api/user.js'
 import { coordinateConvert, regeo } from './api/amap.js'
+import category from './components/category.vue'
 const navigator = weex.requireModule('navigator')
 const storage = weex.requireModule('storage')
 const modal = weex.requireModule('modal')
@@ -163,7 +169,7 @@ const dictionary = weex.requireModule('dictionary')
 const globalEvent = weex.requireModule('globalEvent')
 
 export default {
-  components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton, WxcDialog },
+  components: { WxcSearchbar, WxcTabBar, WxcCell, WxcButton, WxcDialog, category },
   data: () => ({
     city: '',
     cellStyle: { backgroundColor: '#ffffff' },
@@ -921,6 +927,12 @@ export default {
     feedbackClick() {
       navigator.push({
         url: getEntryUrl('views/user/feedback'),
+        animated: 'true'
+      })
+    },
+    articlePostClick() {
+      navigator.push({
+        url: getEntryUrl('views/user/lab/articleList'),
         animated: 'true'
       })
     }
