@@ -30,7 +30,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0",
-    "npm": "^6.9.0",
+    "npm": "^6.14.6",
     "phantom-limb": "0.0.1",
     "postcss-plugin-px2rem": "^0.7.0",
     "vue": "^2.5.17",
