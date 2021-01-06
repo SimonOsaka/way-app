@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "npm": "^6.9.0",
     "phantom-limb": "0.0.1",
     "postcss-plugin-px2rem": "^0.7.0",
